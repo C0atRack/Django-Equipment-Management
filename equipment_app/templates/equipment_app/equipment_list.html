@@ -1,13 +1,15 @@
 {% extends "equipment_app/base.html" %}
 
 {%block content%}
-<div class="container-sm">
-    <table class="table table-striped table-hover">
+<div class="container-fluid table-responsive  mt-3">
+    <table class="table table-striped table-bordered table-hover">
         <thead>
             <tr>
-                <th scope="columnheader">Equipment Name: </th>
-                <th scope="columnheader">Category:</th>
-                <th scope="columnheader" aira-label"Equipment Actions"></th>
+                <th scope="columnheader" >Equipment Name: </th>
+                <th scope="columnheader" >Asset Tag: </th>
+                <th scope="columnheader" >Serial Number: </th>
+                <th scope="columnheader" >Category:</th>
+                <th scope="columnheader"  aira-label"Equipment Actions">Actions:</th>
             </tr>
         </thead>
         <tbody class="table-group-divider">
@@ -15,9 +17,14 @@
         {% for equipment in page_obj %}
             <tr>
                 <th scope="cell" class="align-middle">{{equipment}}</th>
+                <th scope="cell" class="align-middle">{{equipment.AssetTag}}</th>
+                <th scope="cell" class="align-middle">{{equipment.SerialNumber}}</th>
                 <th scope="cell" class="align-middle">{{equipment.Category}}</th>
                 <th scope="cell" class="align-middle">
-                    <a aria-label="View {{equipment.name}} information" class="btn btn-primary btn-sm rounded-pill px-3" href="{{equipment.get_absolute_url}}">View</a>
+                    <div class="d-flex justify-content-center">
+                        <a aria-label="View {{equipment.name}} information" class="btn btn-primary btn-sm rounded-pill px-3 mx-2" href="{{equipment.get_absolute_url}}">View</a>
+                        <a aria-label="View {{equipment.name}} information" class="btn btn-success btn-sm rounded-pill px-3 me-2" href="{{equipment.get_edit_absolute_url}}">Edit</a>
+                    </span>
                 </th>
             </tr>
         {% endfor %}

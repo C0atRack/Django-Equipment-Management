@@ -52,6 +52,12 @@ class EquipmentUpdate(UpdateView):
         print(f"Context: {context}")
         return context
 
+class EquipmentDelete(DeleteView):
+    model = EquipmentModel
+    template_name = "equipment_app/equipment_delete.html"
+
+    def get_success_url(self) -> str:
+        return reverse("index")
 
 class Logout(LogoutView):
     next_page = "index"
