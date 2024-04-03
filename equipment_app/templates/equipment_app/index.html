@@ -1,7 +1,12 @@
 {% extends "equipment_app/base.html" %}
 
 {%block content%}
-<div class="container-fluid mt-auto text-center">
-        <h1>Inventory Checkout</h1>
+<div class="container-md mt-auto text-center">
+	<h1>Inventory Checkout</h1>
+	{% comment %} This is just a dummy form, eventually once django_haystack is added this will become functional {% endcomment %}
+	<form class="d-flex" role="search" method="GET" action="">
+		<input class="form-control mx-3" type="search" placeholder="Catalog Search" aria-label="Search for item" name="q">
+		<button class="btn btn-success me-3" type="submit">Search</button>
+	</form>
 </div>
 {%endblock%}
