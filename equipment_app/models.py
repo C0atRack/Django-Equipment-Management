@@ -18,16 +18,16 @@ class EquipmentModel(models.Model):
     Category = models.CharField(max_length=100, choices=EQUIPMENT_CATEGORIES)
     Img = models.ImageField(upload_to="uploads/")
     Description = models.TextField(max_length=5000, blank=False)
-    ManualLink = models.URLField(max_length=1000)
+    ManualLink = models.URLField(max_length=1000, blank=True)
 
     CalDueDate = models.DateField()
     WaranteeExpires = models.DateField()
 
-    CheckedOutTo = models.ForeignKey(Employee, null=True, on_delete=models.SET_NULL)
-    CheckOutDate = models.DateField()
-    CheckOutLocation = models.CharField(max_length=200)
+    CheckedOutTo = models.ForeignKey(Employee, null=True, blank=True, on_delete=models.SET_NULL)
+    CheckOutDate = models.DateField(null = True, blank=True)
+    CheckOutLocation = models.CharField(max_length=200, null = True, blank=True)
 
-    AccessoryOf = models.ForeignKey('self', null=True, on_delete=models.SET_NULL)
+    AccessoryOf = models.ForeignKey('self', null=True, blank=True,on_delete=models.SET_NULL)
         
 
 
