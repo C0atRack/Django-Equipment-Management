@@ -27,16 +27,16 @@
 					<a class="nav-link active me-2" aria-current="page" href="{% url 'index' %}">Home</a>
                     <a class="nav-link active me-2" aria-current="page" href="{% url 'index' %}">Equipment Catalog</a>
                     <form class="d-flex me-2" role="search" method="GET" action="">
-                        <input class="form-control mx-2" type="search" placeholder="User Search" aria-label="Search for a User" name="q" >
+                        <input class="form-control mx-2" type="search" placeholder="User Search" aria-label="Search for a User" name="q">
                         <button class="btn btn-success me-2" type="submit">Search</button>
                     </form>
 				</div>			
 			</div>
 		</nav>
 		<!-- add block content from html template -->
-		{% block content %}
-		{% endblock %}
     </div>
+    {% block content %}
+    {% endblock %}
     <footer class="container-fluid mt-auto border-top">
 		<div class="d-flex justify-content-center my-3 "> 
 			<a class="mx-3 nav-item" href="{% url 'admin:index' %}">Admin Page</a>
