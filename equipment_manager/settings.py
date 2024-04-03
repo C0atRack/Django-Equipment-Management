@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from decouple import config
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -129,7 +130,16 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-MEDIA_ROOT = BASE_DIR / "media"
+# For when Django is behind nginx to serve dynamic content
+PotentialMediaLocation = config("MEDIA_LOCATION", "")
+if(PotentialMediaLocation == ""):
+    PotentialMediaLocation = BASE_DIR / 'media'
+else:
+    PotentialMediaLocation = os.path.join(PotentialMediaLocation, VIRTUAL_HOSTS[0])
+
+print(f"{PotentialMediaLocation}")
+
+MEDIA_ROOT = PotentialMediaLocation
 MEDIA_URL = 'media/'
 
 # Default primary key field type
