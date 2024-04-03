@@ -1,0 +1,27 @@
+{% extends "equipment_app/base.html" %}
+
+{%block content%}
+<div class="container-sm">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th scope="columnheader">Equipment Name: </th>
+                <th scope="columnheader">Category:</th>
+                <th scope="columnheader" aira-label"Equipment Actions"></th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+
+        {% for equipment in page_obj %}
+            <tr>
+                <th scope="cell" class="align-middle">{{equipment}}</th>
+                <th scope="cell" class="align-middle">{{equipment.Category}}</th>
+                <th scope="cell" class="align-middle">
+                    <a aria-label="View {{equipment.name}} information" class="btn btn-primary btn-sm rounded-pill px-3" href="{{equipment.get_absolute_url}}">View</a>
+                </th>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{%endblock%}
