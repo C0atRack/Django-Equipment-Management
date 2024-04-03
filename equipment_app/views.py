@@ -5,4 +5,4 @@ class Stub(TemplateView):
     template_name = "equipment_app/stub.html"
 
 class Index(TemplateView):
-    template_name = "equipment_app/stub.html"
+    template_name = "equipment_app/index.html"
