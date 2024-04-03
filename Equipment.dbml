@@ -1,0 +1,27 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table Equipment {
+  id bigint [primary key, unique]
+  
+  //Basic Information
+  Name varchar [not null]
+  SerialNumber varchar [not null]
+  Model varchar [not null]
+  AssetTag varchar [not null]
+  Category option_list [not null]
+  ImgPath varchar [not null]
+  CalDueDate datetime
+  WarranteeExpires datetime
+
+  //Checkout Locations
+  CheckedOutTo bigint [ref: > Employee.id]
+  CheckOutDate datetime
+  CheckOutLocation varchar
+
+  AccessoryOf bigint [ref: > Equipment.id]
+}
+
+Table Employee{
+  id bigint [primary key]
+}
