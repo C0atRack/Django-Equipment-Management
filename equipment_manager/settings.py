@@ -26,7 +26,12 @@ SECRET_KEY = config("DJANGO_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+VIRTUAL_HOSTS = config("VIRTUAL_HOST", "localhost").split(",")
+
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"] + VIRTUAL_HOSTS
+
+CSRF_TRUSTED_ORIGINS = [f"https://{url}" for url in ALLOWED_HOSTS]
+
 
 
 # Application definition
