@@ -1,0 +1,36 @@
+{% load static %}
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+ <head>
+	<title>Broadcom Equipment Management</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	{% load django_bootstrap5 %}
+
+	{% bootstrap_css %}
+
+	{% bootstrap_javascript %}
+
+	{% bootstrap_messages %}
+ </head>
+
+ <body class="d-flex flex-column min-vh-100">
+   <div class="container-fluid">
+		<!-- Navbar-->
+		<nav class="navbar navbar-expand-lg justify-content-left align-center border-bottom mb-3">
+			<a href="{% url 'index' %}" class="navbar-brand"><img alt="Broadcom Logo" src="{% static 'images/broadcom-logo.png' %}"></a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse ml-auto" id="navbarNavAltMarkup">
+				<div class="navbar-nav me-lg-auto" role="navigation" aria-label="PageLinks">
+					<a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
+				</div>			
+			</div>
+		</nav>
+		<!-- add block content from html template -->
+		{% block content %}
+		{% endblock %}
+    </div>
+ </body>
+</html>

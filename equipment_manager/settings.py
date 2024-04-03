@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'equipment_app'
+    "django_bootstrap5",
+    'equipment_app',
 ]
 
 MIDDLEWARE = [
@@ -123,6 +124,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
 MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = 'media/'
 
@@ -130,3 +136,12 @@ MEDIA_URL = 'media/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Bootstrap Settings
+BOOTSTRAP5 = {
+    "css_url" : {
+        "url" : "https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css",
+        "integrity" : "sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN",
+        "crossorigin" : "anonymous",
+    }
+}
