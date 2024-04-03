@@ -7,6 +7,7 @@ class EquipmentForm(ModelForm):
         fields = '__all__'
         exclude = ["CheckedOutTo","CheckOutDate","CheckOutLocation"]
         widgets = {
+            "Name" : TextInput(attrs={"class" : "form-control"}),
             "SerialNumber" : TextInput(attrs={"class" : "form-control"}),
             "ModelNumber" : TextInput(attrs={"class" : "form-control"}),
             "AssetTag" : TextInput(attrs={"class" : "form-control"}),

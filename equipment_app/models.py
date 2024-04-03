@@ -29,7 +29,7 @@ class EquipmentModel(models.Model):
     CheckOutDate = models.DateField(null = True, blank=True)
     CheckOutLocation = models.CharField(max_length=200, null = True, blank=True)
 
-    AccessoryOf = models.ForeignKey('self', null=True, blank=True,on_delete=models.SET_NULL)
+    AccessoryOf = models.ForeignKey('self', null=True, blank=True,on_delete=models.SET_NULL, verbose_name="Accessory Of")
 
     def __str__(self) -> str:
         return self.Name

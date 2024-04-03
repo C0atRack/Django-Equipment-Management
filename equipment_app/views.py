@@ -1,3 +1,4 @@
+from typing import Any
 from django.forms import BaseModelForm
 from django.http import HttpResponse
 from django.urls import reverse
@@ -17,15 +18,40 @@ class Index(TemplateView):
 #Equipment Creation View
 class EquipmentCreation(CreateView):
     form_class = EquipmentForm
-    template_name = "equipment_app/equipmentform.html"
+    template_name = "equipment_app/equipment_form.html"
     model = EquipmentModel
 
     def get_success_url(self) -> str:
-        return reverse("index")
+        return self.object.get_absolute_url()
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         form.save()
         return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context['creating'] = True
+        return context
+    
+#Equipment Creation View
+class EquipmentUpdate(UpdateView):
+    form_class = EquipmentForm
+    template_name = "equipment_app/equipment_form.html"
+    model = EquipmentModel
+
+    def get_success_url(self) -> str:
+        return self.object.get_absolute_url()
+
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        form.save()
+        return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context['creating'] = False
+        print(f"Context: {context}")
+        return context
+
 
 class Logout(LogoutView):
     next_page = "index"
