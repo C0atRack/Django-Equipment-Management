@@ -18,6 +18,7 @@ class Index(TemplateView):
 class EquipmentCreation(CreateView):
     form_class = EquipmentForm
     template_name = "equipment_app/equipmentform.html"
+    model = EquipmentModel
 
     def get_success_url(self) -> str:
         return reverse("index")
