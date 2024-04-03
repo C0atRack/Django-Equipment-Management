@@ -1,0 +1,15 @@
+{% extends "equipment_app/base.html" %}
+
+{%block content%}
+<div class="container-sm mt-auto text-end border" style="--bs-border-opacity: 0.5;">
+  <form action="" method="POST">
+    {% csrf_token %}
+    <table class="table">
+      {{ form.as_table }}
+    </table>
+    <div class="text-center m-3">
+      <button type="submit" class="btn btn-primary btn-sm rounded-pill px-3">Submit</button>
+    </div>
+  </form>
+</div>
+{%endblock%}
