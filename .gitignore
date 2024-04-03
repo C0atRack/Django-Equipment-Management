@@ -5,3 +5,4 @@
 *.github
 static_collect
 */migrations/*
+media/
