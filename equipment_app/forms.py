@@ -13,7 +13,7 @@ class EquipmentForm(ModelForm):
             "Category" : Select(attrs={"class" : "form-select"}),
             "Description" : Textarea(attrs={"class" : "form-control"}),
             "ManualLink" : URLInput(attrs={"class" : "form-control"}),
-            #https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date
+            # https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date
             "CalDueDate" : DateInput(attrs={"class" : "form-control", "type": "date"}),
             "WaranteeExpires" : DateInput(attrs={"class" : "form-control", "type": "date"}),
             "AccessoryOf" : Select(attrs={"class" : "form-select"})

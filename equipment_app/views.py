@@ -29,3 +29,8 @@ class EquipmentCreation(CreateView):
 
 class Logout(LogoutView):
     next_page = "index"
+
+class EquipmentList(ListView):
+    paginate_by = 15
+    model = EquipmentModel
+    template_name = "equipment_list.html"

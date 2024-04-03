@@ -17,8 +17,8 @@
  <body class="d-flex flex-column min-vh-100">
    <div class="container-fluid">
 		<!-- Navbar-->
-		<nav class="navbar navbar-expand-lg justify-content-left  border-bottom">
-			<a href="{% url 'index' %}" class="navbar-brand ms-2">
+		<nav class="navbar navbar-expand-lg justify-content-left border-bottom">
+			<a href="{% url 'index' %}" class="navbar-brand mb-2">
 				<img alt="Broadcom Logo" src="{% static 'images/broadcom-logo.png' %}">
 			</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,8 +38,8 @@
 					<a class="nav-link active me-2" href="">{{user.username |capfirst}}'s Profile </a>
 					<a id="logoutLink" role="link" class="btn btn-info" href="{% url 'logout' %}">Log Out</a>
 					{% else %}
-					<a id="signupLink" role="link" class="btn btn-outline-primary me-2 ms-auto" href="">Login</a>
-					<a id="loginLink" role="link" class="btn btn-outline-info  me-2" href="#">Register</a>
+					<a id="signupLink" role="link" class="btn btn-outline-primary me-2" href="">Login</a>
+					<a id="loginLink" role="link" class="btn btn-outline-info me-2" href="#">Register</a>
 					{%endif%}
 				</div>
 			</div>
