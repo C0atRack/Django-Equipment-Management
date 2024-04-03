@@ -1,4 +1,5 @@
 from django.views.generic import *
+from django.contrib.auth.views import LoginView, LogoutView
 
 # Create your views here.
 class Stub(TemplateView):
@@ -6,3 +7,6 @@ class Stub(TemplateView):
 
 class Index(TemplateView):
     template_name = "equipment_app/index.html"
+
+class Logout(LogoutView):
+    next_page = "index"
