@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 class Employee(models.Model):
     pass
@@ -12,6 +13,7 @@ class EquipmentModel(models.Model):
         ('Consumable', 'Consumable'),
     )
 
+    Name = models.CharField("Equipment Name", max_length=200, blank=False)
     SerialNumber = models.CharField("Serial Number", max_length=200, blank=False)
     ModelNumber = models.CharField("Model Number", max_length=200, blank=False)
     AssetTag = models.CharField("Asset Tag", max_length=200, blank=False)
@@ -28,6 +30,11 @@ class EquipmentModel(models.Model):
     CheckOutLocation = models.CharField(max_length=200, null = True, blank=True)
 
     AccessoryOf = models.ForeignKey('self', null=True, blank=True,on_delete=models.SET_NULL)
+
+    def __str__(self) -> str:
+        return self.Name
         
+    def get_absolute_url(self):
+        return reverse('equipment-detail', args=[str(self.id)])
 
 

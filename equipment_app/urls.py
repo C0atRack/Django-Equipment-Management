@@ -8,5 +8,6 @@ urlpatterns = [
 
     #Authentication Views
     path('logout', views.Logout.as_view(), name="logout"),
-    path('equipment_create', views.EquipmentCreation.as_view(), name="equipment-creation")
+    path('equipment_create', views.EquipmentCreation.as_view(), name="equipment-creation"),
+    path('equipment_detail', views.Stub.as_view(), name="equipment_detail"),
 ]
