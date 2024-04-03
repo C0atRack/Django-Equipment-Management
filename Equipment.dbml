@@ -11,12 +11,13 @@ Table Equipment {
   AssetTag varchar [not null]
   Category option_list [not null]
   ImgPath varchar [not null]
-  CalDueDate datetime
-  WarranteeExpires datetime
+  ManualLink varchar
+  CalDueDate date
+  WarranteeExpires date
 
   //Checkout Locations
   CheckedOutTo bigint [ref: > Employee.id]
-  CheckOutDate datetime
+  CheckOutDate date
   CheckOutLocation varchar
 
   AccessoryOf bigint [ref: > Equipment.id]
