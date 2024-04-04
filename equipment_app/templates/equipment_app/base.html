@@ -41,7 +41,11 @@
                     </form>
 				</div>
 				<div class="navbar-nav justify-content-end align-center">
-					<button aria-label="Toggle Site Theme" id="themeToggler" role="link" class="btn btn-secondary me-2 bi {% if theme == "dark" %} bi-moon-stars-fill { %else %} bi-sun-fill {% endif %} "onclick="toggleTheme();"> Toggle Theme</button>
+					{% if theme == "dark" %}
+					<button aria-label="Toggle Site Theme" id="themeToggler" role="link" class="btn btn-secondary me-2 bi bi-moon-stars-fill" onclick="toggleTheme();"> Toggle Theme</button>
+					{%else%}
+					<button aria-label="Toggle Site Theme" id="themeToggler" role="link" class="btn btn-secondary me-2 bi bi-sun-fill" onclick="toggleTheme();"> Toggle Theme</button>
+					{%endif%}
 					{% if user.is_authenticated %}
 					<a class="nav-link active me-2" href="">{{user.username |capfirst}}'s Profile </a>
 					<a id="logoutLink" role="link" class="btn btn-info me-2" href="{% url 'logout' %}">Log Out</a>
