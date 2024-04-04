@@ -1,0 +1,5 @@
+client_max_body_size 10g;
+
+location /media/ {
+        alias /etc/nginx/media/lsi.equipment.net/;
+} 
