@@ -22,6 +22,7 @@ class EquipmentModel(models.Model):
     Img = models.ImageField("Photo", upload_to="uploads/")
     Description = models.TextField("Description", max_length=5000, blank=False)
     ManualLink = models.URLField("Link to Manual", max_length=1000, blank=True)
+    CheckInLocation = models.CharField("Check In Location", max_length=200, blank=False)
 
     CalDueDate = models.DateField("Date for Calibration",)
     WaranteeExpires = models.DateField("Date Warentee Expires")
@@ -45,7 +46,6 @@ class EquipmentModel(models.Model):
         return reverse('equipment-delete', args=[str(self.id)])
     
     def is_availible(self):
-        print(f"Checkout Static: {self.CheckedOutTo}")
         return self.CheckedOutTo == None
 
 
