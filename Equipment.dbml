@@ -7,11 +7,14 @@ Table Equipment {
   //Basic Information
   Name varchar [not null]
   SerialNumber varchar [not null]
-  Model varchar [not null]
+  ModelNumber varchar [not null]
   AssetTag varchar [not null]
   Category option_list [not null]
   ImgPath varchar [not null]
+  Description varchar [not null]
   ManualLink varchar
+  CheckInLocation varchar
+  
   CalDueDate date
   WarranteeExpires date
 
