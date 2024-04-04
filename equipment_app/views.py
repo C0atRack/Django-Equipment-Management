@@ -7,16 +7,17 @@ from django.contrib.auth.views import LoginView, LogoutView
 
 from .forms import *
 from .models import *
+from .mixins import *
 
 # Create your views here.
-class Stub(TemplateView):
+class Stub(TemplateView, BootstrapThemeMixin):
     template_name = "equipment_app/stub.html"
 
-class Index(TemplateView):
+class Index(TemplateView, BootstrapThemeMixin):
     template_name = "equipment_app/index.html"
 
 #Equipment Creation View
-class EquipmentCreation(CreateView):
+class EquipmentCreation(CreateView, BootstrapThemeMixin):
     form_class = EquipmentForm
     template_name = "equipment_app/equipment_form.html"
     model = EquipmentModel
@@ -34,7 +35,7 @@ class EquipmentCreation(CreateView):
         return context
     
 #Equipment Creation View
-class EquipmentUpdate(UpdateView):
+class EquipmentUpdate(UpdateView, BootstrapThemeMixin):
     form_class = EquipmentForm
     template_name = "equipment_app/equipment_form.html"
     model = EquipmentModel
@@ -52,21 +53,21 @@ class EquipmentUpdate(UpdateView):
         print(f"Context: {context}")
         return context
 
-class EquipmentDelete(DeleteView):
+class EquipmentDelete(DeleteView, BootstrapThemeMixin):
     model = EquipmentModel
     template_name = "equipment_app/equipment_delete.html"
 
     def get_success_url(self) -> str:
         return reverse("index")
 
-class Logout(LogoutView):
+class Logout(LogoutView, BootstrapThemeMixin):
     next_page = "index"
 
-class EquipmentList(ListView):
+class EquipmentList(ListView, BootstrapThemeMixin):
     paginate_by = 15
     model = EquipmentModel
     template_name = "equipment_app/equipment_list.html"
 
-class EquipmentDetail(DetailView):
+class EquipmentDetail(DetailView, BootstrapThemeMixin):
     model = EquipmentModel
     template_name = "equipment_app/equipment_detail.html"
