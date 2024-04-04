@@ -69,7 +69,9 @@
             <div class="col">
                 <div class="mb-3 text-wrap">
                     {% if object.is_availible %}
-                    <a aria-label="Check out {{object.name}}" class="btn btn-info btn-lg my-3" href="{%url 'stub'%}">Check out now!</a>
+                    <div class="container-fluid text-center">
+                        <a aria-label="Check out {{object.name}}" class="btn btn-info btn-lg my-3" href="{%url 'stub'%}">Check out now!</a>
+                    </div>
                     {%else%}
                     {%with checkout_user=object.CheckedOutTo.AffUser%}
                     <div class="container-fluid">

@@ -11,7 +11,7 @@
                 <th scope="columnheader" >Serial Number: </th>
                 <th scope="columnheader" >Availibility: </th>
                 <th scope="columnheader" >Category:</th>
-                <th scope="columnheader" aira-label="Equipment Actions">Actions:</th>
+                <th scope="columnheader" aira-label="Equipment Action Buttons">Actions:</th>
             </tr>
         </thead>
         <tbody class="table-group-divider">
@@ -32,7 +32,7 @@
                         <a aria-label="View {{equipment.name}} information" class="btn btn-primary btn-sm rounded-pill px-3 mx-2" href="{{equipment.get_absolute_url}}">View</a>
                         <a aria-label="Edit {{equipment.name}}'s information" class="btn btn-success btn-sm rounded-pill px-3 me-2" href="{{equipment.get_edit_absolute_url}}">Edit</a>
                         <a aria-label="Delete {{equipment.name}}" class="btn btn-danger btn-sm rounded-pill px-3 me-2" href="{{equipment.get_delete_absolute_url}}">Delete</a>
-                    </span>
+                    </divn>
                 </th>
             </tr>
         {% endfor %}
