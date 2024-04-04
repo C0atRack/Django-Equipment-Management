@@ -66,3 +66,7 @@ class EquipmentList(ListView):
     paginate_by = 15
     model = EquipmentModel
     template_name = "equipment_app/equipment_list.html"
+
+class EquipmentDetail(DetailView):
+    model = EquipmentModel
+    template_name = "equipment_app/equipment_detail.html"
