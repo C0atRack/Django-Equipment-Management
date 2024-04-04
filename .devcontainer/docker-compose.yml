@@ -7,8 +7,8 @@ services:
     image: docker.wondergarden.net/alpine-python-devc:latest
     environment:
       - VIRTUAL_PORT=8000
-      - VIRTUAL_HOST=lsi.equipment.net
-      - LETSENCRYPT_HOST=lsi.equipment.net
+      - VIRTUAL_HOST=${DJANGO_HOST:-lsi.equipment.net}
+      - LETSENCRYPT_HOST=${DJANGO_HOST:-lsi.equipment.net}
     expose:
       - 8000
     ports:
