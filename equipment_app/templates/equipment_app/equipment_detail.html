@@ -57,14 +57,16 @@
             </div>
         </div>
         <div class="col border">
-            <div class="border-0 mb-3 text-wrap text-center">
+            <div class="border-0 mb-3 text-wrap">
                 {% if object.is_availible %}
                 <a aria-label="Delete {{object.name}}" class="btn btn-info btn-lg my-3" href="{{object.get_delete_absolute_url}}">Check out now!</a>
                 {%else%}
                 {%with checkout_user=object.CheckedOutTo.AffUser%}
-                <h4 class="fw-bold">Checked out to:&nbsp</h5>
-                <h3 class="fw-bold">{{checkout_user.first_name}} {{checkout_user.last_name}}</h3>
-                <h3 class="fw-normal">{{checkout_user.email}}</h3>
+                <h4 class="fw-bold text-center">Checked out to:&nbsp</h5>
+                <h5 class="fw-normal">{{checkout_user.first_name}} {{checkout_user.last_name}}</h3>
+                <h5 class="fw-normal">{{checkout_user.email}}</h3>
+                <h4 class="fw-bold text-center">Checkout Location:</h5>
+                <h5 class="fw-normal">{{object.CheckOutLocation}}</h3>
                 {%endwith%}
                 {%endif%}
             </div>
