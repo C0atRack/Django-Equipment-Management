@@ -3,13 +3,13 @@
 {%load static%}
 
 {%block content%}
-<div class="container-fluid mt-3">
+<div class="container-fluid mt-3 me-3">
     <div class="row">
         <div class="col-sm-3 border text-center">
             <img alt="Equipment Photo" class="img-fluid" src="{{object.Img.url}}">
         </div>
         <div class="col border">
-            <div class="border-0 mb-3">
+            <div class="border-0 mb-3 text-wrap">
                 <div class="d-flex flex-row align-center">
                     <h5 class="fw-bold">Name:&nbsp</h5>
                     <h5 class="fw-normal">{{ object }}</h5>
@@ -24,9 +24,10 @@
                 </div>
                 <div class="d-flex flex-row align-center">
                     <h5 class="fw-bold">Availibility:&nbsp</h5>
-                    {% if object.CheckedOutTo is not null %}
+                    {% if object.is_availible %}
+                    <h5 class="fw-normal text-success-emphasis">Availible!</h5>
                     {% else %}
-                    Availible!
+                    <h5 class="fw-normal text-danger-emphasis">Checked Out</h5>
                     {% endif %}
                 </div>
             </div>
