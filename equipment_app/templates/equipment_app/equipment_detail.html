@@ -1,5 +1,36 @@
 {% extends "equipment_app/base.html" %}
 
+{%load static%}
+
 {%block content%}
-<h1>Sorry, but {{request.path}} is not availible yet!</h1>
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col-sm-3 border text-center">
+            <img alt="Equipment Photo" class="img-fluid" src="{{object.Img.url}}">
+        </div>
+        <div class="col border">
+            <div class="border-0 mb-3">
+                <div class="d-flex flex-row align-center">
+                    <h5 class="fw-bold">Name:&nbsp</h5>
+                    <h5 class="fw-normal">{{ object }}</h5>
+                </div>
+                <div class="d-flex flex-row align-center">
+                    <h5 class="fw-bold">Serial Number:&nbsp</h5>
+                    <h5 class="fw-normal">{{ object.SerialNumber }}</h5>
+                </div>
+                <div class="d-flex flex-row align-center">
+                    <h5 class="fw-bold">Asset Tag:&nbsp</h5>
+                    <h5 class="fw-normal">{{ object.SerialNumber }}</h5>
+                </div>
+                <div class="d-flex flex-row align-center">
+                    <h5 class="fw-bold">Availibility:&nbsp</h5>
+                    {% if object.CheckedOutTo is not null %}
+                    {% else %}
+                    Availible!
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {%endblock%}
