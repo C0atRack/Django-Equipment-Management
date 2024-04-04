@@ -21,7 +21,7 @@
                 <th scope="cell" class="align-middle">{{equipment}}</th>
                 <th scope="cell" class="align-middle">{{equipment.AssetTag}}</th>
                 <th scope="cell" class="align-middle">{{equipment.SerialNumber}}</th>
-                {% if object.is_availible %}
+                {% if equipment.is_availible %}
                 <th scope="cell" class="align-middle text-success-emphasis">Availible!</th>
                 {% else %}
                  <th scope="cell" class="align-middle text-danger-emphasis">Checked Out</th>
