@@ -1,8 +1,9 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 class Employee(models.Model):
-    pass
+    AffUser = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="User")
 
 
 class EquipmentModel(models.Model):
