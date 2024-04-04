@@ -6,7 +6,7 @@
 <div class="container-fluid">
     <div class="row my-3 border-bottom">
         <div class="col-sm-3 border-end  text-center">
-            <img alt="Equipment Photo" class="img-fluid" src="{{object.Img.url}}">
+            <img alt="Photo of {{object}}" class="img-fluid" src="{{object.Img.url}}">
             {% if not object.ManualLink == "" %}
             <a class="btn btn-info my-3" href="{{object.ManualLink}}">Manual</a>
             {%endif%}
@@ -25,6 +25,12 @@
                     <h5 class="fw-bold">Asset Tag:&nbsp</h5>
                     <h5 class="fw-normal">{{ object.AssetTag }}</h5>
                 </div>
+                {% if object.AccessoryOf is not None%}
+                <div class="d-flex flex-row align-center">
+                    <h5 class="fw-bold">Accessory to:&nbsp</h5>
+                    <h5 class="fw-normal"><a href="{{object.AccessoryOf.get_absolute_url}}">{{ object.AccessoryOf }}</a></h5>
+                </div>
+                {% endif%}
                 <div class="d-flex flex-row align-center">
                     <h5 class="fw-bold">Check-in Location:&nbsp</h5>
                     <h5 class="fw-normal">{{ object.CheckInLocation }}</h5>
