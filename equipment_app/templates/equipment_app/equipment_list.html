@@ -2,6 +2,7 @@
 
 {%block content%}
 <div class="container-fluid table-responsive  mt-3">
+    {%if page_obj.count is not 0 %}
     <table class="table table-striped table-bordered table-hover">
         <thead>
             <tr>
@@ -9,7 +10,7 @@
                 <th scope="columnheader" >Asset Tag: </th>
                 <th scope="columnheader" >Serial Number: </th>
                 <th scope="columnheader" >Category:</th>
-                <th scope="columnheader"  aira-label"Equipment Actions">Actions:</th>
+                <th scope="columnheader" aira-label="Equipment Actions">Actions:</th>
             </tr>
         </thead>
         <tbody class="table-group-divider">
@@ -23,12 +24,19 @@
                 <th scope="cell" class="align-middle">
                     <div class="d-flex justify-content-center">
                         <a aria-label="View {{equipment.name}} information" class="btn btn-primary btn-sm rounded-pill px-3 mx-2" href="{{equipment.get_absolute_url}}">View</a>
-                        <a aria-label="View {{equipment.name}} information" class="btn btn-success btn-sm rounded-pill px-3 me-2" href="{{equipment.get_edit_absolute_url}}">Edit</a>
+                        <a aria-label="Edit {{equipment.name}}'s information" class="btn btn-success btn-sm rounded-pill px-3 me-2" href="{{equipment.get_edit_absolute_url}}">Edit</a>
+                        <a aria-label="Delete {{equipment.name}}" class="btn btn-danger btn-sm rounded-pill px-3 me-2" href="{{equipment.get_delete_absolute_url}}">Delete</a>
                     </span>
                 </th>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+    {%else%}
+    <h1 class="text-center">No Equipment added!</h1>
+    <div class="d-flex justify-content-center">
+        <a aria-label="Add Equipment" class="btn btn-primary btn-sm rounded-pill px-3 mx-2" href="{% url 'equipment-creation'%}">Add Equipment</a>
+    </div>
+    {%endif%}
 </div>
 {%endblock%}

@@ -39,5 +39,9 @@ class EquipmentModel(models.Model):
     
     def get_edit_absolute_url(self):
         return reverse('equipment-update', args=[str(self.id)])
+    
+        
+    def get_delete_absolute_url(self):
+        return reverse('equipment-delete', args=[str(self.id)])
 
 

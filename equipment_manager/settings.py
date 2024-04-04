@@ -137,8 +137,6 @@ if(PotentialMediaLocation == ""):
 else:
     PotentialMediaLocation = os.path.join(PotentialMediaLocation, VIRTUAL_HOSTS[0])
 
-print(f"{PotentialMediaLocation}")
-
 MEDIA_ROOT = PotentialMediaLocation
 MEDIA_URL = 'media/'
 

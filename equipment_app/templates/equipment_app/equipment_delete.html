@@ -1,0 +1,23 @@
+<!-- inherit from base.html-->
+{% extends "equipment_app/base.html" %}
+
+<!-- Replace block content in base_template.html -->
+{% block content %}
+<div class="container-fluid border border-2 rounded" style="--bs-border-opacity: 0.5; max-width: 700px;">
+  <div class="mb-3">
+    <h1 class="text-center">Are you sure you want to delete {{ object }}?</h1>
+  </div>
+  <div class="mb-3">
+    <div class="text-center">
+      <span class="align-middle">
+        <form action="{{object.get_delete_url}} " method="POST">
+          {% csrf_token %}
+          <button class="btn btn-danger btn-sm rounded-pill px-3" type="submit">Delete</button>
+          <a class="btn btn-primary btn-sm rounded-pill px-3"  href="{{object.get_absolute_url}}">Cancel</a>
+        </form>
+      </span>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -2,7 +2,7 @@
 
 {%block content%}
 <div class="container-sm mt-auto text-left border" style="--bs-border-opacity: 0.5;">
-  <h2 class="text-center">{%if formAction %}Adding Equipment{%else%}Modifying '{{object}}'{%endif%}</h1>
+  <h2 class="text-center">{%if creating %}Adding Equipment{%else%}Modifying '{{object}}'{%endif%}</h1>
   <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <table class="table">
