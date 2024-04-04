@@ -83,9 +83,19 @@ WSGI_APPLICATION = 'equipment_manager.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# If needed, this can be re-enabled
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # },
+    "default" : {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME" : "django_equipment_db",
+        "USER" : config("POSTGRES_USER"),
+        "PASSWORD" : config("POSTGRES_PASSWORD"),
+        "HOST": "db.wondergarden.net",
+        "PORT": 5432,
+        'OPTIONS': {'sslmode': 'verify-full', "sslrootcert" : "system"},
     }
 }
 
