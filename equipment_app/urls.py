@@ -7,6 +7,7 @@ urlpatterns = [
     path('', views.Index.as_view(), name="index"),
 
     #Authentication Views
+    path('login', views.Login.as_view(), name="login"),
     path('logout', views.Logout.as_view(), name="logout"),
     path("equipment_list", views.EquipmentList.as_view(), name="equipment-list"),
     path("equipment_detail/<int:pk>", views.EquipmentDetail.as_view(), name="equipment-detail"),
