@@ -15,7 +15,6 @@
             </tr>
         </thead>
         <tbody class="table-group-divider">
-
         {% for equipment in page_obj %}
             <tr>
                 <th scope="cell" class="align-middle">{{equipment}}</th>
@@ -32,7 +31,7 @@
                         <a aria-label="View {{equipment.name}} information" class="btn btn-primary btn-sm rounded-pill px-3 mx-2" href="{{equipment.get_absolute_url}}">View</a>
                         <a aria-label="Edit {{equipment.name}}'s information" class="btn btn-success btn-sm rounded-pill px-3 me-2" href="{{equipment.get_edit_absolute_url}}">Edit</a>
                         <a aria-label="Delete {{equipment.name}}" class="btn btn-danger btn-sm rounded-pill px-3 me-2" href="{{equipment.get_delete_absolute_url}}">Delete</a>
-                    </divn>
+                    </div>
                 </th>
             </tr>
         {% endfor %}
