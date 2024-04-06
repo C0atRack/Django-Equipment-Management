@@ -9,8 +9,8 @@
                 <th scope="columnheader" >Equipment Name: </th>
                 <th scope="columnheader" >Asset Tag: </th>
                 <th scope="columnheader" >Serial Number: </th>
-                <th scope="columnheader" >Availibility: </th>
                 <th scope="columnheader" >Category:</th>
+                <th scope="columnheader" >Availibility: </th>
                 <th scope="columnheader" aira-label="Equipment Action Buttons">Actions:</th>
             </tr>
         </thead>
@@ -20,17 +20,17 @@
                 <th scope="cell" class="align-middle">{{equipment}}</th>
                 <th scope="cell" class="align-middle">{{equipment.AssetTag}}</th>
                 <th scope="cell" class="align-middle">{{equipment.SerialNumber}}</th>
+                <th scope="cell" class="align-middle">{{equipment.Category}}</th>
                 {% if equipment.is_availible %}
                 <th scope="cell" class="align-middle text-success-emphasis">Availible!</th>
                 {% else %}
                  <th scope="cell" class="align-middle text-danger-emphasis">Checked Out</th>
                 {% endif %}
-                <th scope="cell" class="align-middle">{{equipment.Category}}</th>
                 <th scope="cell" class="align-middle">
                     <div class="d-flex justify-content-center">
-                        <a aria-label="View {{equipment.name}} information" class="btn btn-primary btn-sm rounded-pill px-3 mx-2" href="{{equipment.get_absolute_url}}">View</a>
-                        <a aria-label="Edit {{equipment.name}}'s information" class="btn btn-success btn-sm rounded-pill px-3 me-2" href="{{equipment.get_edit_absolute_url}}">Edit</a>
-                        <a aria-label="Delete {{equipment.name}}" class="btn btn-danger btn-sm rounded-pill px-3 me-2" href="{{equipment.get_delete_absolute_url}}">Delete</a>
+                        <a aria-label="View {{equipment}} information" class="btn btn-primary btn-sm rounded-pill px-3 mx-2" href="{{equipment.get_absolute_url}}">View</a>
+                        <a aria-label="Edit {{equipment}}'s information" class="btn btn-success btn-sm rounded-pill px-3 me-2" href="{{equipment.get_edit_absolute_url}}">Edit</a>
+                        <a aria-label="Delete {{equipment}}" class="btn btn-danger btn-sm rounded-pill px-3 me-2" href="{{equipment.get_delete_absolute_url}}">Delete</a>
                     </div>
                 </th>
             </tr>

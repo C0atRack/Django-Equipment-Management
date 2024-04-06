@@ -25,7 +25,7 @@
    <div class="container-fluid">
 		<!-- Navbar-->
 		<nav class="navbar navbar-expand-lg justify-content-left border-bottom">
-			<a href="{% url 'index' %}" class="navbar-brand mb-2">
+			<a href="{% url 'index' %}" class="navbar-brand mb-2" aria-label="Go to the index page.">
 				<img alt="Broadcom Logo" src="{% static 'images/broadcom-logo.png' %}">
 			</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,9 +42,9 @@
 				</div>
 				<div class="navbar-nav justify-content-end align-center">
 					{% if theme == "dark" %}
-					<button aria-label="Toggle Site Theme" id="themeToggler" role="link" class="btn btn-secondary me-2 bi bi-moon-stars-fill" onclick="toggleTheme();"> Toggle Theme</button>
+					<button aria-label="Toggle Site Theme" id="themeToggler" role="button" class="btn btn-secondary me-2 bi bi-moon-stars-fill" onclick="toggleTheme();"> Toggle Theme</button>
 					{%else%}
-					<button aria-label="Toggle Site Theme" id="themeToggler" role="link" class="btn btn-secondary me-2 bi bi-sun-fill" onclick="toggleTheme();"> Toggle Theme</button>
+					<button aria-label="Toggle Site Theme" id="themeToggler" role="button" class="btn btn-secondary me-2 bi bi-sun-fill" onclick="toggleTheme();"> Toggle Theme</button>
 					{%endif%}
 					{% if user.is_authenticated %}
 					<a class="nav-link active me-2" href="">{{user.username |capfirst}}'s Profile </a>

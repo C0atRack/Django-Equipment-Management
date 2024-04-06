@@ -18,6 +18,10 @@
                     <h5 class="fw-normal">{{ object }}</h5>
                 </div>
                 <div class="d-flex flex-row align-center">
+                    <h5 class="fw-bold">Category:&nbsp</h5>
+                    <h5 class="fw-normal">{{ object.Category }}</h5>
+                </div>
+                <div class="d-flex flex-row align-center">
                     <h5 class="fw-bold">Serial Number:&nbsp</h5>
                     <h5 class="fw-normal">{{ object.SerialNumber }}</h5>
                 </div>
@@ -34,6 +38,14 @@
                 <div class="d-flex flex-row align-center">
                     <h5 class="fw-bold">Check-in Location:&nbsp</h5>
                     <h5 class="fw-normal">{{ object.CheckInLocation }}</h5>
+                </div>
+                <div class="d-flex flex-row align-center">
+                    <h5 class="fw-bold">Warentee Date:&nbsp</h5>
+                    <h5 class="fw-normal">{{ object.WaranteeExpires }}</h5>
+                </div>
+                <div class="d-flex flex-row align-center">
+                    <h5 class="fw-bold">Calibration Due On:&nbsp</h5>
+                    <h5 class="fw-normal">{{ object.CalDueDate }}</h5>
                 </div>
                 <div class="d-flex flex-row align-center">
                     <h5 class="fw-bold">Availibility:&nbsp</h5>
@@ -57,20 +69,20 @@
         <div class="row my-3">
             <div class="col-sm-2 text-center border-end">
                 <div class="my-3">
-                    <a aria-label="Edit {{object.name}}'s information" class="btn btn-success me-3" href="{{object.get_edit_absolute_url}}">Edit</a>
+                    <a aria-label="Edit {{object}}'s information" class="btn btn-success me-3" href="{{object.get_edit_absolute_url}}">Edit</a>
                 </div>
                 <div class="mb-3">
-                    <a aria-label="Force check {{object.name}}'s in" class="btn btn-warning me-3" href="{% url 'stub' %}">Force Check In</a>
+                    <a aria-label="Force check {{object}}'s in" class="btn btn-warning me-3" href="{% url 'stub' %}">Force Check In</a>
                 </div>
                 <div class="mb-3">
-                    <a aria-label="Delete {{object.name}}" class="btn btn-danger me-3" href="{{object.get_delete_absolute_url}}">Delete</a>
+                    <a aria-label="Delete {{object}}" class="btn btn-danger me-3" href="{{object.get_delete_absolute_url}}">Delete</a>
                 </div>
             </div>
             <div class="col">
                 <div class="mb-3 text-wrap">
                     {% if object.is_availible %}
                     <div class="container-fluid text-center">
-                        <a aria-label="Check out {{object.name}}" class="btn btn-info btn-lg my-3" href="{%url 'stub'%}">Check out now!</a>
+                        <a aria-label="Check out {{object}}" class="btn btn-info btn-lg my-3" href="{%url 'stub'%}">Check out now!</a>
                     </div>
                     {%else%}
                     {%with checkout_user=object.CheckedOutTo.AffUser%}

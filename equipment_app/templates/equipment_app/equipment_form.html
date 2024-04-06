@@ -5,9 +5,7 @@
   <h2 class="text-center">{%if creating %}Adding Equipment{%else%}Modifying '{{object}}'{%endif%}</h1>
   <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    <table class="table">
-      {{ form.as_table }}
-    </table>
+    {{ form.as_p }}
     <div class="text-center m-3">
       <button type="submit" class="btn btn-primary btn-sm rounded-pill px-3">Submit</button>
     </div>
