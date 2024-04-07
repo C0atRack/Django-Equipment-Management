@@ -91,11 +91,11 @@ DATABASES = {
     # },
     "default" : {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME" : "django_equipment_db",
+        "NAME" : config("POSTGRES_DB"),
         "USER" : config("POSTGRES_USER"),
         "PASSWORD" : config("POSTGRES_PASSWORD"),
-        "HOST": "db.wondergarden.net",
-        "PORT": 5432,
+        "HOST": config("POSTGRES_HOST"),
+        "PORT": config("POSTGRES_PORT", 5432),
         'OPTIONS': {'sslmode': 'verify-full', "sslrootcert" : "system"},
     }
 }
