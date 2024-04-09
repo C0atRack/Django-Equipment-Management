@@ -37,10 +37,10 @@ pipeline {
                 success {
                     updateGitlabCommitStatus name: 'Setup Venv', state: 'success'
                     setBuildStatus("venv setup", "SUCCESS");
-                    setBuildStatus("venv setup", "FAIL");
                 }
                 failure{
                     updateGitlabCommitStatus name: 'Setup Venv', state: 'failed'
+                    setBuildStatus("venv setup", "FAIL");
                 }
             }
         }
