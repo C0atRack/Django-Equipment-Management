@@ -47,5 +47,8 @@ class EquipmentModel(models.Model):
     
     def is_availible(self):
         return self.CheckedOutTo == None
+    
+    class Meta:
+        ordering = ['-AssetTag']
 
 

@@ -7,6 +7,8 @@ from equipment_manager.settings import BASE_DIR
 
 from datetime import datetime
 
+from equipment_app.models import EquipmentModel
+
 class EquipmentCreateTest(StaticLiveServerTestCase):
 
     @classmethod
@@ -21,12 +23,13 @@ class EquipmentCreateTest(StaticLiveServerTestCase):
         super().tearDownClass()
 
     def test_equipment_create(self):
+        BlankNumber = "1234"
         self.selenium.get(f"{self.live_server_url}/equipment_list")
         self.selenium.find_element(By.ID, "add_equipment").click()
         self.selenium.find_element(By.ID, "id_Name").send_keys("Test Equipment")
-        self.selenium.find_element(By.ID, "id_SerialNumber").send_keys("1234")
-        self.selenium.find_element(By.ID, "id_ModelNumber").send_keys("1234")
-        self.selenium.find_element(By.ID, "id_AssetTag").send_keys("1234")
+        self.selenium.find_element(By.ID, "id_SerialNumber").send_keys(BlankNumber)
+        self.selenium.find_element(By.ID, "id_ModelNumber").send_keys(BlankNumber)
+        self.selenium.find_element(By.ID, "id_AssetTag").send_keys(BlankNumber)
         options = Select(self.selenium.find_element(By.ID, "id_Category"))
         options.select_by_visible_text("Test Equipment")
 
@@ -38,6 +41,8 @@ class EquipmentCreateTest(StaticLiveServerTestCase):
             elem = self.selenium.find_element(By.NAME, name)
             elem.send_keys(datetime.today().strftime("%Y-%m-%d"))
         self.selenium.find_element(By.ID, "submit").click()
+
+        self.assertEqual(EquipmentModel.objects.filter(SerialNumber=f"{BlankNumber}").count(), 1)
         
 
 
