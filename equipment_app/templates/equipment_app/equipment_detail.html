@@ -69,7 +69,7 @@
         <div class="row my-3">
             <div class="col-sm-2 text-center border-end">
                 <div class="my-3">
-                    <a aria-label="Edit {{object}}'s information" class="btn btn-success me-3" href="{{object.get_edit_absolute_url}}">Edit</a>
+                    <a aria-label="Edit {{object}}'s information" class="btn btn-success me-3" href="{{object.get_edit_absolute_url}}" id="edit_button">Edit</a>
                 </div>
                 <div class="mb-3">
                     <a aria-label="Force check {{object}}'s in" class="btn btn-warning me-3" href="{% url 'stub' %}">Force Check In</a>

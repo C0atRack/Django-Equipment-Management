@@ -41,7 +41,7 @@ class EquipmentCreateTest(StaticLiveServerTestCase):
             elem = self.selenium.find_element(By.NAME, name)
             elem.send_keys(datetime.today().strftime("%Y-%m-%d"))
         self.selenium.find_element(By.ID, "submit").click()
-
+        self.selenium.find_element(By.ID, "edit_button")
         self.assertEqual(EquipmentModel.objects.filter(SerialNumber=f"{BlankNumber}").count(), 1)
         
 
