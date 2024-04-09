@@ -19,11 +19,11 @@ pipeline {
             post{
                 success {
                     updateGitlabCommitStatus name: 'Clone repo', state: 'success'
-                    setBuildStatus("Git Clone", "SUCCESS");
+                    setBuildStatus("Git Checkout", "SUCCESS");
                 }
                 failure{
                     updateGitlabCommitStatus name: 'Clone repo', state: 'failed'
-                    setBuildStatus("Git Clone", "FAIL");
+                    setBuildStatus("Git Checkout", "FAIL");
                 }
             }
         }
@@ -31,16 +31,32 @@ pipeline {
         stage('Setup venv'){
             steps{
                 updateGitlabCommitStatus name: 'Setup Venv', state: 'running'
-                sh('echo Hello world!')
+                sh('./pipeline_scripts/setup_venv.sh')
             }
             post{
                 success {
                     updateGitlabCommitStatus name: 'Setup Venv', state: 'success'
-                    setBuildStatus("venv setup", "SUCCESS");
+                    setBuildStatus("Setup Venv", "SUCCESS");
                 }
                 failure{
                     updateGitlabCommitStatus name: 'Setup Venv', state: 'failed'
-                    setBuildStatus("venv setup", "FAIL");
+                    setBuildStatus("Setup Venv", "FAIL");
+                }
+            }
+        }
+        stage('Run testing'){
+            steps{
+                updateGitlabCommitStatus name: 'Running Django Tests', state: 'running'
+                sh('source djvenv/bin/activate; ./manage.py test --verbosity 2')
+            }
+            post{
+                success {
+                    updateGitlabCommitStatus name: 'Running Django Tests', state: 'success'
+                    setBuildStatus("Running Django Tests", "SUCCESS");
+                }
+                failure{
+                    updateGitlabCommitStatus name: 'Running Django Tests', state: 'failed'
+                    setBuildStatus("Running Django Tests", "FAIL");
                 }
             }
         }
