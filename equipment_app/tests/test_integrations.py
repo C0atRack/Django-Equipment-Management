@@ -32,7 +32,7 @@ class BaselineTest(StaticLiveServerTestCase):
         self.selenium.find_element(By.ID, "id_AssetTag").send_keys("1234")
         options = Select(self.selenium.find_element(By.ID, "id_Category"))
         options.select_by_visible_text("Test Equipment")
-        (self.selenium.find_elements(By.ID, "id_Img"): WebElement).send_keys("./testing_data/test_equipment.png")
+        self.selenium.find_elements(By.ID, "id_Img").send_keys("./testing_data/test_equipment.png")
         #print(fileinput)
         
 
