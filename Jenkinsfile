@@ -48,9 +48,7 @@ pipeline {
             steps{
                 updateGitlabCommitStatus name: 'Running Django Tests', state: 'running'
                 withCredentials([file(credentialsId: 'Testing_ENV', variable: 'ENVFILE')]){
-                    sh('mv "$(echo $ENVFILE | sed s/\\\'//g)" .')
-                    sh('source djvenv/bin/activate; ./manage.py test --verbosity 2')
-                    sh('rm .env')
+                    sh('./pipeline_scripts/run_tests.sh')
                 }
             }
             post{
