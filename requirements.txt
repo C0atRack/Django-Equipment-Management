@@ -1,6 +1,10 @@
 asgiref==3.8.1
 Django==4.2
 django-bootstrap5==23.4
+django-widget-tweaks==1.5.0
 pillow==10.3.0
+psycopg==3.1.18
+psycopg-binary==3.1.18
 python-decouple==3.8
 sqlparse==0.4.4
+typing_extensions==4.10.0
