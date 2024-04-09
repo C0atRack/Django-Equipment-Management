@@ -3,11 +3,11 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.support.select import Select
 
-from selenium.webdriver.remote.webelement import WebElement
+from equipment_manager.settings import BASE_DIR
 
-from PIL import Image
+from datetime import datetime
 
-class BaselineTest(StaticLiveServerTestCase):
+class EquipmentCreateTest(StaticLiveServerTestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -20,10 +20,7 @@ class BaselineTest(StaticLiveServerTestCase):
         cls.selenium.quit()
         super().tearDownClass()
 
-    def test_homepage(self):
-        self.selenium.get(self.live_server_url)
-
-    def test_login(self):
+    def test_equipment_create(self):
         self.selenium.get(f"{self.live_server_url}/equipment_list")
         self.selenium.find_element(By.ID, "add_equipment").click()
         self.selenium.find_element(By.ID, "id_Name").send_keys("Test Equipment")
@@ -32,8 +29,15 @@ class BaselineTest(StaticLiveServerTestCase):
         self.selenium.find_element(By.ID, "id_AssetTag").send_keys("1234")
         options = Select(self.selenium.find_element(By.ID, "id_Category"))
         options.select_by_visible_text("Test Equipment")
-        self.selenium.find_elements(By.ID, "id_Img").send_keys("./testing_data/test_equipment.png")
-        #print(fileinput)
+
+        self.selenium.find_element(By.CSS_SELECTOR, "input[type='file']").send_keys((BASE_DIR / "testing_data"/ "test_equipment.png").__str__())
+        self.selenium.find_element(By.ID, "id_Description").send_keys("Test description")
+        self.selenium.find_element(By.ID, "id_ManualLink").send_keys("https://example.site")
+        self.selenium.find_element(By.ID, "id_CheckInLocation").send_keys("Test location")
+        for name in ["CalDueDate", "WaranteeExpires"]:
+            elem = self.selenium.find_element(By.NAME, name)
+            elem.send_keys(datetime.today().strftime("%Y-%m-%d"))
+        self.selenium.find_element(By.ID, "submit").click()
         
 
 
