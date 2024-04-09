@@ -5,4 +5,5 @@
 *.github
 static_collect
 */migrations/*
+!*/migrations/__init__.py
 media/
