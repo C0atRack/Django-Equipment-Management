@@ -50,7 +50,7 @@ pipeline {
                 withCredentials([file(credentialsId: 'Testing_ENV', variable: 'ENVFILE')]){
                     sh('mv "$(echo $ENVFILE | sed s/\\\'//g)" .')
                     sh('source djvenv/bin/activate; ./manage.py test --verbosity 2')
-                    sh('rm \\\"$ENVFILE\\\"')
+                    sh('rm "$(echo $ENVFILE | sed s/\\\'//g)"')
                 }
             }
             post{
