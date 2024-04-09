@@ -19,34 +19,30 @@ pipeline {
             post{
                 success {
                     updateGitlabCommitStatus name: 'Clone repo', state: 'success'
+                    setBuildStatus("Git Clone", "SUCCESS");
                 }
                 failure{
                     updateGitlabCommitStatus name: 'Clone repo', state: 'failed'
+                    setBuildStatus("Git Clone", "FAIL");
                 }
             }
         }
         
         stage('Setup venv'){
             steps{
-                updateGitlabCommitStatus name: 'Testing run', state: 'running'
+                updateGitlabCommitStatus name: 'Setup Venv', state: 'running'
                 sh('echo Hello world!')
             }
             post{
                 success {
-                    updateGitlabCommitStatus name: 'Testing run', state: 'success'
+                    updateGitlabCommitStatus name: 'Setup Venv', state: 'success'
+                    setBuildStatus("venv setup", "SUCCESS");
+                    setBuildStatus("venv setup", "FAIL");
                 }
                 failure{
-                    updateGitlabCommitStatus name: 'Testing run', state: 'failed'
+                    updateGitlabCommitStatus name: 'Setup Venv', state: 'failed'
                 }
             }
-        }
-    }
-    post{
-        success{
-            setBuildStatus("Jenkins pipeline", "SUCCESS")
-        }
-        failure{
-            setBuildStatus("Jenkins pipeline", "FAIL")
         }
     }
 }
