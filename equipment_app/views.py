@@ -39,7 +39,7 @@ class EquipmentCreation(CreateView, ManagerNeeded, BootstrapThemeMixin):
     
     
 #Equipment Creation View
-class EquipmentUpdate(UpdateView, BootstrapThemeMixin):
+class EquipmentUpdate(UpdateView, ManagerNeeded, BootstrapThemeMixin):
     form_class = EquipmentForm
     template_name = "equipment_app/equipment_form.html"
     model = EquipmentModel
@@ -56,7 +56,7 @@ class EquipmentUpdate(UpdateView, BootstrapThemeMixin):
         context['creating'] = False
         return context
 
-class EquipmentDelete(DeleteView, BootstrapThemeMixin):
+class EquipmentDelete(DeleteView, ManagerNeeded, BootstrapThemeMixin):
     model = EquipmentModel
     template_name = "equipment_app/equipment_delete.html"
 
