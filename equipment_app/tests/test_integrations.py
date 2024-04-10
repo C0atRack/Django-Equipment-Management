@@ -25,6 +25,7 @@ class EquipmentCreateTest(StaticLiveServerTestCase):
 
     @classmethod
     def tearDownClass(cls) -> None:
+        cls.selenium.save_full_page_screenshot(f"Integration_Equipment_Create.png")
         cls.selenium.quit()
         super().tearDownClass()
 
@@ -48,7 +49,6 @@ class EquipmentCreateTest(StaticLiveServerTestCase):
             elem.send_keys(datetime.today().strftime("%Y-%m-%d"))
         self.selenium.find_element(By.ID, "submit").click()
         self.selenium.find_element(By.ID, "edit_button")
-        self.selenium.save_full_page_screenshot(f"Integration_Equipment_Create.png")
         
 
 
