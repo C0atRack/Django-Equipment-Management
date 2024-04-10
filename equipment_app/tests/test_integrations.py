@@ -4,10 +4,9 @@ from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.support.select import Select
 
 from equipment_manager.settings import BASE_DIR
+from django.contrib.auth.models import User, Permission
 
 from datetime import datetime
-
-from equipment_app.models import EquipmentModel
 
 class EquipmentCreateTest(StaticLiveServerTestCase):
 
@@ -17,6 +16,12 @@ class EquipmentCreateTest(StaticLiveServerTestCase):
         cls.selenium = WebDriver()
         cls.selenium.implicitly_wait(10)
         cls.selenium.maximize_window()
+        cls.user = User.objects.create_user(username="test", password="test")
+        cls.user.user_permissions.add(Permission.objects.get(codename="can_edit"))
+        cls.selenium.get(f"{cls.live_server_url}/login")
+        cls.selenium.find_element(By.ID, "id_username").send_keys("test")
+        cls.selenium.find_element(By.ID, "id_password").send_keys("test")
+        cls.selenium.find_element(By.ID, "submit_button").click()
 
     @classmethod
     def tearDownClass(cls) -> None:
