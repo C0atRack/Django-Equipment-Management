@@ -1,4 +1,5 @@
 from typing import Any
+import datetime
 from django.forms import BaseModelForm
 from django.http import HttpResponse
 from django.urls import reverse
@@ -62,6 +63,24 @@ class EquipmentDelete(DeleteView, ManagerNeeded, BootstrapThemeMixin):
 
     def get_success_url(self) -> str:
         return reverse("index")
+
+class EquipmentCheckout(UpdateView, BootstrapThemeMixin):
+    form_class = EquipmentCheckout
+    model = EquipmentModel
+    template_name = "equipment_app/equipment_form.html"
+    def get_success_url(self) -> str:
+        return self.object.get_absolute_url()
+    
+    def form_valid(self, form: EquipmentCheckout):
+        object:EquipmentModel = self.object
+        object.CheckedOutTo = self.request.user
+        object.CheckOutDate = datetime.date.today
+        object.save()
+        return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        return super().get_context_data(**kwargs)
+    
 
 class Login(LoginView, BootstrapThemeMixin):
     next_page = "index"

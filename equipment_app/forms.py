@@ -20,3 +20,10 @@ class EquipmentForm(ModelForm):
             "WaranteeExpires" : DateInput(attrs={"class" : "form-control", "type": "date"}),
             "AccessoryOf" : Select(attrs={"class" : "form-select"})
         }
+
+class EquipmentCheckout(ModelForm):
+    model = EquipmentModel
+    fields = ["CheckOutLocation"]
+    widgets = {
+        "CheckOutLocation" : TextInput(attrs={"class" : "form-control"}),
+    }
