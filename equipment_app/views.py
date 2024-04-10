@@ -16,6 +16,9 @@ class Stub(TemplateView, BootstrapThemeMixin):
 class Index(TemplateView, BootstrapThemeMixin):
     template_name = "equipment_app/index.html"
 
+class UnauthorizedView(TemplateView, BootstrapThemeMixin):
+    template_name = "equipment_app/unauthorized.html"
+
 #Equipment Creation View
 class EquipmentCreation(CreateView, ManagerNeeded, BootstrapThemeMixin):
     form_class = EquipmentForm
@@ -33,6 +36,7 @@ class EquipmentCreation(CreateView, ManagerNeeded, BootstrapThemeMixin):
         context = super().get_context_data(**kwargs)
         context['creating'] = True
         return context
+    
     
 #Equipment Creation View
 class EquipmentUpdate(UpdateView, BootstrapThemeMixin):
