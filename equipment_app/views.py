@@ -17,7 +17,7 @@ class Index(TemplateView, BootstrapThemeMixin):
     template_name = "equipment_app/index.html"
 
 #Equipment Creation View
-class EquipmentCreation(CreateView, BootstrapThemeMixin):
+class EquipmentCreation(CreateView, ManagerNeeded, BootstrapThemeMixin):
     form_class = EquipmentForm
     template_name = "equipment_app/equipment_form.html"
     model = EquipmentModel

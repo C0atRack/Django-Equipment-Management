@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 class Employee(models.Model):
     AffUser = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="User")
-
+    
 
 class EquipmentModel(models.Model):
 
@@ -50,5 +50,6 @@ class EquipmentModel(models.Model):
     
     class Meta:
         ordering = ['-AssetTag']
+        permissions = (("can_edit", "Is the Employee allowed to edit details about the equipment"),)
 
 
