@@ -1,4 +1,4 @@
-*.env
+*.env*
 *.sqlite3
 *.pyv
 *venv
