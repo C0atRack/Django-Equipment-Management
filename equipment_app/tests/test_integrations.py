@@ -5,6 +5,7 @@ from selenium.webdriver.support.select import Select
 
 from equipment_manager.settings import BASE_DIR
 from django.contrib.auth.models import User, Permission
+from django.urls import reverse
 
 from datetime import datetime
 
@@ -31,7 +32,8 @@ class EquipmentCreateTest(StaticLiveServerTestCase):
 
     def test_equipment_create(self):
         BlankNumber = "1234"
-        self.selenium.get(f"{self.live_server_url}/equipment_list")
+        targetUrl = reverse("equipment-list")
+        self.selenium.get(f"{self.live_server_url}{targetUrl}")
         self.selenium.find_element(By.ID, "add_equipment").click()
         self.selenium.find_element(By.ID, "id_Name").send_keys("Test Equipment")
         self.selenium.find_element(By.ID, "id_SerialNumber").send_keys(BlankNumber)

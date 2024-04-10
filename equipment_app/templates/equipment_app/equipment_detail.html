@@ -66,47 +66,46 @@
             </div>
         </div>
     </div>
-        <div class="row my-3">
-            {% if perms.equipment_app.can_edit %}
-            <div class="col-sm-2 text-center border-end">
+    <div class="row my-3">
+        {% if perms.equipment_app.can_edit %}
+        <div class="col-sm-2 text-center border-end">
 
-                <div class="my-3">
-                    <a aria-label="Edit {{object}}'s information" class="btn btn-success me-3" href="{{object.get_edit_absolute_url}}" id="edit_button">Edit</a>
-                </div>
-                <div class="mb-3">
-                    <a aria-label="Force check {{object}}'s in" class="btn btn-warning me-3" href="{% url 'stub' %}">Force Check In</a>
-                </div>
-                <div class="mb-3">
-                    <a aria-label="Delete {{object}}" class="btn btn-danger me-3" href="{{object.get_delete_absolute_url}}">Delete</a>
-                </div>
+            <div class="my-3">
+                <a aria-label="Edit {{object}}'s information" class="btn btn-success me-3" href="{{object.get_edit_absolute_url}}" id="edit_button">Edit</a>
             </div>
-            {%endif%}
-            <div class="col">
-                <div class="mb-3 text-wrap">
-                    {% if object.is_availible %}
-                    <div class="container-fluid text-center">
-                        <a aria-label="Check out {{object}}" class="btn btn-info btn-lg my-3" href="{{object.get_checkout_url}}">Check out now!</a>
-                    </div>
-                    {%else%}
-                    {%with checkout_user=object.CheckedOutTo.AffUser%}
-                    <div class="container-fluid">
-                        <h4 class="fw-bold text-center">Checked out to:&nbsp</h5>
-                        <div class="row">
-                            <div class="col-sm">
-                                {% comment %} TODO: These header portions aren't centered with the Profile button {% endcomment %}
-                                <h5 class="fw-normal">{{checkout_user.first_name}} {{checkout_user.last_name}}</h3>
-                                <h5 class="fw-normal">{{checkout_user.email}}</h3>
-                            </div>
-                            <div class="col">
-                                <a aria-label="View {{user.first_name}} {{user.last_name}}'s profile" class="btn btn-info btn-lg my-3" href="{%url 'stub'%}">View {{user.first_name| capfirst}} {{user.last_name | capfirst}}'s profile</a>
-                            </div>
-                        </div>
-                        <h4 class="fw-bold text-center">Checkout Location:</h5>
-                        <h5 class="fw-normal">{{object.CheckOutLocation}}</h3>
-                    <div>
-                    {%endwith%}
-                    {%endif%}
+            <div class="mb-3">
+                <a aria-label="Force check {{object}}'s in" class="btn btn-warning me-3" href="{% url 'stub' %}">Force Check In</a>
+            </div>
+            <div class="mb-3">
+                <a aria-label="Delete {{object}}" class="btn btn-danger me-3" href="{{object.get_delete_absolute_url}}">Delete</a>
+            </div>
+        </div>
+        {%endif%}
+        <div class="col">
+            <div class="mb-3 text-wrap">
+                {% if object.is_availible %}
+                <div class="container-fluid text-center">
+                    <a aria-label="Check out {{object}}" class="btn btn-info btn-lg my-3" href="{{object.get_checkout_url}}">Check out now!</a>
                 </div>
+                {%else%}
+                {%with checkout_user=object.CheckedOutTo.AffUser%}
+                <div class="container-fluid">
+                    <h4 class="fw-bold text-center">Checked out to:&nbsp</h5>
+                    <div class="row">
+                        <div class="col-sm">
+                            {% comment %} TODO: These header portions aren't centered with the Profile button {% endcomment %}
+                            <h5 class="fw-normal">{{checkout_user.first_name}} {{checkout_user.last_name}}</h5>
+                            <h5 class="fw-normal">{{checkout_user.email}}</h5>
+                        </div>
+                        <div class="col">
+                            <a aria-label="View {{user.first_name}} {{user.last_name}}'s profile" class="btn btn-info btn-lg my-3" href="{%url 'stub'%}">View {{user.first_name| capfirst}} {{user.last_name | capfirst}}'s profile</a>
+                        </div>
+                    </div>
+                    <h5 class="fw-bold text-center">Checkout Location:</h5>
+                    <h5 class="fw-normal">{{object.CheckOutLocation}}</h5>
+                </div>
+                {%endwith%}
+                {%endif%}
             </div>
         </div>
     </div>

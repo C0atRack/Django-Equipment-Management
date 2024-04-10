@@ -35,7 +35,7 @@ class EquipmentCreation(CreateView, ManagerNeeded, BootstrapThemeMixin):
     
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context['creating'] = True
+        context['ActionText'] = "Adding Equipment"
         return context
     
     
@@ -54,7 +54,7 @@ class EquipmentUpdate(UpdateView, ManagerNeeded, BootstrapThemeMixin):
     
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context['creating'] = False
+        context['ActionText'] = f"Modifying {self.object}"
         return context
 
 class EquipmentDelete(DeleteView, ManagerNeeded, BootstrapThemeMixin):
@@ -78,7 +78,9 @@ class EquipmentCheckout(UpdateView, BootstrapThemeMixin):
         return super().form_valid(form)
     
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        return super().get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
+        context['ActionText'] = f"Checking out {self.object}"
+        return context
     
 
 class Login(LoginView, BootstrapThemeMixin):
