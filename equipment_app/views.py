@@ -73,9 +73,8 @@ class EquipmentCheckout(UpdateView, BootstrapThemeMixin):
     
     def form_valid(self, form: EquipmentCheckout):
         object:EquipmentModel = self.object
-        object.CheckedOutTo = self.request.user
-        object.CheckOutDate = datetime.date.today
-        object.save()
+        object.CheckedOutTo = Employee.objects.filter(AffUser=self.request.user).first()
+        object.CheckOutDate = datetime.date.today()
         return super().form_valid(form)
     
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:

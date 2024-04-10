@@ -29,7 +29,7 @@ class EquipmentModel(models.Model):
 
     CheckedOutTo = models.ForeignKey(Employee, null=True, blank=True, on_delete=models.SET_NULL)
     CheckOutDate = models.DateField(null = True, blank=True)
-    CheckOutLocation = models.CharField(max_length=200, null = True, blank=True)
+    CheckOutLocation = models.CharField("Checkout Location", max_length=200, null = True, blank=True)
 
     AccessoryOf = models.ForeignKey('self', null=True, blank=True,on_delete=models.SET_NULL, verbose_name="Accessory Of")
 
@@ -45,6 +45,9 @@ class EquipmentModel(models.Model):
     def get_delete_absolute_url(self):
         return reverse('equipment-delete', args=[str(self.id)])
     
+    def get_checkout_url(self):
+        return reverse('equipment-checkout', args=[str(self.id)])
+
     def is_availible(self):
         return self.CheckedOutTo == None
     

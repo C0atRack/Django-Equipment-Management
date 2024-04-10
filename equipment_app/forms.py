@@ -22,8 +22,9 @@ class EquipmentForm(ModelForm):
         }
 
 class EquipmentCheckout(ModelForm):
-    model = EquipmentModel
-    fields = ["CheckOutLocation"]
-    widgets = {
-        "CheckOutLocation" : TextInput(attrs={"class" : "form-control"}),
-    }
+    class Meta:
+        model = EquipmentModel
+        fields = ["CheckOutLocation"]
+        widgets = {
+            "CheckOutLocation" : Textarea(attrs={"class" : "form-control", "label-text" : "Check out location:"}),
+        }
