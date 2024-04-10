@@ -29,8 +29,10 @@
                 <th scope="cell" class="align-middle">
                     <div class="d-flex justify-content-center">
                         <a aria-label="View {{equipment}} information" class="btn btn-primary btn-sm rounded-pill px-3 mx-2" href="{{equipment.get_absolute_url}}">View</a>
+                        {% if perms.equipment_app.can_edit %}
                         <a aria-label="Edit {{equipment}}'s information" class="btn btn-success btn-sm rounded-pill px-3 me-2" href="{{equipment.get_edit_absolute_url}}">Edit</a>
                         <a aria-label="Delete {{equipment}}" class="btn btn-danger btn-sm rounded-pill px-3 me-2" href="{{equipment.get_delete_absolute_url}}">Delete</a>
+                        {% endif %}
                     </div>
                 </th>
             </tr>
@@ -40,8 +42,10 @@
     {%else%}
     <h1 class="text-center">No Equipment added!</h1>
     {%endif%}
+    {% if perms.equipment_app.can_edit %}
     <div class="d-flex justify-content-center">
         <a aria-label="Add Equipment" class="btn btn-primary btn-sm rounded-pill px-3 mx-2" href="{% url 'equipment-creation'%}"n id="add_equipment">Add Equipment</a>
     </div>
+    {% endif %}
 </div>
 {%endblock%}

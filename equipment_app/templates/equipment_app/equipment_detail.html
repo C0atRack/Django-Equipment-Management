@@ -67,7 +67,9 @@
         </div>
     </div>
         <div class="row my-3">
+            {% if perms.equipment_app.can_edit %}
             <div class="col-sm-2 text-center border-end">
+
                 <div class="my-3">
                     <a aria-label="Edit {{object}}'s information" class="btn btn-success me-3" href="{{object.get_edit_absolute_url}}" id="edit_button">Edit</a>
                 </div>
@@ -78,6 +80,7 @@
                     <a aria-label="Delete {{object}}" class="btn btn-danger me-3" href="{{object.get_delete_absolute_url}}">Delete</a>
                 </div>
             </div>
+            {%endif%}
             <div class="col">
                 <div class="mb-3 text-wrap">
                     {% if object.is_availible %}
