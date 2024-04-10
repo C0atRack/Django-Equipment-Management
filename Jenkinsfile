@@ -55,6 +55,7 @@ pipeline {
                 success {
                     updateGitlabCommitStatus name: 'Running Django Tests', state: 'success'
                     setBuildStatus("Running Django Tests", "SUCCESS");
+                    archiveArtifacts(artifacts: 'Integration_*')
                 }
                 failure{
                     updateGitlabCommitStatus name: 'Running Django Tests', state: 'failed'

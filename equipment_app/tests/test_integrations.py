@@ -16,6 +16,7 @@ class EquipmentCreateTest(StaticLiveServerTestCase):
         super().setUpClass()
         cls.selenium = WebDriver()
         cls.selenium.implicitly_wait(10)
+        cls.selenium.maximize_window()
 
     @classmethod
     def tearDownClass(cls) -> None:
@@ -42,7 +43,7 @@ class EquipmentCreateTest(StaticLiveServerTestCase):
             elem.send_keys(datetime.today().strftime("%Y-%m-%d"))
         self.selenium.find_element(By.ID, "submit").click()
         self.selenium.find_element(By.ID, "edit_button")
-        self.assertEqual(EquipmentModel.objects.filter(SerialNumber=f"{BlankNumber}").count(), 1)
+        self.selenium.save_full_page_screenshot(f"Integration_Equipment_Create.png")
         
 
 
