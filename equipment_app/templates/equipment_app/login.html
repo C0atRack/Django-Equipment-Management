@@ -2,26 +2,18 @@
 {% extends "equipment_app/base.html" %}
 {% load widget_tweaks %}
 {% block content %}
-<div class="container-sm">
+<div class="container-sm border mt-3" style="max-width: 500px;">
     <form action="" method="POST">
-        {% csrf_token %}
-        <table class="table">
-            <tbody>
-                {% for field in form.visible_fields%}
-                <tr>
-                    <th class="align-middle">
-                        <label for="field.label_tag">{{field.label}}:</label>
-                    </th>
-                    <td>
-                        {{field|add_class:"form-control"}}
-                    </td>
-                </tr>
-                {%endfor%}
-            </tbody>
-        </table>
-        <div class="text-center m-3">
-            <button type="submit" class="btn btn-primary btn-sm rounded-pill px-3" id="submit_button">Submit</button>
-        </div>
+    {% csrf_token %}
+    {% for field in form.visible_fields%}
+    <p class="mt-2">
+        <label for="field.label_tag">{{field.label}}:</label>
+        {{field|add_class:"form-control"}}
+    </p>
+    {%endfor%}
+    <div class="text-center m-2">
+        <button type="submit" class="btn btn-primary btn-sm rounded-pill px-3" id="login_button">Login</button>
+    </div>
     </form>
 </div>
 {% endblock%}

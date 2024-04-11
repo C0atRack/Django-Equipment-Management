@@ -22,7 +22,7 @@ class EquipmentCreateTest(StaticLiveServerTestCase):
         cls.selenium.get(f"{cls.live_server_url}/login")
         cls.selenium.find_element(By.ID, "id_username").send_keys("test")
         cls.selenium.find_element(By.ID, "id_password").send_keys("test")
-        cls.selenium.find_element(By.ID, "submit_button").click()
+        cls.selenium.find_element(By.ID, "login_button").click()
 
     @classmethod
     def tearDownClass(cls) -> None:

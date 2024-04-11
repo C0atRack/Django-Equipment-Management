@@ -90,6 +90,12 @@ class Login(LoginView, BootstrapThemeMixin):
 class Logout(LogoutView, BootstrapThemeMixin):
     next_page = "index"
 
+    def get_next_page(self) -> str | None:
+        return reverse("logout-success")
+
+class LogoutSuccess(TemplateView):
+    template_name = "equipment_app/logout_success"
+
 class EquipmentList(ListView, BootstrapThemeMixin):
     paginate_by = 15
     model = EquipmentModel
