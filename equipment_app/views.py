@@ -89,15 +89,11 @@ class Login(LoginView, BootstrapThemeMixin):
     template_name = "equipment_app/login.html"
 
 class Logout(LogoutView, BootstrapThemeMixin):
-    next_page = "index"
+    def get_next_page(self) -> str | None:
+        return reverse("logout-success")
 
-class LogoutSuccess(TemplateView):
+class LogoutSuccess(TemplateView, BootstrapThemeMixin):
     template_name = "equipment_app/logout_success.html"
-
-    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        if(self.request.user.is_anonymous):
-            return HttpResponseRedirect(reverse("index"))
-        return super().dispatch(request, *args, **kwargs)
 
 class EquipmentList(ListView, BootstrapThemeMixin):
     paginate_by = 15
