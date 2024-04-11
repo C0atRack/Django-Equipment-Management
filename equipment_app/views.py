@@ -89,10 +89,6 @@ class Login(LoginView, BootstrapThemeMixin):
     template_name = "equipment_app/login.html"
 
 class Logout(LogoutView, BootstrapThemeMixin):
-    def get_next_page(self) -> str | None:
-        return reverse("logout-success")
-
-class LogoutSuccess(TemplateView, BootstrapThemeMixin):
     template_name = "equipment_app/logout_success.html"
 
 class EquipmentList(ListView, BootstrapThemeMixin):
