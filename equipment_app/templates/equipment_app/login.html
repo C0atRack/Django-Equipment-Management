@@ -1,8 +1,13 @@
 <!-- inherit from base.html-->
 {% extends "equipment_app/base.html" %}
 {% load widget_tweaks %}
+{% load static %}
 {% block content %}
 <div class="container-sm border mt-3" style="max-width: 500px;">
+    <div class="d-flex justify-content-center my-2">
+        <img alt="Broadcom Logo" src="{% static 'images/broadcom-logo.png' %}" class="img-fluid">
+    </div>
+    <h3 class="text-center mb-2">Log In:</h3>
     <form action="" method="POST">
     {% csrf_token %}
     {% for field in form.visible_fields%}
