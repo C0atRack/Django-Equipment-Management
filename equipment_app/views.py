@@ -2,6 +2,7 @@ from typing import Any
 import datetime
 from django.forms import BaseModelForm
 from django.http import HttpResponse
+from django.http.request import HttpRequest as HttpRequest
 from django.urls import reverse
 from django.views.generic import *
 from django.contrib.auth.views import LoginView, LogoutView
@@ -90,11 +91,13 @@ class Login(LoginView, BootstrapThemeMixin):
 class Logout(LogoutView, BootstrapThemeMixin):
     next_page = "index"
 
-    def get_next_page(self) -> str | None:
-        return reverse("logout-success")
-
 class LogoutSuccess(TemplateView):
-    template_name = "equipment_app/logout_success"
+    template_name = "equipment_app/logout_success.html"
+
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        if(self.request.user.is_anonymous):
+            return HttpResponseRedirect(reverse("index"))
+        return super().dispatch(request, *args, **kwargs)
 
 class EquipmentList(ListView, BootstrapThemeMixin):
     paginate_by = 15
