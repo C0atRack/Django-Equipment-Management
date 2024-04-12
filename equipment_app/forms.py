@@ -31,7 +31,7 @@ class EquipmentCheckout(ModelForm):
         }
 
 class EmployeeCreationForm(UserCreationForm):
-    is_manager = BooleanField(label="Is a manager:", required=True, widget=CheckboxInput(attrs={"class" : ""}))
+    is_manager = BooleanField(label="Is a manager:", required=True, widget=CheckboxInput())
     class Meta:
         model = User
         fields = ["first_name", "last_name", "email", "password1", "password2"]
