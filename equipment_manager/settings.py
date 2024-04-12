@@ -169,7 +169,12 @@ if(config("S3_BUCKET_NAME", default="") != ""):
     AWS_S3_USE_SSL = True
     AWS_S3_VERIFY = True if (CA := config("S3_ROOT_CA", default="")) == "" else CA
     MEDIA_URL = config("S3_HOST") + "/" + config("S3_BUCKET_NAME") + "/"
-
+elif (PotentialMediaLocation := config("MEDIA_LOCATION", "")) == "":
+    MEDIA_ROOT = BASE_DIR / 'media'
+    MEDIA_URL = 'media/'
+else:
+    MEDIA_ROOT = os.path.join(PotentialMediaLocation, VIRTUAL_HOSTS[0])
+    MEDIA_URL = 'media/'
 
 # For when Django is behind nginx to serve dynamic content
 
