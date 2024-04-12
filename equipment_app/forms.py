@@ -1,4 +1,5 @@
-from django.forms import ModelForm, Textarea, TextInput, DateInput, Select, URLInput
+from django.forms import ModelForm, Textarea, TextInput, DateInput, Select, URLInput, BooleanField, CheckboxInput
+from django.contrib.auth.forms import UserCreationForm
 from .models import *
 
 class EquipmentForm(ModelForm):
@@ -28,3 +29,9 @@ class EquipmentCheckout(ModelForm):
         widgets = {
             "CheckOutLocation" : Textarea(attrs={"class" : "form-control", "label-text" : "Check out location:"}),
         }
+
+class EmployeeCreationForm(UserCreationForm):
+    is_manager = BooleanField(label="Is a manager:", required=True, widget=CheckboxInput(attrs={"class" : ""}))
+    class Meta:
+        model = User
+        fields = ["first_name", "last_name", "email", "password1", "password2"]

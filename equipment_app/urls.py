@@ -9,6 +9,7 @@ urlpatterns = [
     #Authentication Views
     path('login', views.Login.as_view(), name="login"),
     path('logout', views.Logout.as_view(), name="logout"),
+    path('register', views.Register.as_view(), name="register"),
     path('unauthorized', views.UnauthorizedView.as_view(), name="unauthorized"),
     path("equipment/list", views.EquipmentList.as_view(), name="equipment-list"),
     path("equipment/<int:pk>", views.EquipmentDetail.as_view(), name="equipment-detail"),

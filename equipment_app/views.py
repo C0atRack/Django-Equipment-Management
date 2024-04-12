@@ -91,6 +91,16 @@ class Login(LoginView, BootstrapThemeMixin):
 class Logout(LogoutView, BootstrapThemeMixin):
     template_name = "equipment_app/logout_success.html"
 
+class Register(CreateView, BootstrapThemeMixin):
+    template_name = "equipment_app/employee_register.html"
+
+
+    def get_form_class(self):
+        if self.request.user.has_perm(""):
+            pass
+        return EmployeeCreationForm
+
+
 class EquipmentList(ListView, BootstrapThemeMixin):
     paginate_by = 15
     model = EquipmentModel
