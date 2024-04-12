@@ -136,19 +136,27 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT= 'static_collect'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
 #Storages
 STORAGES = {
+    "default": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        "OPTIONS": {
+        },
+    },
     "staticfiles": {
         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
         "OPTIONS": {
-            "location" : "static/",
         },
     },
-    "media": {
+}
+
+if(config("S3_BUCKET_NAME", default="") != ""):
+    STORAGES["media"] ={
         "BACKEND": "storages.backends.s3.S3Storage",
         "OPTIONS": {
             "AWS_STORAGE_BUCKET_NAME" : config("S3_BUCKET_NAME"),
@@ -159,11 +167,11 @@ STORAGES = {
             "AWS_S3_USE_SSL" : True,
             "AWS_S3_VERIFY" : False,
         },
-    },
-}
+    }
+    MEDIA_URL = config("S3_HOST") + "/" + config("S3_BUCKET_NAME") + "/"
 
 # For when Django is behind nginx to serve dynamic content
-MEDIA_URL = config("S3_HOST") + "/" + config("S3_BUCKET_NAME") + "/"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
