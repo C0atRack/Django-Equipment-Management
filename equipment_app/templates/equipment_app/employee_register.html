@@ -6,9 +6,12 @@
     <form action="" method="POST">
         {% csrf_token %}
         {% for field in form.visible_fields%}
-        <p>
         <label for="field.label_tag">{{field.label}}</label>
+        {%if field.widget_type != 'checkbox' %}
         {{field|add_class:"form-control"}}
+        {%else%}
+        {{field|add_class:"form-check-input"}}
+        {%endif%}
         </p>
         {%endfor%}
         <div class="text-center m-3">
