@@ -170,9 +170,11 @@ if(config("S3_BUCKET_NAME", default="") != ""):
     AWS_S3_VERIFY = True if (CA := config("S3_ROOT_CA", default="")) == "" else CA
     MEDIA_URL = config("S3_HOST") + "/" + config("S3_BUCKET_NAME") + "/"
 elif (PotentialMediaLocation := config("MEDIA_LOCATION", "")) == "":
+    # If there is no MEDIA_LOCATION specified
     MEDIA_ROOT = BASE_DIR / 'media'
     MEDIA_URL = 'media/'
 else:
+    # If there is a MEDIA_LOCATION, use that one
     MEDIA_ROOT = os.path.join(PotentialMediaLocation, VIRTUAL_HOSTS[0])
     MEDIA_URL = 'media/'
 
