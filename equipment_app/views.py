@@ -6,6 +6,7 @@ from django.http.request import HttpRequest as HttpRequest
 from django.urls import reverse
 from django.views.generic import *
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.models import Permission
 
 from .forms import *
 from .models import *
@@ -93,13 +94,25 @@ class Logout(LogoutView, BootstrapThemeMixin):
 
 class Register(CreateView, BootstrapThemeMixin):
     template_name = "equipment_app/employee_register.html"
+    manager_version = False
+    
+    success_url = "index"
 
+    def form_valid(self, form):
+        NewUser: User= form.save()
+        NewUser.username = NewUser.email
+        NewEmployee = Employee()
+        NewEmployee.AffUser = NewUser
+        if(self.manager_version):
+            NewUser.user_permissions.add(Permission.objects.get(codename="can_edit"))
+        return super().form_valid(form)
+    
 
-    def get_form_class(self):
-        if self.request.user.has_perm(""):
-            pass
-        return EmployeeCreationForm
-
+    def get_form_class(self) -> BaseModelForm:
+        if(self.request.user.is_superuser):
+            self.manager_version = True
+            return EmployeeForm_Manager
+        return EmployeeForm
 
 class EquipmentList(ListView, BootstrapThemeMixin):
     paginate_by = 15
