@@ -144,7 +144,7 @@ STATICFILES_DIRS = [
 #Storages
 STORAGES = {
     "default": {
-        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
         "OPTIONS": {
         },
     },
@@ -159,18 +159,17 @@ if(config("S3_BUCKET_NAME", default="") != ""):
     STORAGES["default"] ={
         "BACKEND": "storages.backends.s3.S3Storage",
         "OPTIONS": {
-            "AWS_STORAGE_BUCKET_NAME" : config("S3_BUCKET_NAME"),
-            "AWS_S3_ACCESS_KEY_ID" : config("S3_ACCESS_KEY"),
-            "AWS_S3_SECRET_ACCESS_KEY" : config("S3_SECRET_KEY"),
-            "AWS_S3_CUSTOM_DOMAIN" : config("S3_HOST"),
-            "AWS_S3_ENDPOINT_URL" : config("S3_HOST"),
-            "AWS_S3_USE_SSL" : True,
-            "AWS_S3_VERIFY" : False,
         },
     }
+    AWS_STORAGE_BUCKET_NAME = config("S3_BUCKET_NAME")
+    AWS_S3_ACCESS_KEY_ID = config("S3_ACCESS_KEY")
+    AWS_S3_SECRET_ACCESS_KEY = config("S3_SECRET_KEY")
+    AWS_S3_CUSTOM_DOMAIN = config("S3_HOST")
+    AWS_S3_ENDPOINT_URL = config("S3_HOST")
+    AWS_S3_USE_SSL = True
+    AWS_S3_VERIFY = True if (CA := config("S3_ROOT_CA", default="")) == "" else CA
     MEDIA_URL = config("S3_HOST") + "/" + config("S3_BUCKET_NAME") + "/"
 
-print(MEDIA_URL)
 
 # For when Django is behind nginx to serve dynamic content
 
