@@ -136,20 +136,34 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-# For when Django is behind nginx to serve dynamic content
-PotentialMediaLocation = config("MEDIA_LOCATION", "")
-if(PotentialMediaLocation == ""):
-    PotentialMediaLocation = BASE_DIR / 'media'
-else:
-    PotentialMediaLocation = os.path.join(PotentialMediaLocation, VIRTUAL_HOSTS[0])
+#Storages
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        "OPTIONS": {
+            "location" : "static/",
+        },
+    },
+    "media": {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+            "AWS_STORAGE_BUCKET_NAME" : config("S3_BUCKET_NAME"),
+            "AWS_S3_ACCESS_KEY_ID" : config("S3_ACCESS_KEY"),
+            "AWS_S3_SECRET_ACCESS_KEY" : config("S3_SECRET_KEY"),
+            "AWS_S3_CUSTOM_DOMAIN" : config("S3_HOST"),
+            "AWS_S3_ENDPOINT_URL" : config("S3_HOST"),
+            "AWS_S3_USE_SSL" : True,
+            "AWS_S3_VERIFY" : False,
+        },
+    },
+}
 
-MEDIA_ROOT = PotentialMediaLocation
-MEDIA_URL = 'media/'
+# For when Django is behind nginx to serve dynamic content
+MEDIA_URL = config("S3_HOST") + "/" + config("S3_BUCKET_NAME") + "/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

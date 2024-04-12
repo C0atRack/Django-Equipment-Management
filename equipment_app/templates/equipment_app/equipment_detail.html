@@ -8,7 +8,7 @@
         <div class="col-sm-3 border-end text-center">
             <div class="row">
                 <div class="col-fluid">
-                    <img alt="Photo of {{object}}" class="img-fluid" src="{{object.Img.url}}">
+                    <img alt="Photo of {{object}}" class="img-fluid" src="{% get_media_prefix %}{{object.Img}}">
                 </div>
                 {% if not object.ManualLink == "" %}
                 <div class = "col-fluid">
