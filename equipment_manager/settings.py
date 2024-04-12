@@ -156,7 +156,7 @@ STORAGES = {
 }
 
 if(config("S3_BUCKET_NAME", default="") != ""):
-    STORAGES["media"] ={
+    STORAGES["default"] ={
         "BACKEND": "storages.backends.s3.S3Storage",
         "OPTIONS": {
             "AWS_STORAGE_BUCKET_NAME" : config("S3_BUCKET_NAME"),
@@ -169,6 +169,8 @@ if(config("S3_BUCKET_NAME", default="") != ""):
         },
     }
     MEDIA_URL = config("S3_HOST") + "/" + config("S3_BUCKET_NAME") + "/"
+
+print(MEDIA_URL)
 
 # For when Django is behind nginx to serve dynamic content
 
