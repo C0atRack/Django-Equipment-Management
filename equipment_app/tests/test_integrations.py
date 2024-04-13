@@ -54,3 +54,33 @@ class EquipmentCreateTest(StaticLiveServerTestCase):
         
 
 
+class SignUpTest(StaticLiveServerTestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.selenium = WebDriver()
+        cls.selenium.implicitly_wait(10)
+        cls.selenium.maximize_window()
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        cls.selenium.save_full_page_screenshot(f"Integration_User_Signup.png")
+        cls.selenium.quit()
+        super().tearDownClass()
+
+    def test_equipment_create(self):
+        targetUrl = reverse("index")
+        self.selenium.get(f"{self.live_server_url}{targetUrl}")
+        self.selenium.find_element(By.ID, "signupLink").click()
+        self.selenium.find_element(By.ID, "id_first_name").send_keys("Hello")
+        self.selenium.find_element(By.ID, "id_last_name").send_keys("World")
+        self.selenium.find_element(By.ID, "id_email").send_keys("World")
+        password = "E@mp3leP@ssw0rd!"
+        for id in range(1,3): 
+            self.selenium.find_element(By.ID, f"id_password{id}").send_keys(password)
+        self.selenium.find_element(By.XPATH, "//button[@text='Submit']")
+        
+        
+
+
