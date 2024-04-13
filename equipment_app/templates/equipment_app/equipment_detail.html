@@ -104,7 +104,7 @@
                             <h5 class="fw-normal">{{checkout_user.email}}</h5>
                         </div>
                         <div class="col">
-                            <a aria-label="View {{user.first_name}} {{user.last_name}}'s profile" class="btn btn-info btn-lg my-3" href="{%url 'stub'%}">View {{user.first_name| capfirst}} {{user.last_name | capfirst}}'s profile</a>
+                            <a aria-label="View {{user.first_name}} {{user.last_name}}'s profile" class="btn btn-info btn-lg my-3" href="{{object.CheckedOutTo.get_absolute_url}}">View {{checkout_user.first_name| capfirst}} {{checkout_user.last_name | capfirst}}'s profile</a>
                         </div>
                     </div>
                     <h5 class="fw-bold text-center">Checkout Location:</h5>
