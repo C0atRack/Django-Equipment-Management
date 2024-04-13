@@ -98,7 +98,7 @@ class Register(CreateView, BootstrapThemeMixin):
     form_class = EmployeeForm
     
     def get_success_url(self) -> str:
-        return reverse("index")
+        return self.object.employee.get_absolute_url()
 
     def form_valid(self, form):
         NewUser: User= form.save()
