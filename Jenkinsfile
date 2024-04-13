@@ -52,7 +52,9 @@ pipeline {
                 }
             }
             post{
-                archiveArtifacts(artifacts: 'Integration_*')
+                always{
+                    archiveArtifacts(artifacts: 'Integration_*')
+                }
                 success {
                     updateGitlabCommitStatus name: 'Running Django Tests', state: 'success'
                     setBuildStatus("Running Django Tests", "SUCCESS");
