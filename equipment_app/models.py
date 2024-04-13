@@ -5,6 +5,13 @@ from django.contrib.auth.models import User
 class Employee(models.Model):
     AffUser = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="User")
     
+    def __str__(self) -> str:
+        return f"{self.AffUser.first_name} {self.AffUser.last_name} : {self.AffUser.email}"
+    
+    def get_absolute_url(self):
+        return reverse("profile", kwargs={"pk": self.pk})
+    
+    
 
 class EquipmentModel(models.Model):
 

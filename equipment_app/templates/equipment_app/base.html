@@ -47,7 +47,7 @@
 					<button aria-label="Toggle Site Theme" id="themeToggler" role="button" class="btn btn-secondary me-2 bi bi-sun-fill" onclick="toggleTheme();"> Toggle Theme</button>
 					{%endif%}
 					{% if user.is_authenticated %}
-					<a class="nav-link active me-2" href="">{{user.first_name |capfirst}}'s Profile </a>
+					<a class="nav-link active me-2" href="{{user.employee.get_absolute_url}}">{{user.first_name |capfirst}}'s Profile </a>
 					<a id="logoutLink" role="link" class="btn btn-info me-2" href="{% url 'logout' %}">Log Out</a>
 					{% else %}
 					<a id="signupLink" role="link" class="btn btn-outline-primary me-2" href="{% url 'login' %}">Login</a>

@@ -108,6 +108,15 @@ class Register(CreateView, BootstrapThemeMixin):
         NewEmployee.save()
         return super().form_valid(form)
     
+class EmployeeDetail(DeleteView, BootstrapThemeMixin):
+    template_name = "equipment_app/employee_detail.html"
+    model = Employee
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context['employee_user'] = self.object.AffUser
+        return context
+    
 class EquipmentList(ListView, BootstrapThemeMixin):
     paginate_by = 15
     model = EquipmentModel
