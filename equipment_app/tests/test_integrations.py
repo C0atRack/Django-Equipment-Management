@@ -65,7 +65,7 @@ class SignUpTest(StaticLiveServerTestCase):
         cls.selenium.implicitly_wait(10)
         cls.selenium.maximize_window()
         # Matches when the url is http://localhost:<port>/user/profile/number
-        cls.urlRegex = re.compile("http(s?)\:\/\/(([a-zA-Z0-9\.])+((\.[a-zA-Z0-9\.])+)?)((\:[0-9]+)?)\/user\/profile\/\d+")
+        cls.urlRegex = re.compile("http(s?)\:\/\/(([a-zA-Z\.])+((\.[a-zA-Z\.])+)?)((\:[0-9]+)?)\/user\/profile\/\d+")
 
     @classmethod
     def tearDownClass(cls) -> None:
