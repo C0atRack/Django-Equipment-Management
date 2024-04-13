@@ -115,6 +115,9 @@ class EmployeeDetail(DeleteView, BootstrapThemeMixin):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context['employee_user'] = self.object.AffUser
+        context['aff_equipment'] = EquipmentModel.objects.filter(CheckedOutTo=self.object)
+        
+            
         return context
     
 class EquipmentList(ListView, BootstrapThemeMixin):
