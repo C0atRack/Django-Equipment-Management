@@ -2,10 +2,12 @@ from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.wait import WebDriverWait
 
 from equipment_manager.settings import BASE_DIR
 from django.contrib.auth.models import User, Permission
 from django.urls import reverse
+import re
 
 from datetime import datetime
 
@@ -62,6 +64,8 @@ class SignUpTest(StaticLiveServerTestCase):
         cls.selenium = WebDriver()
         cls.selenium.implicitly_wait(10)
         cls.selenium.maximize_window()
+        # Matches when the url is http://localhost:<port>/user/profile/number
+        cls.urlRegex = re.compile("http(s?)\:\/\/(([a-zA-Z0-9\.])+((\.[a-zA-Z0-9\.])+)?)((\:[0-9]+)?)\/user\/profile\/\d+")
 
     @classmethod
     def tearDownClass(cls) -> None:
@@ -75,11 +79,17 @@ class SignUpTest(StaticLiveServerTestCase):
         self.selenium.find_element(By.ID, "signupLink").click()
         self.selenium.find_element(By.ID, "id_first_name").send_keys("Hello")
         self.selenium.find_element(By.ID, "id_last_name").send_keys("World")
-        self.selenium.find_element(By.ID, "id_email").send_keys("World")
+        self.selenium.find_element(By.ID, "id_email").send_keys("world@hello.net")
         password = "E@mp3leP@ssw0rd!"
         for id in range(1,3): 
             self.selenium.find_element(By.ID, f"id_password{id}").send_keys(password)
-        self.selenium.find_element(By.XPATH, "//button[@text='Submit']")
+        self.selenium.find_element(By.ID, "register_submit").click()
+        print(self.selenium.current_url)
+
+        WebDriverWait(self.selenium, timeout=10).until(lambda check: self.urlRegex.match(self.selenium.current_url) )
+        
+        
+        
         
         
 
