@@ -95,25 +95,19 @@ class Logout(LogoutView, BootstrapThemeMixin):
 class Register(CreateView, BootstrapThemeMixin):
     template_name = "equipment_app/employee_register.html"
     manager_version = False
+    form_class = EmployeeForm
     
-    success_url = "index"
+    def get_success_url(self) -> str:
+        return reverse("index")
 
     def form_valid(self, form):
         NewUser: User= form.save()
         NewUser.username = NewUser.email
         NewEmployee = Employee()
         NewEmployee.AffUser = NewUser
-        if(self.manager_version):
-            NewUser.user_permissions.add(Permission.objects.get(codename="can_edit"))
+        NewEmployee.save()
         return super().form_valid(form)
     
-
-    def get_form_class(self) -> BaseModelForm:
-        if(self.request.user.is_superuser):
-            self.manager_version = True
-            return EmployeeForm_Manager
-        return EmployeeForm
-
 class EquipmentList(ListView, BootstrapThemeMixin):
     paginate_by = 15
     model = EquipmentModel
