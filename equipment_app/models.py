@@ -57,6 +57,9 @@ class EquipmentModel(models.Model):
     def get_checkout_url(self):
         return reverse('equipment-checkout', args=[str(self.id)])
 
+    def get_checkin_url(self):
+        return reverse('equipment-checkin', args=[str(self.id)])
+
     def is_availible(self):
         return self.CheckedOutTo == None
     

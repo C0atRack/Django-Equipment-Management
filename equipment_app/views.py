@@ -182,5 +182,5 @@ class EquipmentCheckIn(UpdateView, LoginRequiredMixin, BootstrapThemeMixin):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context['ActionText'] = f"Turning in {self.object}"
-        context['SubActionText'] = f"Please return {self.object} to: {self.object.CheckOutLocation}"
+        context['SubActionText'] = f"Please return {self.object} to: {self.object.CheckInLocation}"
         return context
