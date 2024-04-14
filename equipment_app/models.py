@@ -11,6 +11,8 @@ class Employee(models.Model):
     def get_absolute_url(self):
         return reverse("profile", kwargs={"pk": self.pk})
     
+    def get_perm_url(self):
+        return reverse("update-perms", kwargs={"pk": self.pk})
     
 
 class EquipmentModel(models.Model):
