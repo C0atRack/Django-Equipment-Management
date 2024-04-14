@@ -1,7 +1,7 @@
 {% extends "equipment_app/base.html" %}
 
 {%block content%}
-<div class="container-sm text-left border my-3" style="--bs-border-opacity: 0.5;">
+<div class="container-sm text-left border my-3" style="--bs-border-opacity: 0.5; max-width: 50vw">
   <h2 class="text-center">{{ActionText}}:</h1>
   <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
