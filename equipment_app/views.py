@@ -66,7 +66,7 @@ class EquipmentDelete(DeleteView, ManagerNeeded, BootstrapThemeMixin):
     def get_success_url(self) -> str:
         return reverse("index")
 
-class EquipmentCheckout(UpdateView, BootstrapThemeMixin):
+class EquipmentCheckout(LoginNeeded, UpdateView, BootstrapThemeMixin):
     form_class = EquipmentCheckout
     model = EquipmentModel
     template_name = "equipment_app/equipment_form.html"

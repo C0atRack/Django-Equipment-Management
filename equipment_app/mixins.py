@@ -2,7 +2,7 @@ from typing import Any
 from django.http import HttpRequest
 from django.http.response import HttpResponseRedirect
 from django.views.generic.base import ContextMixin
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.urls import reverse
 
 class BootstrapThemeMixin(ContextMixin):
@@ -25,3 +25,7 @@ class ManagerNeeded(PermissionRequiredMixin):
     
     def handle_no_permission(self) -> HttpResponseRedirect:
         return HttpResponseRedirect(redirect_to=reverse("unauthorized"))
+    
+class LoginNeeded(LoginRequiredMixin):
+    def get_login_url(self) -> str:
+        return reverse("login")
