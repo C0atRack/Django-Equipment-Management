@@ -137,6 +137,7 @@ class EmployeePermUpdate(ManagerNeeded, UpdateView, BootstrapThemeMixin):
         context = super().get_context_data(**kwargs)
         context['ActionText'] = f"Editing {self.object.AffUser.first_name} {self.object.AffUser.last_name}'s permissions"
         return context
+    
 
     
 class EquipmentList(ListView, BootstrapThemeMixin):
@@ -147,3 +148,7 @@ class EquipmentList(ListView, BootstrapThemeMixin):
 class EquipmentDetail(DetailView, BootstrapThemeMixin):
     model = EquipmentModel
     template_name = "equipment_app/equipment_detail.html"
+
+
+class EquipmentCheckIn(FormView):
+    pass
