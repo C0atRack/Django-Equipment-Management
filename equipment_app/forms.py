@@ -1,5 +1,5 @@
 from typing import Any
-from django.forms import ModelForm, Textarea, TextInput, DateInput, Select, URLInput, BooleanField, CheckboxInput
+from django.forms import ModelForm, Textarea, TextInput, DateInput, Select, URLInput, BooleanField, CheckboxInput, Form
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
 
@@ -44,3 +44,5 @@ class EmployeeForm_Manager(ModelForm):
         exclude = '__all__'
 
 
+class EquipmentCheckin(Form):
+    TurnedIn = BooleanField(label="Confirm Check In:", required=True, widget=CheckboxInput(attrs={"class" : "form-check-input"}))

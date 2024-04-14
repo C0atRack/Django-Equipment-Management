@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.http.request import HttpRequest as HttpRequest
 from django.urls import reverse
 from django.views.generic import *
+from django.views.generic.detail import SingleObjectMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.models import Permission, User
 
@@ -145,10 +146,33 @@ class EquipmentList(ListView, BootstrapThemeMixin):
     model = EquipmentModel
     template_name = "equipment_app/equipment_list.html"
 
-class EquipmentDetail(DetailView, BootstrapThemeMixin):
+class EquipmentDetail(DetailView,  BootstrapThemeMixin):
     model = EquipmentModel
     template_name = "equipment_app/equipment_detail.html"
 
 
-class EquipmentCheckIn(FormView):
-    pass
+class EquipmentCheckIn(FormView, SingleObjectMixin, LoginRequiredMixin, BootstrapThemeMixin):
+    model = EquipmentModel
+    form_class = EquipmentCheckin
+    template_name = "equipment_app/equipment_form.html"
+    object: EquipmentModel
+
+    def get(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+        self.object = self.get_object()
+        ReqUser: User = self.request.user
+        # If an employee is attempting to check in equipment
+        if (self.object.CheckedOutTo == None):
+            # If the equipment is not checked out
+            return HttpResponseRedirect(reverse("unauthorized"))
+        elif (ReqUser.employee != None):
+            # If the employee is not a manager (Can force check in all equipment)
+            if(not ReqUser.has_perm(Permission.objects.get(codename="can_edit"))):
+                if self.object.CheckedOutTo.AffUser != ReqUser:
+                    return HttpResponseRedirect(reverse("unauthorized"))
+        return super().get(request, *args, **kwargs)
+    
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context['ActionText'] = f"Turning in {self.object}"
+        context['SubActionText'] = f"Please return {self.object} to: {self.object.CheckOutLocation}"
+        return context
