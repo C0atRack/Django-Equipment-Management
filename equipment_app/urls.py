@@ -10,6 +10,7 @@ urlpatterns = [
     path('login', views.Login.as_view(), name="login"),
     path('logout', views.Logout.as_view(), name="logout"),
     path('user/profile/<int:pk>', views.EmployeeDetail.as_view(), name="profile"),
+    path('user/profile/<int:pk>/perm', views.EmployeePermUpdate.as_view(), name="update-perms"),
     path('register', views.Register.as_view(), name="register"),
     path('unauthorized', views.UnauthorizedView.as_view(), name="unauthorized"),
     path("equipment/list", views.EquipmentList.as_view(), name="equipment-list"),
