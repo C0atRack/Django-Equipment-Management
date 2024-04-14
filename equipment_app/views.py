@@ -6,7 +6,7 @@ from django.http.request import HttpRequest as HttpRequest
 from django.urls import reverse
 from django.views.generic import *
 from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth.models import Permission
+from django.contrib.auth.models import Permission, User
 
 from .forms import *
 from .models import *
@@ -116,9 +116,26 @@ class EmployeeDetail(DeleteView, BootstrapThemeMixin):
         context = super().get_context_data(**kwargs)
         context['employee_user'] = self.object.AffUser
         context['aff_equipment'] = EquipmentModel.objects.filter(CheckedOutTo=self.object)
-        
-            
         return context
+    
+class EmployeePermUpdate(UpdateView, BootstrapThemeMixin, ManagerNeeded):
+    template_name = "equipment_app/equipment_form.html"
+    form_class = EmployeeForm_Manager
+    model = Employee
+
+    def form_valid(self, form):
+        Perm = Permission.objects.get(codename="can_edit")
+        EmployeeUser: User = self.request.user
+        if form.cleaned_data["is_manager"]:
+            EmployeeUser.user_permissions.add(Perm)
+        else:
+            EmployeeUser.user_permissions.remove(Perm)
+        return super().form_valid(form)
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context['ActionText'] = f"Editing {self.object.AffUser.first_name} {self.object.AffUser.last_name}'s permissions"
+        return context
+
     
 class EquipmentList(ListView, BootstrapThemeMixin):
     paginate_by = 15
