@@ -151,12 +151,20 @@ class EquipmentDetail(DetailView,  BootstrapThemeMixin):
     template_name = "equipment_app/equipment_detail.html"
 
 
-class EquipmentCheckIn(FormView, SingleObjectMixin, LoginRequiredMixin, BootstrapThemeMixin):
+class EquipmentCheckIn(UpdateView, LoginRequiredMixin, BootstrapThemeMixin):
     model = EquipmentModel
     form_class = EquipmentCheckin
     template_name = "equipment_app/equipment_form.html"
-    object: EquipmentModel
 
+    def get_success_url(self) -> str:
+        return self.object.get_absolute_url()
+
+    def form_valid(self, form):
+        #Unset fields
+        self.object.CheckedOutTo = None
+        self.object.CheckOutLocation = ""
+        return super().form_valid(form)
+    
     def get(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
         self.object = self.get_object()
         ReqUser: User = self.request.user

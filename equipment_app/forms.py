@@ -44,5 +44,9 @@ class EmployeeForm_Manager(ModelForm):
         exclude = '__all__'
 
 
-class EquipmentCheckin(Form):
+class EquipmentCheckin(ModelForm):
     TurnedIn = BooleanField(label="Confirm Check In:", required=True, widget=CheckboxInput(attrs={"class" : "form-check-input"}))
+    class Meta:
+        model = EquipmentModel
+        fields = []
+        exclude = '__all__'
