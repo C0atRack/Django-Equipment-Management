@@ -74,7 +74,6 @@ class SignUpTest(StaticLiveServerTestCase):
 
     @classmethod
     def tearDownClass(cls) -> None:
-        cls.selenium.save_full_page_screenshot(f"Integration_User_Signup.png")
         cls.selenium.quit()
         super().tearDownClass()
 
@@ -99,6 +98,7 @@ class SignUpTest(StaticLiveServerTestCase):
         self.selenium.find_element(By.ID, "login_button").click()
 
         WebDriverWait(self.selenium, timeout=10).until(lambda check: self.profileRegex.match(self.selenium.current_url) )
+        self.selenium.save_full_page_screenshot(f"Integration_User_Signup.png")
 
 
     def test_bad_password(self):
@@ -115,6 +115,7 @@ class SignUpTest(StaticLiveServerTestCase):
         self.selenium.find_element(By.ID, "register_submit").click()
 
         self.assertIsNotNone(self.selenium.find_element(By.XPATH, '//ul[@class="errorlist"]'))
+        self.selenium.save_full_page_screenshot(f"Integration_User_Signup_bad_pass.png")
 
 class CheckOutTest(StaticLiveServerTestCase):
     fixtures = [str(BASE_DIR / "testing_data" / "fixtures" / "checkout.json")]
@@ -131,7 +132,6 @@ class CheckOutTest(StaticLiveServerTestCase):
 
     @classmethod
     def tearDownClass(cls) -> None:
-        cls.selenium.save_full_page_screenshot(f"Integration_CheckOut.png")
         cls.selenium.quit()
         super().tearDownClass()
 
@@ -151,6 +151,7 @@ class CheckOutTest(StaticLiveServerTestCase):
         WebDriverWait(self.selenium, timeout=10).until(lambda check: self.urlRegex.match(self.selenium.current_url) )
 
         self.assertIsNotNone(self.selenium.find_element(By.XPATH, '//a[@aria-label="Check Test in"]'))
+        self.selenium.save_full_page_screenshot(f"Integration_CheckOut.png")
 
         
         
