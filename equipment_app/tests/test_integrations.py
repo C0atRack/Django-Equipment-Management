@@ -12,6 +12,9 @@ import re
 from datetime import datetime
 
 class EquipmentCreateTest(StaticLiveServerTestCase):
+    fixtures = [str(BASE_DIR / "testing_data" / "fixtures" / "equipment_create.json")]
+    
+    serialized_rollback = True
 
     @classmethod
     def setUpClass(cls):
@@ -19,12 +22,6 @@ class EquipmentCreateTest(StaticLiveServerTestCase):
         cls.selenium = WebDriver()
         cls.selenium.implicitly_wait(10)
         cls.selenium.maximize_window()
-        cls.user = User.objects.create_user(username="test", password="test")
-        cls.user.user_permissions.add(Permission.objects.get(codename="can_edit"))
-        cls.selenium.get(f"{cls.live_server_url}/login")
-        cls.selenium.find_element(By.ID, "id_username").send_keys("test")
-        cls.selenium.find_element(By.ID, "id_password").send_keys("test")
-        cls.selenium.find_element(By.ID, "login_button").click()
 
     @classmethod
     def tearDownClass(cls) -> None:
@@ -33,6 +30,11 @@ class EquipmentCreateTest(StaticLiveServerTestCase):
         super().tearDownClass()
 
     def test_equipment_create(self):
+        self.selenium.get(f"{self.live_server_url}/login")
+        self.selenium.find_element(By.ID, "id_username").send_keys("test@example.com")
+        self.selenium.find_element(By.ID, "id_password").send_keys("niwL5nZeBTZa64M")
+        self.selenium.find_element(By.ID, "login_button").click()
+
         BlankNumber = "1234"
         targetUrl = reverse("equipment-list")
         self.selenium.get(f"{self.live_server_url}{targetUrl}")
@@ -58,6 +60,8 @@ class EquipmentCreateTest(StaticLiveServerTestCase):
 
 class SignUpTest(StaticLiveServerTestCase):
 
+    serialized_rollback = True
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -65,7 +69,8 @@ class SignUpTest(StaticLiveServerTestCase):
         cls.selenium.implicitly_wait(10)
         cls.selenium.maximize_window()
         # Matches when the url is http://localhost:<port>/user/profile/number
-        cls.urlRegex = re.compile("http(s?)\:\/\/(([a-zA-Z\.])+((\.[a-zA-Z\.])+)?)((\:[0-9]+)?)\/login")
+        cls.loginRegex = re.compile("http(s?)\:\/\/(([a-zA-Z\.])+((\.[a-zA-Z\.])+)?)((\:[0-9]+)?)\/login")
+        cls.profileRegex = re.compile("http(s?)\:\/\/(([a-zA-Z0-9\.])+((\.[a-zA-Z0-9\.])+)?)((\:[0-9]+)?)\/user\/profile\/\d+")
 
     @classmethod
     def tearDownClass(cls) -> None:
@@ -79,18 +84,27 @@ class SignUpTest(StaticLiveServerTestCase):
         self.selenium.find_element(By.ID, "signupLink").click()
         self.selenium.find_element(By.ID, "id_first_name").send_keys("Hello")
         self.selenium.find_element(By.ID, "id_last_name").send_keys("World")
-        self.selenium.find_element(By.ID, "id_email").send_keys("world@hello.net")
+        email = "world@hello.net"
+        self.selenium.find_element(By.ID, "id_email").send_keys(email)
         password = "E@mp3leP@ssw0rd!"
         for id in range(1,3): 
             self.selenium.find_element(By.ID, f"id_password{id}").send_keys(password)
         self.selenium.find_element(By.ID, "register_submit").click()
-        print(self.selenium.current_url)
+        #Wait for the url to match before proceeding
+        WebDriverWait(self.selenium, timeout=10).until(lambda check: self.loginRegex.match(self.selenium.current_url) )
 
-        WebDriverWait(self.selenium, timeout=10).until(lambda check: self.urlRegex.match(self.selenium.current_url) )
+        #Try to log in
+        self.selenium.find_element(By.ID, "id_username").send_keys(email)
+        self.selenium.find_element(By.ID, "id_password").send_keys(password)
+        self.selenium.find_element(By.ID, "login_button").click()
+
+        WebDriverWait(self.selenium, timeout=10).until(lambda check: self.profileRegex.match(self.selenium.current_url) )
         
 class CheckOutTest(StaticLiveServerTestCase):
     fixtures = [str(BASE_DIR / "testing_data" / "fixtures" / "checkout.json")]
         
+    serialized_rollback = True
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
