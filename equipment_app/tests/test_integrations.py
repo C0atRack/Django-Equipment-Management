@@ -11,9 +11,9 @@ import re
 
 from datetime import datetime
 
-class EquipmentCreateTest(StaticLiveServerTestCase):
-    fixtures = [str(BASE_DIR / "testing_data" / "fixtures" / "equipment_create.json")]
-    
+class EqBaseTest(StaticLiveServerTestCase):
+
+    #This has to be here AND in each inherited class. DO NOT REMOVE
     serialized_rollback = True
 
     @classmethod
@@ -21,7 +21,18 @@ class EquipmentCreateTest(StaticLiveServerTestCase):
         super().setUpClass()
         cls.selenium = WebDriver()
         cls.selenium.implicitly_wait(10)
-        cls.selenium.maximize_window()
+        #cls.selenium.maximize_window()
+    
+    def login(self, username: str, password: str):
+        self.selenium.find_element(By.ID, "id_username").send_keys(username)
+        self.selenium.find_element(By.ID, "id_password").send_keys(password)
+        self.selenium.find_element(By.ID, "login_button").click()
+
+class EquipmentCreateTest(EqBaseTest):
+    fixtures = [str(BASE_DIR / "testing_data" / "fixtures" / "equipment_create.json")]
+    
+    serialized_rollback = True
+
 
     @classmethod
     def tearDownClass(cls) -> None:
@@ -31,9 +42,7 @@ class EquipmentCreateTest(StaticLiveServerTestCase):
 
     def test_equipment_create(self):
         self.selenium.get(f"{self.live_server_url}/login")
-        self.selenium.find_element(By.ID, "id_username").send_keys("test@example.com")
-        self.selenium.find_element(By.ID, "id_password").send_keys("niwL5nZeBTZa64M")
-        self.selenium.find_element(By.ID, "login_button").click()
+        self.login("test@example.com", "niwL5nZeBTZa64M")
 
         BlankNumber = "1234"
         targetUrl = reverse("equipment-list")
@@ -58,18 +67,15 @@ class EquipmentCreateTest(StaticLiveServerTestCase):
         
 
 
-class SignUpTest(StaticLiveServerTestCase):
+class SignUpTest(EqBaseTest):
 
     serialized_rollback = True
 
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.selenium = WebDriver()
-        cls.selenium.implicitly_wait(10)
-        cls.selenium.maximize_window()
-        # Matches when the url is http://localhost:<port>/user/profile/number
         cls.loginRegex = re.compile("http(s?)\:\/\/(([a-zA-Z\.])+((\.[a-zA-Z\.])+)?)((\:[0-9]+)?)\/login")
+        # Matches when the url is http://localhost:<port>/user/profile/<number>
         cls.profileRegex = re.compile("http(s?)\:\/\/(([a-zA-Z0-9\.])+((\.[a-zA-Z0-9\.])+)?)((\:[0-9]+)?)\/user\/profile\/\d+")
 
     @classmethod
@@ -92,10 +98,8 @@ class SignUpTest(StaticLiveServerTestCase):
         #Wait for the url to match before proceeding
         WebDriverWait(self.selenium, timeout=10).until(lambda check: self.loginRegex.match(self.selenium.current_url) )
 
-        #Try to log in
-        self.selenium.find_element(By.ID, "id_username").send_keys(email)
-        self.selenium.find_element(By.ID, "id_password").send_keys(password)
-        self.selenium.find_element(By.ID, "login_button").click()
+        #Try to log 
+        self.login(email, password)
 
         WebDriverWait(self.selenium, timeout=10).until(lambda check: self.profileRegex.match(self.selenium.current_url) )
         self.selenium.save_full_page_screenshot(f"Integration_User_Signup.png")
@@ -117,7 +121,7 @@ class SignUpTest(StaticLiveServerTestCase):
         self.assertIsNotNone(self.selenium.find_element(By.XPATH, '//ul[@class="errorlist"]'))
         self.selenium.save_full_page_screenshot(f"Integration_User_Signup_bad_pass.png")
 
-class CheckOutTest(StaticLiveServerTestCase):
+class CheckOutTest(EqBaseTest):
     fixtures = [str(BASE_DIR / "testing_data" / "fixtures" / "checkout.json")]
         
     serialized_rollback = True
@@ -125,9 +129,6 @@ class CheckOutTest(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.selenium = WebDriver()
-        cls.selenium.implicitly_wait(10)
-        cls.selenium.maximize_window()
         cls.urlRegex = re.compile("http(s?)\:\/\/(([a-zA-Z\.])+((\.[a-zA-Z\.])+)?)((\:[0-9]+)?)\/equipment\/\d+")
 
     @classmethod
@@ -141,9 +142,7 @@ class CheckOutTest(StaticLiveServerTestCase):
         self.selenium.find_element(By.XPATH, "//a[@href='/equipment/list']").click()
         self.selenium.find_element(By.XPATH, '//a[@aria-label="View Test information"]').click()
         self.selenium.find_element(By.XPATH, '//a[@aria-label="Check out Test"]').click()
-        self.selenium.find_element(By.ID, "id_username").send_keys("test@example.com")
-        self.selenium.find_element(By.ID, "id_password").send_keys("niwL5nZeBTZa64M")
-        self.selenium.find_element(By.ID, "login_button").click()
+        self.login("test@example.com", "niwL5nZeBTZa64M")
 
         self.selenium.find_element(By.ID, "id_CheckOutLocation").send_keys("Test Checkout Location")
         self.selenium.find_element(By.ID, "submit").click()
@@ -154,6 +153,3 @@ class CheckOutTest(StaticLiveServerTestCase):
         self.selenium.save_full_page_screenshot(f"Integration_CheckOut.png")
 
         
-        
-
-
