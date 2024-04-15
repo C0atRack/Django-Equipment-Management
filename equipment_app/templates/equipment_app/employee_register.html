@@ -6,6 +6,7 @@
     <form action="" method="POST">
         {% csrf_token %}
         {% for field in form.visible_fields%}
+        {{field.errors}}
         <label for="field.label_tag">{{field.label}}</label>
         {{field|add_class:"form-control"}}
         </p>

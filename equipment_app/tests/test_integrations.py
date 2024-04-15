@@ -78,7 +78,7 @@ class SignUpTest(StaticLiveServerTestCase):
         cls.selenium.quit()
         super().tearDownClass()
 
-    def test_equipment_create(self):
+    def test_signup(self):
         targetUrl = reverse("index")
         self.selenium.get(f"{self.live_server_url}{targetUrl}")
         self.selenium.find_element(By.ID, "signupLink").click()
@@ -99,7 +99,23 @@ class SignUpTest(StaticLiveServerTestCase):
         self.selenium.find_element(By.ID, "login_button").click()
 
         WebDriverWait(self.selenium, timeout=10).until(lambda check: self.profileRegex.match(self.selenium.current_url) )
-        
+
+
+    def test_bad_password(self):
+        targetUrl = reverse("index")
+        self.selenium.get(f"{self.live_server_url}{targetUrl}")
+        self.selenium.find_element(By.ID, "signupLink").click()
+        self.selenium.find_element(By.ID, "id_first_name").send_keys("Hello")
+        self.selenium.find_element(By.ID, "id_last_name").send_keys("World")
+        email = "world@hello.net"
+        self.selenium.find_element(By.ID, "id_email").send_keys(email)
+        password = "1234"
+        for id in range(1,3): 
+            self.selenium.find_element(By.ID, f"id_password{id}").send_keys(password)
+        self.selenium.find_element(By.ID, "register_submit").click()
+
+        self.assertIsNotNone(self.selenium.find_element(By.XPATH, '//ul[@class="errorlist"]'))
+
 class CheckOutTest(StaticLiveServerTestCase):
     fixtures = [str(BASE_DIR / "testing_data" / "fixtures" / "checkout.json")]
         

@@ -88,7 +88,7 @@ class EquipmentCheckout(LoginNeeded, UpdateView, BootstrapThemeMixin):
 
 class Login(LoginView, BootstrapThemeMixin):
     template_name = "equipment_app/login.html"
-
+    
     def get_default_redirect_url(self):
         return self.request.user.employee.get_absolute_url()
 
