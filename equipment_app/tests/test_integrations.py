@@ -65,7 +65,7 @@ class SignUpTest(StaticLiveServerTestCase):
         cls.selenium.implicitly_wait(10)
         cls.selenium.maximize_window()
         # Matches when the url is http://localhost:<port>/user/profile/number
-        cls.urlRegex = re.compile("http(s?)\:\/\/(([a-zA-Z\.])+((\.[a-zA-Z\.])+)?)((\:[0-9]+)?)\/user\/profile\/\d+")
+        cls.urlRegex = re.compile("http(s?)\:\/\/(([a-zA-Z\.])+((\.[a-zA-Z\.])+)?)((\:[0-9]+)?)\/login")
 
     @classmethod
     def tearDownClass(cls) -> None:
@@ -88,8 +88,40 @@ class SignUpTest(StaticLiveServerTestCase):
 
         WebDriverWait(self.selenium, timeout=10).until(lambda check: self.urlRegex.match(self.selenium.current_url) )
         
+class CheckOutTest(StaticLiveServerTestCase):
+    fixtures = [str(BASE_DIR / "testing_data" / "fixtures" / "checkout.json")]
         
-        
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.selenium = WebDriver()
+        cls.selenium.implicitly_wait(10)
+        cls.selenium.maximize_window()
+        cls.urlRegex = re.compile("http(s?)\:\/\/(([a-zA-Z\.])+((\.[a-zA-Z\.])+)?)((\:[0-9]+)?)\/equipment\/\d+")
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        cls.selenium.save_full_page_screenshot(f"Integration_CheckOut.png")
+        cls.selenium.quit()
+        super().tearDownClass()
+
+    def test_checkout(self):
+        targetUrl = reverse("index")
+        self.selenium.get(f"{self.live_server_url}{targetUrl}")
+        self.selenium.find_element(By.XPATH, "//a[@href='/equipment/list']").click()
+        self.selenium.find_element(By.XPATH, '//a[@aria-label="View Test information"]').click()
+        self.selenium.find_element(By.XPATH, '//a[@aria-label="Check out Test"]').click()
+        self.selenium.find_element(By.ID, "id_username").send_keys("test@example.com")
+        self.selenium.find_element(By.ID, "id_password").send_keys("niwL5nZeBTZa64M")
+        self.selenium.find_element(By.ID, "login_button").click()
+
+        self.selenium.find_element(By.ID, "id_CheckOutLocation").send_keys("Test Checkout Location")
+        self.selenium.find_element(By.ID, "submit").click()
+
+        WebDriverWait(self.selenium, timeout=10).until(lambda check: self.urlRegex.match(self.selenium.current_url) )
+
+        self.assertIsNotNone(self.selenium.find_element(By.XPATH, '//a[@aria-label="Check Test in"]'))
+
         
         
 

@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 
 class Employee(models.Model):
-    AffUser = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="User")
+    AffUser = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="User", null=False, blank=False)
     
     def __str__(self) -> str:
         return f"{self.AffUser.first_name} {self.AffUser.last_name} : {self.AffUser.email}"
