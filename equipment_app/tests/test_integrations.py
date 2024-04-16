@@ -153,3 +153,27 @@ class CheckOutTest(EqBaseTest):
         self.selenium.save_full_page_screenshot(f"Integration_CheckOut.png")
 
         
+class CheckInTest(StaticLiveServerTestCase):
+    fixtures = [str(BASE_DIR / "testing_data" / "fixtures" / "checkin.json")]
+
+    serialized_rollback = True
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.selenium = WebDriver()
+        cls.selenium.implicitly_wait(10)
+        cls.selenium.maximize_window()
+        cls.urlRegex = re.compile("http(s?)\:\/\/(([a-zA-Z\.])+((\.[a-zA-Z\.])+)?)((\:[0-9]+)?)\/equipment\/\d+")
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        cls.selenium.quit()
+        super().tearDownClass()
+
+    def test_checkin(self):
+        targetUrl = reverse("index")
+        self.selenium.get(f"{self.live_server_url}{targetUrl}")
+        self.selenium.find_element(By.XPATH, "//a[@href='/equipment/list']").click()
+        self.selenium.find_element(By.XPATH, '//a[@aria-label="View Test information"]').click()
+        self.selenium.save_full_page_screenshot(f"Integration_CheckIn.png")
