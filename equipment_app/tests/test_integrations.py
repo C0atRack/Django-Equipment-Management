@@ -23,6 +23,11 @@ class EqBaseTest(StaticLiveServerTestCase):
         cls.selenium.implicitly_wait(10)
         #cls.selenium.maximize_window()
     
+    @classmethod
+    def tearDownClass(cls) -> None:
+        cls.selenium.quit()
+        super().tearDownClass()
+
     def login(self, username: str, password: str):
         self.selenium.find_element(By.ID, "id_username").send_keys(username)
         self.selenium.find_element(By.ID, "id_password").send_keys(password)
@@ -32,13 +37,6 @@ class EquipmentCreateTest(EqBaseTest):
     fixtures = [str(BASE_DIR / "testing_data" / "fixtures" / "equipment_create.json")]
     
     serialized_rollback = True
-
-
-    @classmethod
-    def tearDownClass(cls) -> None:
-        cls.selenium.save_full_page_screenshot(f"Integration_Equipment_Create.png")
-        cls.selenium.quit()
-        super().tearDownClass()
 
     def test_equipment_create(self):
         self.selenium.get(f"{self.live_server_url}/login")
@@ -64,6 +62,7 @@ class EquipmentCreateTest(EqBaseTest):
             elem.send_keys(datetime.today().strftime("%Y-%m-%d"))
         self.selenium.find_element(By.ID, "submit").click()
         self.selenium.find_element(By.ID, "edit_button")
+        self.selenium.save_full_page_screenshot(f"Integration_Equipment_Create.png")
         
 
 
@@ -77,11 +76,6 @@ class SignUpTest(EqBaseTest):
         cls.loginRegex = re.compile("http(s?)\:\/\/(([a-zA-Z\.])+((\.[a-zA-Z\.])+)?)((\:[0-9]+)?)\/login")
         # Matches when the url is http://localhost:<port>/user/profile/<number>
         cls.profileRegex = re.compile("http(s?)\:\/\/(([a-zA-Z0-9\.])+((\.[a-zA-Z0-9\.])+)?)((\:[0-9]+)?)\/user\/profile\/\d+")
-
-    @classmethod
-    def tearDownClass(cls) -> None:
-        cls.selenium.quit()
-        super().tearDownClass()
 
     def test_signup(self):
         targetUrl = reverse("index")
@@ -131,10 +125,6 @@ class CheckOutTest(EqBaseTest):
         super().setUpClass()
         cls.urlRegex = re.compile("http(s?)\:\/\/(([a-zA-Z\.])+((\.[a-zA-Z\.])+)?)((\:[0-9]+)?)\/equipment\/\d+")
 
-    @classmethod
-    def tearDownClass(cls) -> None:
-        cls.selenium.quit()
-        super().tearDownClass()
 
     def test_checkout(self):
         targetUrl = reverse("index")
@@ -162,11 +152,6 @@ class CheckInTest(EqBaseTest):
     def setUpClass(cls):
         super().setUpClass()
         cls.urlRegex = re.compile("http(s?)\:\/\/(([a-zA-Z\.])+((\.[a-zA-Z\.])+)?)((\:[0-9]+)?)\/equipment\/\d+")
-
-    @classmethod
-    def tearDownClass(cls) -> None:
-        cls.selenium.quit()
-        super().tearDownClass()
 
     def test_checkin_from_list(self):
         self.selenium.get(f"{self.live_server_url}")

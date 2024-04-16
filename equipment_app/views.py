@@ -162,7 +162,7 @@ class EquipmentCheckIn(UpdateView, LoginRequiredMixin, BootstrapThemeMixin):
         return self.object.get_absolute_url()
 
     def form_valid(self, form):
-        #Unset fields
+        #Unset fields to check in equipment
         self.object.CheckedOutTo = None
         self.object.CheckOutLocation = ""
         return super().form_valid(form)
