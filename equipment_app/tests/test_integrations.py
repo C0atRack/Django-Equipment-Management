@@ -5,7 +5,7 @@ from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 
 from equipment_manager.settings import BASE_DIR
-from django.contrib.auth.models import User, Permission
+from equipment_app.models import *
 from django.urls import reverse
 import re
 
@@ -153,7 +153,7 @@ class CheckOutTest(EqBaseTest):
         self.selenium.save_full_page_screenshot(f"Integration_CheckOut.png")
 
         
-class CheckInTest(StaticLiveServerTestCase):
+class CheckInTest(EqBaseTest):
     fixtures = [str(BASE_DIR / "testing_data" / "fixtures" / "checkin.json")]
 
     serialized_rollback = True
@@ -161,9 +161,6 @@ class CheckInTest(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.selenium = WebDriver()
-        cls.selenium.implicitly_wait(10)
-        cls.selenium.maximize_window()
         cls.urlRegex = re.compile("http(s?)\:\/\/(([a-zA-Z\.])+((\.[a-zA-Z\.])+)?)((\:[0-9]+)?)\/equipment\/\d+")
 
     @classmethod
@@ -171,9 +168,19 @@ class CheckInTest(StaticLiveServerTestCase):
         cls.selenium.quit()
         super().tearDownClass()
 
-    def test_checkin(self):
-        targetUrl = reverse("index")
-        self.selenium.get(f"{self.live_server_url}{targetUrl}")
+    def test_checkin_from_list(self):
+        self.selenium.get(f"{self.live_server_url}")
+        self.selenium.find_element(By.ID, "loginLink").click()
+        self.login("test@example.com", "niwL5nZeBTZa64M")
         self.selenium.find_element(By.XPATH, "//a[@href='/equipment/list']").click()
         self.selenium.find_element(By.XPATH, '//a[@aria-label="View Test information"]').click()
+        self.selenium.find_element(By.XPATH, '//a[@aria-label="Check Test in"]').click()
+        self.selenium.find_element(By.ID, "id_TurnedIn").click()
+        self.selenium.find_element(By.ID, "submit").click()
+
+        #Verify with the DB the equipment is not checked out
+        self.assertIsNone(EquipmentModel.objects.get(id=1).CheckedOutTo)
+        #Verify the view now says checkout
+        self.assertIsNotNone(self.selenium.find_element(By.XPATH, '//a[@aria-label="Check out Test"]'))
+
         self.selenium.save_full_page_screenshot(f"Integration_CheckIn.png")
