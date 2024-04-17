@@ -62,7 +62,7 @@ class EquipmentCreateTest(EqBaseTest):
             elem.send_keys(datetime.today().strftime("%Y-%m-%d"))
         self.selenium.find_element(By.ID, "submit").click()
         self.selenium.find_element(By.ID, "edit_button")
-        self.selenium.save_full_page_screenshot(f"Integration_Equipment_Create.png")
+        self.selenium.save_full_page_screenshot("Integration_Equipment_Create.png")
         
 
 
@@ -96,7 +96,7 @@ class SignUpTest(EqBaseTest):
         self.login(email, password)
 
         WebDriverWait(self.selenium, timeout=10).until(lambda check: self.profileRegex.match(self.selenium.current_url) )
-        self.selenium.save_full_page_screenshot(f"Integration_User_Signup.png")
+        self.selenium.save_full_page_screenshot("Integration_User_Signup.png")
 
 
     def test_bad_password(self):
@@ -113,7 +113,7 @@ class SignUpTest(EqBaseTest):
         self.selenium.find_element(By.ID, "register_submit").click()
 
         self.assertIsNotNone(self.selenium.find_element(By.XPATH, '//ul[@class="errorlist"]'))
-        self.selenium.save_full_page_screenshot(f"Integration_User_Signup_bad_pass.png")
+        self.selenium.save_full_page_screenshot("Integration_User_Signup_bad_pass.png")
 
 class CheckOutTest(EqBaseTest):
     fixtures = [str(BASE_DIR / "testing_data" / "fixtures" / "checkout.json")]
@@ -140,7 +140,7 @@ class CheckOutTest(EqBaseTest):
         WebDriverWait(self.selenium, timeout=10).until(lambda check: self.urlRegex.match(self.selenium.current_url) )
 
         self.assertIsNotNone(self.selenium.find_element(By.XPATH, '//a[@aria-label="Check Test in"]'))
-        self.selenium.save_full_page_screenshot(f"Integration_CheckOut.png")
+        self.selenium.save_full_page_screenshot("Integration_CheckOut.png")
 
         
 class CheckInTest(EqBaseTest):
@@ -168,4 +168,4 @@ class CheckInTest(EqBaseTest):
         #Verify the view now says checkout
         self.assertIsNotNone(self.selenium.find_element(By.XPATH, '//a[@aria-label="Check out Test"]'))
 
-        self.selenium.save_full_page_screenshot(f"Integration_CheckIn.png")
+        self.selenium.save_full_page_screenshot("Integration_CheckIn.png")
