@@ -1,4 +1,5 @@
 from django.test import TransactionTestCase
+from django.contrib.auth.models import User
 from django.test import TestCase
 
 from equipment_app.models import EquipmentModel, Employee
@@ -26,3 +27,14 @@ class TestEquipmentUrls(TestCase):
     def test_checkX_urls(self):
         self.assertEqual(self.equipment.get_checkout_url(), f"/equipment/checkout/{self.equipment.id}")
         self.assertEqual(self.equipment.get_checkin_url(), f"/equipment/checkin/{self.equipment.id}")
+
+class TestEmployeeUrls(TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.user:User = User.objects.create(first_name="Test", last_name="Name", email="testname@example.com", username="testname@example.com")
+        cls.employee = Employee.objects.create(AffUser = cls.user)
+        return super().setUpClass()
+    
+    def test_urls(self):
+        self.assertEqual(self.employee.get_absolute_url(), f"/user/profile/{self.employee.id}")
+        self.assertEqual(self.employee.get_perm_url(), f"/user/profile/{self.employee.id}/perm")

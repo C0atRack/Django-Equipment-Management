@@ -196,6 +196,7 @@ class CheckOutTest(EqBaseTest):
         WebDriverWait(self.selenium, timeout=10).until(lambda check: self.urlRegex.match(self.selenium.current_url) )
 
         self.assertIsNotNone(self.selenium.find_element(By.XPATH, '//a[@aria-label="Check Test in"]'))
+        self.assertFalse(EquipmentModel.objects.get(id=1).is_availible())
         self.selenium.save_full_page_screenshot("Integration_CheckOut.png")
 
         
@@ -223,5 +224,7 @@ class CheckInTest(EqBaseTest):
         self.assertIsNone(EquipmentModel.objects.get(id=1).CheckedOutTo)
         #Verify the view now says checkout
         self.assertIsNotNone(self.selenium.find_element(By.XPATH, '//a[@aria-label="Check out Test"]'))
+        #Verify that the database says the object isn't checked out
+        self.assertTrue(EquipmentModel.objects.get(id=1).is_availible())
 
         self.selenium.save_full_page_screenshot("Integration_CheckIn.png")
