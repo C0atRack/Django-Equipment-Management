@@ -24,7 +24,6 @@ class EqBaseTest(StaticLiveServerTestCase):
         super().setUpClass()
         cls.selenium = WebDriver()
         cls.selenium.implicitly_wait(10)
-        cls.selenium.delete_all_cookies()
     
     @classmethod
     def tearDownClass(cls) -> None:
@@ -85,10 +84,7 @@ class EquipmentModifyTest(EqBaseTest):
         namefield.clear()
         namefield.send_keys("Test Equipment Modify")
 
-        fileElem = self.selenium.find_element(By.CSS_SELECTOR, "input[type='file']")
-        fileElem.clear()
-        #fileElem.send_keys((BASE_DIR / "testing_data"/ "test_equipment_new.png").__str__())
-        print(fileElem)
+        self.selenium.find_element(By.CSS_SELECTOR, "input[type='file']").send_keys((BASE_DIR / "testing_data"/ "test_equipment_new.png").__str__())
 
         serialfield = self.selenium.find_element(By.ID, "id_SerialNumber")
         serialfield.clear()
@@ -103,7 +99,6 @@ class EquipmentModifyTest(EqBaseTest):
         assetTagField.send_keys(BlankNumber)
 
 
-        self.selenium.find_element(By.CSS_SELECTOR, "input[type='file']").send_keys((BASE_DIR / "testing_data"/ "test_equipment_new.png").__str__())
 
         descField = self.selenium.find_element(By.ID, "id_Description")
         descField.clear()
@@ -123,7 +118,6 @@ class EquipmentModifyTest(EqBaseTest):
             elem.send_keys(datetime.today().strftime("%Y-%m-%d"))
         self.selenium.find_element(By.ID, "submit").click()
         obj = EquipmentModel.objects.all().first()
-        print(obj.Img)
         self.assertEqual(obj.SerialNumber, "1235")
         self.selenium.save_full_page_screenshot("Integration_Equipment_Modify.png")
 

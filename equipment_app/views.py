@@ -32,10 +32,6 @@ class EquipmentCreation(CreateView, ManagerNeeded, BootstrapThemeMixin):
     def get_success_url(self) -> str:
         return self.object.get_absolute_url()
 
-    def form_valid(self, form: BaseModelForm) -> HttpResponse:
-        form.save()
-        return super().form_valid(form)
-    
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context['ActionText'] = "Adding Equipment"
@@ -51,12 +47,7 @@ class EquipmentUpdate(UpdateView, ManagerNeeded, BootstrapThemeMixin):
     def get_success_url(self) -> str:
         # Send the client to see the object they just created
         return self.object.get_absolute_url()
-    
-    def form_valid(self, form):
-        form.save()
-        return super().form_valid(form)
-    
-    
+     
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context['ActionText'] = f"Modifying {self.object}"
