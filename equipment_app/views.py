@@ -49,11 +49,13 @@ class EquipmentUpdate(UpdateView, ManagerNeeded, BootstrapThemeMixin):
     model = EquipmentModel
 
     def get_success_url(self) -> str:
+        # Send the client to see the object they just created
         return self.object.get_absolute_url()
-
-    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+    
+    def form_valid(self, form):
         form.save()
         return super().form_valid(form)
+    
     
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
@@ -65,7 +67,8 @@ class EquipmentDelete(DeleteView, ManagerNeeded, BootstrapThemeMixin):
     template_name = "equipment_app/equipment_delete.html"
 
     def get_success_url(self) -> str:
-        return reverse("index")
+        # Logically the client would likely want to see other equipment after removing some
+        return reverse("equipment-list")
 
 class EquipmentCheckout(LoginNeeded, UpdateView, BootstrapThemeMixin):
     form_class = EquipmentCheckout
@@ -127,9 +130,11 @@ class EmployeePermUpdate(ManagerNeeded, UpdateView, BootstrapThemeMixin):
     model = Employee
 
     def form_valid(self, form):
+        # Grab the permission object for being a manager
         Perm = Permission.objects.get(codename="can_edit")
         EmployeeUser: User = self.object.AffUser
-        print(form.cleaned_data["is_manager"])
+
+        # Check the is_manager field of the form is checked, and remove or add accordingly
         if form.cleaned_data["is_manager"]:
             EmployeeUser.user_permissions.add(Perm)
         else:

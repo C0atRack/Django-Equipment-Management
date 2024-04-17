@@ -3,10 +3,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.common.keys import Keys
 
 from equipment_manager.settings import BASE_DIR
 from equipment_app.models import *
 from django.urls import reverse
+from time import sleep
+
 import re
 
 from datetime import datetime
@@ -21,7 +24,7 @@ class EqBaseTest(StaticLiveServerTestCase):
         super().setUpClass()
         cls.selenium = WebDriver()
         cls.selenium.implicitly_wait(10)
-        #cls.selenium.maximize_window()
+        cls.selenium.delete_all_cookies()
     
     @classmethod
     def tearDownClass(cls) -> None:
@@ -64,7 +67,63 @@ class EquipmentCreateTest(EqBaseTest):
         self.selenium.find_element(By.ID, "edit_button")
         self.selenium.save_full_page_screenshot("Integration_Equipment_Create.png")
         
+class EquipmentModifyTest(EqBaseTest):
+    fixtures = [str(BASE_DIR / "testing_data" / "fixtures" / "modify.json")]
+    
+    #serialized_rollback = True
 
+    def test_equipment_create(self):
+        self.assertEqual(EquipmentModel.objects.all().count(), 1)
+        self.selenium.get(f"{self.live_server_url}/login")
+        self.login("test@example.com", "niwL5nZeBTZa64M")
+
+        BlankNumber = "1235"
+        targetUrl = reverse("equipment-list")
+        self.selenium.get(f"{self.live_server_url}{targetUrl}")
+        self.selenium.find_element(By.XPATH, '//a[@aria-label="Edit Test\'s information"]').click()
+        namefield = self.selenium.find_element(By.ID, "id_Name")
+        namefield.clear()
+        namefield.send_keys("Test Equipment Modify")
+
+        fileElem = self.selenium.find_element(By.CSS_SELECTOR, "input[type='file']")
+        fileElem.send_keys((BASE_DIR / "testing_data"/ "test_equipment_new.png").__str__())
+
+        serialfield = self.selenium.find_element(By.ID, "id_SerialNumber")
+        serialfield.clear()
+        serialfield.send_keys(BlankNumber)
+
+        modelNumField = self.selenium.find_element(By.ID, "id_ModelNumber")
+        modelNumField.clear()
+        modelNumField.send_keys(BlankNumber)
+
+        assetTagField = self.selenium.find_element(By.ID, "id_AssetTag")
+        assetTagField.clear()
+        assetTagField.send_keys(BlankNumber)
+
+
+        self.selenium.find_element(By.CSS_SELECTOR, "input[type='file']").send_keys((BASE_DIR / "testing_data"/ "test_equipment.png").__str__())
+
+        descField = self.selenium.find_element(By.ID, "id_Description")
+        descField.clear()
+        descField.send_keys("New test description")
+
+
+        manualLink = self.selenium.find_element(By.ID, "id_ManualLink")\
+        # I cannot use clear since the url field does not work with selenium
+        manualLink.send_keys(Keys.CONTROL + "a")
+        manualLink.send_keys(Keys.DELETE)
+        manualLink.send_keys("https://new.example.site")
+
+        self.selenium.find_element(By.ID, "id_CheckInLocation").send_keys("Test location NEW")
+        for name in ["CalDueDate", "WaranteeExpires"]:
+            elem = self.selenium.find_element(By.NAME, name)
+            elem.clear()
+            elem.send_keys(datetime.today().strftime("%Y-%m-%d"))
+        self.selenium.find_element(By.ID, "submit").click()
+        obj = EquipmentModel.objects.all().first()
+        print(obj.Img)
+        self.assertEqual(obj.SerialNumber, "1235")
+        self.selenium.save_full_page_screenshot("Integration_Equipment_Modify.png")
 
 class SignUpTest(EqBaseTest):
 

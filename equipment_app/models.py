@@ -6,6 +6,7 @@ class Employee(models.Model):
     AffUser = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="User", null=False, blank=False)
     
     def __str__(self) -> str:
+        # Essentially return their full name and email
         return f"{self.AffUser.first_name} {self.AffUser.last_name} : {self.AffUser.email}"
     
     def get_absolute_url(self):
