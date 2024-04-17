@@ -29,11 +29,11 @@ DEBUG = True
 
 VIRTUAL_HOSTS = config("VIRTUAL_HOST", "localhost").split(",")
 
+# Allow connections from both localhost & any domain name hosts nginx is serving this app under
 ALLOWED_HOSTS = ["localhost", "127.0.0.1"] + VIRTUAL_HOSTS
 
+# Let's django know the domain's that the reverse proxy is serving are allowed
 CSRF_TRUSTED_ORIGINS = [f"https://{url}" for url in ALLOWED_HOSTS]
-
-
 
 # Application definition
 
@@ -95,7 +95,8 @@ DATABASES = {
         "USER" : config("POSTGRES_USER"),
         "PASSWORD" : config("POSTGRES_PASSWORD"),
         "HOST": config("POSTGRES_HOST"),
-        "PORT": config("POSTGRES_PORT", 5432),
+        "PORT": config("POSTGRES_PORT", default=5432),
+        # In the name of security, do not allow non TLS connections to the database
         'OPTIONS': {'sslmode': 'verify-full', "sslrootcert" : "system"},
     }
 }
@@ -155,21 +156,28 @@ STORAGES = {
     },
 }
 
+# Checking and settting up the default storage for media
 if(config("S3_BUCKET_NAME", default="") != ""):
     STORAGES["default"] ={
         "BACKEND": "storages.backends.s3.S3Storage",
         "OPTIONS": {
         },
     }
+    # Reads from a .env file to credientals and the hostname of the S3 server
     AWS_STORAGE_BUCKET_NAME = config("S3_BUCKET_NAME")
     AWS_S3_ACCESS_KEY_ID = config("S3_ACCESS_KEY")
     AWS_S3_SECRET_ACCESS_KEY = config("S3_SECRET_KEY")
     AWS_S3_CUSTOM_DOMAIN = config("S3_HOST")
     AWS_S3_ENDPOINT_URL = config("S3_HOST")
+
+    #NEVER try to connect to an AWS server without TLS
     AWS_S3_USE_SSL = True
+    # If a root ca is specified, AWS_S3_VERIFY will use that certificate
+    # Otherswise, setting ASW_S3_VERIFY to true will have the backend library check against amazon's CA
     AWS_S3_VERIFY = True if (CA := config("S3_ROOT_CA", default="")) == "" else CA
+    #The media url is no longer a resource django serves
     MEDIA_URL = config("S3_HOST") + "/" + config("S3_BUCKET_NAME") + "/"
-elif (PotentialMediaLocation := config("MEDIA_LOCATION", "")) == "":
+elif (PotentialMediaLocation := config("MEDIA_LOCATION", default="")) == "":
     # If there is no MEDIA_LOCATION specified
     MEDIA_ROOT = BASE_DIR / 'media'
     MEDIA_URL = 'media/'
@@ -188,6 +196,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Bootstrap Settings
 BOOTSTRAP5 = {
+    #I specified these versions as they are newer than what the packacke auto-includes
     "css_url" : {
         "url" : "https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css",
         "integrity" : "sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN",

@@ -151,7 +151,7 @@ class CheckInTest(EqBaseTest):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.urlRegex = re.compile("http(s?)\:\/\/(([a-zA-Z\.])+((\.[a-zA-Z\.])+)?)((\:[0-9]+)?)\/equipment\/\d+")
+        cls.urlRegex = re.compile("http(s?)\:\/\/(([a-zA-Z\.])+)((\:[0-9]+)?)\/equipment\/\d+")
 
     def test_checkin_from_list(self):
         self.selenium.get(f"{self.live_server_url}")
