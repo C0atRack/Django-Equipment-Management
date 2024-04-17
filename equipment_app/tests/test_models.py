@@ -38,3 +38,6 @@ class TestEmployeeUrls(TestCase):
     def test_urls(self):
         self.assertEqual(self.employee.get_absolute_url(), f"/user/profile/{self.employee.id}")
         self.assertEqual(self.employee.get_perm_url(), f"/user/profile/{self.employee.id}/perm")
+    
+    def test_str(self):
+        self.assertEqual(str(self.employee), "Test Name : testname@example.com")
