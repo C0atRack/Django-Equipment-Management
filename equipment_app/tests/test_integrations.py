@@ -114,7 +114,8 @@ class EquipmentModifyTest(EqBaseTest):
         self.selenium.find_element(By.ID, "id_CheckInLocation").send_keys("Test location NEW")
         for name in ["CalDueDate", "WaranteeExpires"]:
             elem = self.selenium.find_element(By.NAME, name)
-            elem.clear()
+            elem.send_keys(Keys.CONTROL + "a")
+            elem.send_keys(Keys.DELETE)
             elem.send_keys(datetime.today().strftime("%Y-%m-%d"))
         self.selenium.find_element(By.ID, "submit").click()
         obj = EquipmentModel.objects.all().first()
