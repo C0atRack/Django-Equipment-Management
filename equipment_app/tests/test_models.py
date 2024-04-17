@@ -22,3 +22,7 @@ class TestEquipmentUrls(TestCase):
         self.assertFalse(self.equipment.is_availible())
         self.equipment.CheckedOutTo = None
         self.assertTrue(self.equipment.is_availible())
+    
+    def test_checkX_urls(self):
+        self.assertEqual(self.equipment.get_checkout_url(), f"/equipment/checkout/{self.equipment.id}")
+        self.assertEqual(self.equipment.get_checkin_url(), f"/equipment/checkin/{self.equipment.id}")
