@@ -50,6 +50,7 @@ pipeline {
                 withCredentials([file(credentialsId: 'Testing_ENV', variable: 'ENVFILE')]){
                     sh('./pipeline_scripts/run_tests.sh')
                 }
+                sh('./pipeline_scripts/get_coverage.sh')
             }
             post{
                 always{
