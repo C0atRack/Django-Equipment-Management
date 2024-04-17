@@ -86,7 +86,9 @@ class EquipmentModifyTest(EqBaseTest):
         namefield.send_keys("Test Equipment Modify")
 
         fileElem = self.selenium.find_element(By.CSS_SELECTOR, "input[type='file']")
-        fileElem.send_keys((BASE_DIR / "testing_data"/ "test_equipment_new.png").__str__())
+        fileElem.clear()
+        #fileElem.send_keys((BASE_DIR / "testing_data"/ "test_equipment_new.png").__str__())
+        print(fileElem)
 
         serialfield = self.selenium.find_element(By.ID, "id_SerialNumber")
         serialfield.clear()
@@ -101,7 +103,7 @@ class EquipmentModifyTest(EqBaseTest):
         assetTagField.send_keys(BlankNumber)
 
 
-        self.selenium.find_element(By.CSS_SELECTOR, "input[type='file']").send_keys((BASE_DIR / "testing_data"/ "test_equipment.png").__str__())
+        self.selenium.find_element(By.CSS_SELECTOR, "input[type='file']").send_keys((BASE_DIR / "testing_data"/ "test_equipment_new.png").__str__())
 
         descField = self.selenium.find_element(By.ID, "id_Description")
         descField.clear()
