@@ -69,7 +69,7 @@ class EquipmentModifyTest(EqBaseTest):
     
     #serialized_rollback = True
 
-    def test_equipment_create(self):
+    def test_equipment_modify(self):
         self.assertEqual(EquipmentModel.objects.all().count(), 1)
         self.selenium.get(f"{self.live_server_url}/login")
         self.login("test@example.com", "niwL5nZeBTZa64M")
