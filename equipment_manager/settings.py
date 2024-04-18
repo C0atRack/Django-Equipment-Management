@@ -108,6 +108,11 @@ HAYSTACK_CONNECTIONS = {
         'ENGINE': 'haystack.backends.elasticsearch7_backend.Elasticsearch7SearchEngine',
         'URL': config("ELS_HOST"),
         'INDEX_NAME': 'haystack',
+        'KWARGS' : {
+            'http_auth' : ("elastic", config("ELS_PASS")),
+            'use_ssl' : True,
+            'ca_certs' : config("ELS_ROOT_CA")
+        }
     },
 }
 
