@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "django_bootstrap5",
     "widget_tweaks",
+    'haystack',
     'equipment_app',
 ]
 
@@ -101,6 +102,14 @@ DATABASES = {
     }
 }
 
+#HayStack 
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch7_backend.Elasticsearch7SearchEngine',
+        'URL': config("ELS_HOST"),
+        'INDEX_NAME': 'haystack',
+    },
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
