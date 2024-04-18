@@ -85,9 +85,9 @@ class EquipmentFormTest(TransactionTestCase):
     def test_form_missing_img(self):
         data : dict = {
             'Name': "Test", 
-            'SerialNumber' : "1234", 
-            'ModelNumber' : "1234",
-            'AssetTag' : '1234',
+            'SerialNumber' : "5678", 
+            'ModelNumber' : "9101112",
+            'AssetTag' : '1314151',
             'Category' : 'Test Equipment',
             'Description' : 'Description',
             'ManualLink' : 'http://example.com',
