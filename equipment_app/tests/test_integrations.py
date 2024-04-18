@@ -8,8 +8,6 @@ from selenium.webdriver.common.keys import Keys
 from equipment_manager.settings import BASE_DIR
 from equipment_app.models import *
 from django.urls import reverse
-from time import sleep
-
 import re
 
 from datetime import datetime
@@ -180,8 +178,7 @@ class CheckOutTest(EqBaseTest):
     def setUpClass(cls):
         super().setUpClass()
         cls.urlRegex = re.compile("http(s?)\:\/\/(([a-zA-Z\.])+((\.[a-zA-Z\.])+)?)((\:[0-9]+)?)\/equipment\/\d+")
-
-
+        
     def test_checkout(self):
         targetUrl = reverse("index")
         self.selenium.get(f"{self.live_server_url}{targetUrl}")
