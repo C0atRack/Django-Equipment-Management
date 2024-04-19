@@ -1,4 +1,6 @@
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from django.urls import reverse
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.support.select import Select
@@ -7,10 +9,12 @@ from selenium.webdriver.common.keys import Keys
 
 from equipment_manager.settings import BASE_DIR
 from equipment_app.models import *
-from django.urls import reverse
-import re
 
+from decouple import config
+
+import re
 from datetime import datetime
+
 
 class EqBaseTest(StaticLiveServerTestCase):
 
@@ -22,6 +26,14 @@ class EqBaseTest(StaticLiveServerTestCase):
         super().setUpClass()
         cls.selenium = WebDriver()
         cls.selenium.implicitly_wait(10)
+        width: int = 0
+        height: int = 0
+        if((width := config("BROWSER_WIDTH", default=0, cast=int)) and (height := config("BROWSER_HEIGHT", default=0, cast=int))):
+            cls.selenium.set_window_size(width=width, height=height)
+            cls.click_navbar = True
+        else:
+            #fullscreen
+            cls.selenium.fullscreen_window()
     
     @classmethod
     def tearDownClass(cls) -> None:
@@ -32,6 +44,9 @@ class EqBaseTest(StaticLiveServerTestCase):
         self.selenium.find_element(By.ID, "id_username").send_keys(username)
         self.selenium.find_element(By.ID, "id_password").send_keys(password)
         self.selenium.find_element(By.ID, "login_button").click()
+
+    def openNavBarDropdown(self):
+        self.selenium.find_element(By.XPATH, '//button[@class="navbar-toggler"]').click()
 
 class EquipmentCreateTest(EqBaseTest):
     fixtures = [str(BASE_DIR / "testing_data" / "fixtures" / "equipment_create.json")]
@@ -67,7 +82,12 @@ class EquipmentCreateTest(EqBaseTest):
 class EquipmentModifyTest(EqBaseTest):
     fixtures = [str(BASE_DIR / "testing_data" / "fixtures" / "modify.json")]
     
-    #serialized_rollback = True
+    serialized_rollback = True
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.urlRegex = re.compile("http(s?)\:\/\/(([a-zA-Z\.])+((\.[a-zA-Z\.])+)?)((\:[0-9]+)?)\/equipment\/\d+")
+    
 
     def test_equipment_modify(self):
         self.assertEqual(EquipmentModel.objects.all().count(), 1)
@@ -116,6 +136,7 @@ class EquipmentModifyTest(EqBaseTest):
             elem.send_keys(Keys.DELETE)
             elem.send_keys(datetime.today().strftime("%Y-%m-%d"))
         self.selenium.find_element(By.ID, "submit").click()
+        WebDriverWait(self.selenium, timeout=10).until(lambda check: self.urlRegex.match(self.selenium.current_url) )
         obj = EquipmentModel.objects.all().first()
         self.assertEqual(obj.SerialNumber, "1235")
         self.selenium.save_full_page_screenshot("Integration_Equipment_Modify.png")
@@ -134,6 +155,8 @@ class SignUpTest(EqBaseTest):
     def test_signup(self):
         targetUrl = reverse("index")
         self.selenium.get(f"{self.live_server_url}{targetUrl}")
+        if(self.click_navbar):
+            self.openNavBarDropdown()
         self.selenium.find_element(By.ID, "signupLink").click()
         self.selenium.find_element(By.ID, "id_first_name").send_keys("Hello")
         self.selenium.find_element(By.ID, "id_last_name").send_keys("World")
@@ -156,6 +179,8 @@ class SignUpTest(EqBaseTest):
     def test_bad_password(self):
         targetUrl = reverse("index")
         self.selenium.get(f"{self.live_server_url}{targetUrl}")
+        if(self.click_navbar):
+            self.openNavBarDropdown()
         self.selenium.find_element(By.ID, "signupLink").click()
         self.selenium.find_element(By.ID, "id_first_name").send_keys("Hello")
         self.selenium.find_element(By.ID, "id_last_name").send_keys("World")
@@ -182,6 +207,8 @@ class CheckOutTest(EqBaseTest):
     def test_checkout(self):
         targetUrl = reverse("index")
         self.selenium.get(f"{self.live_server_url}{targetUrl}")
+        if(self.click_navbar):
+            self.openNavBarDropdown()
         self.selenium.find_element(By.XPATH, "//a[@href='/equipment/list']").click()
         self.selenium.find_element(By.XPATH, '//a[@aria-label="View Test information"]').click()
         self.selenium.find_element(By.XPATH, '//a[@aria-label="Check out Test"]').click()
@@ -209,9 +236,17 @@ class CheckInTest(EqBaseTest):
 
     def test_checkin_from_list(self):
         self.selenium.get(f"{self.live_server_url}")
-        self.selenium.find_element(By.ID, "loginLink").click()
+        loginLink = self.selenium.find_element(By.ID, "loginLink")
+        if(self.click_navbar):
+            self.openNavBarDropdown()
+            WebDriverWait(driver=self.selenium, timeout=10).until(lambda x: loginLink.is_displayed())
+        loginLink.click()
         self.login("test@example.com", "niwL5nZeBTZa64M")
-        self.selenium.find_element(By.XPATH, "//a[@href='/equipment/list']").click()
+        equList = self.selenium.find_element(By.XPATH, "//a[@href='/equipment/list']")
+        if(self.click_navbar):
+            self.openNavBarDropdown()
+            WebDriverWait(driver=self.selenium, timeout=10).until(lambda x: equList.is_displayed())
+        equList.click()
         self.selenium.find_element(By.XPATH, '//a[@aria-label="View Test information"]').click()
         self.selenium.find_element(By.XPATH, '//a[@aria-label="Check Test in"]').click()
         self.selenium.find_element(By.ID, "id_TurnedIn").click()
@@ -225,3 +260,4 @@ class CheckInTest(EqBaseTest):
         self.assertTrue(EquipmentModel.objects.get(id=1).is_availible())
 
         self.selenium.save_full_page_screenshot("Integration_CheckIn.png")
+

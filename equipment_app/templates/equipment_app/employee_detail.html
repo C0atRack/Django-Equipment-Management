@@ -39,7 +39,7 @@
                     {% for equipment in aff_equipment %}
                         <tr>
                             <th scope="cell" class="align-middle">
-                                <img alt="Photo of {{equipment}}" class="image-fluid" style="width: 20vw; min-width: 330px;" src="{% get_media_prefix %}{{equipment.Img}}">
+                                <img alt="Photo of {{equipment}}" class="img-fluid" style="max-height: 20%;" src="{% get_media_prefix %}{{equipment.Img}}">
                             </th>
                             <th scope="cell" class="align-middle">{{equipment}}</th>
                             <th scope="cell" class="align-middle">{{equipment.AssetTag}}</th>
