@@ -26,15 +26,19 @@ class EqBaseTest(StaticLiveServerTestCase):
         super().setUpClass()
         cls.selenium = WebDriver()
         cls.selenium.implicitly_wait(10)
-        width: int = 0
-        height: int = 0
-        if((width := config("BROWSER_WIDTH", default=0, cast=int)) and (height := config("BROWSER_HEIGHT", default=0, cast=int))):
-            cls.selenium.set_window_size(width=width, height=height)
+        cls.width: int = config("BROWSER_WIDTH", default=0, cast=int)
+        cls.height: int = config("BROWSER_HEIGHT", default=0, cast=int)
+        if(cls.width and cls.height):
+            cls.selenium.set_window_size(width=cls.width, height=cls.height)
             cls.click_navbar = True
         else:
             #fullscreen
             cls.selenium.fullscreen_window()
     
+    def screenShot(self, testname: str):
+        mobileText: str = f"_mobile_{self.width}x{self.height}" if self.click_navbar else ""
+        self.selenium.save_full_page_screenshot(f"Integration_{testname}{mobileText}.png")
+
     @classmethod
     def tearDownClass(cls) -> None:
         cls.selenium.quit()
@@ -77,7 +81,7 @@ class EquipmentCreateTest(EqBaseTest):
             elem.send_keys(datetime.today().strftime("%Y-%m-%d"))
         self.selenium.find_element(By.ID, "submit").click()
         self.selenium.find_element(By.ID, "edit_button")
-        self.selenium.save_full_page_screenshot("Integration_Equipment_Create.png")
+        self.screenShot("Equipment_Create")
         
 class EquipmentModifyTest(EqBaseTest):
     fixtures = [str(BASE_DIR / "testing_data" / "fixtures" / "modify.json")]
@@ -139,7 +143,7 @@ class EquipmentModifyTest(EqBaseTest):
         WebDriverWait(self.selenium, timeout=10).until(lambda check: self.urlRegex.match(self.selenium.current_url) )
         obj = EquipmentModel.objects.all().first()
         self.assertEqual(obj.SerialNumber, "1235")
-        self.selenium.save_full_page_screenshot("Integration_Equipment_Modify.png")
+        self.screenShot("Equipment_Modify")
 
 class SignUpTest(EqBaseTest):
 
@@ -173,7 +177,7 @@ class SignUpTest(EqBaseTest):
         self.login(email, password)
 
         WebDriverWait(self.selenium, timeout=10).until(lambda check: self.profileRegex.match(self.selenium.current_url) )
-        self.selenium.save_full_page_screenshot("Integration_User_Signup.png")
+        self.screenShot("User_Signup")
 
 
     def test_bad_password(self):
@@ -192,7 +196,7 @@ class SignUpTest(EqBaseTest):
         self.selenium.find_element(By.ID, "register_submit").click()
 
         self.assertIsNotNone(self.selenium.find_element(By.XPATH, '//ul[@class="errorlist"]'))
-        self.selenium.save_full_page_screenshot("Integration_User_Signup_bad_pass.png")
+        self.screenShot("User_Signup_bad_pass")
 
 class CheckOutTest(EqBaseTest):
     fixtures = [str(BASE_DIR / "testing_data" / "fixtures" / "checkout.json")]
@@ -221,7 +225,7 @@ class CheckOutTest(EqBaseTest):
 
         self.assertIsNotNone(self.selenium.find_element(By.XPATH, '//a[@aria-label="Check Test in"]'))
         self.assertFalse(EquipmentModel.objects.get(id=1).is_availible())
-        self.selenium.save_full_page_screenshot("Integration_CheckOut.png")
+        self.screenShot("CheckOut")
 
         
 class CheckInTest(EqBaseTest):
@@ -259,5 +263,5 @@ class CheckInTest(EqBaseTest):
         #Verify that the database says the object isn't checked out
         self.assertTrue(EquipmentModel.objects.get(id=1).is_availible())
 
-        self.selenium.save_full_page_screenshot("Integration_CheckIn.png")
+        self.screenShot("CheckIn")
 
