@@ -1,6 +1,6 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
-
+from haystack import urls as search_urls
 
 urlpatterns = [
     path('stub', views.Stub.as_view(), name="stub"),
@@ -20,4 +20,5 @@ urlpatterns = [
     path('equipment/delete/<int:pk>', views.EquipmentDelete.as_view(), name="equipment-delete"),
     path('equipment/checkout/<int:pk>', views.EquipmentCheckout.as_view(), name="equipment-checkout"),
     path('equipment/checkin/<int:pk>', views.EquipmentCheckIn.as_view(), name="equipment-checkin"),
+    path('search', include(search_urls))
 ]
