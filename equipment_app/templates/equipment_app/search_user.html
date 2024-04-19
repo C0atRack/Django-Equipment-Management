@@ -13,7 +13,7 @@
             </div>
         </form>
     </div>
-    <div class="container-md" style="max-width: 30%;">
+    <div class="container-sm" style="max-width: 500px;">
     {% if query %}
         {% if page_obj %}
         <h2 class="text-center">Results:</h2>
@@ -23,13 +23,13 @@
                 <div class="container-md border rounded mb-3">
                     <div class="row">
                         <div class="col-sm-3 text-center d-flex ">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" fill="currentColor" class="bi bi-person-fill mx-auto" viewBox="0 0 16 16">
                                 <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
                             </svg>
                         </div>
                         <div class="col text-center position-relative d-flex flex-column justify-content-center">
                             <h3 class="text-center">{{found_user.first_name | capfirst}} {{found_user.last_name | capfirst}}</h3>
-                            <a aria-label="View {{user.first_name}} {{user.last_name}}'s profile" class="btn btn-info btn-lg mx-auto" href="{{found_user.employee.get_absolute_url}}">View Profile</a>
+                            <a aria-label="View {{user.first_name}} {{user.last_name}}'s profile" class="btn btn-info btn-lg mx-auto mb-md-0 mb-3" href="{{found_user.employee.get_absolute_url}}">View Profile</a>
                         </div>
                     </div>
                 </div>
