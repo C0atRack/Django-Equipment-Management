@@ -60,8 +60,7 @@ class EquipmentSearchForm(SearchForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         choices=[("Any", "Any")] + list(EquipmentModel.EQUIPMENT_CATEGORIES)
-        print(choices)
-        self.fields['EquCategory'] = ChoiceField(label="", choices=choices, required=False, initial="Any")
+        self.fields['EquCategory'] = ChoiceField(label="Equipment Category: ", choices=choices, required=False, initial="Any")
 
     def search(self):
         sqs = super().search()
