@@ -77,15 +77,15 @@
         <div class="col-sm-2 text-center border-end">
 
             <div class="my-3">
-                <a aria-label="Edit {{object}}'s information" class="btn btn-success me-3" href="{{object.get_edit_absolute_url}}" id="edit_button">Edit</a>
+                <a aria-label="Edit {{object}}'s information" class="btn btn-success " href="{{object.get_edit_absolute_url}}" id="edit_button">Edit</a>
             </div>
             {% if object.CheckedOutTo is not None%}
             <div class="mb-3">
-                <a aria-label="Force check {{object}}'s in" class="btn btn-warning me-3" href="{{object.get_checkin_url}}">Force Check In</a>
+                <a aria-label="Force check {{object}}'s in" class="btn btn-warning" href="{{object.get_checkin_url}}">Force Check In</a>
             </div>
             {%endif%}
             <div class="mb-3">
-                <a aria-label="Delete {{object}}" class="btn btn-danger me-3" href="{{object.get_delete_absolute_url}}">Delete</a>
+                <a aria-label="Delete {{object}}" class="btn btn-danger" href="{{object.get_delete_absolute_url}}">Delete</a>
             </div>
         </div>
         {%endif%}
@@ -106,8 +106,8 @@
                             <h5 class="fw-normal">{{checkout_user.first_name}} {{checkout_user.last_name}}</h5>
                             <h5 class="fw-normal">{{checkout_user.email}}</h5>
                         </div>
-                        <div class="col">
-                            <a aria-label="View {{user.first_name}} {{user.last_name}}'s profile" class="btn btn-info btn-lg my-3" href="{{object.CheckedOutTo.get_absolute_url}}">View {{checkout_user.first_name| capfirst}} {{checkout_user.last_name | capfirst}}'s profile</a>
+                        <div class="col align-center">
+                            <a aria-label="View {{user.first_name}} {{user.last_name}}'s profile" class="btn btn-info btn-lg" href="{{object.CheckedOutTo.get_absolute_url}}">View {{checkout_user.first_name| capfirst}} {{checkout_user.last_name | capfirst}}'s profile</a>
                         </div>
                     </div>
                     <h5 class="fw-bold text-center">Checkout Location:</h5>
