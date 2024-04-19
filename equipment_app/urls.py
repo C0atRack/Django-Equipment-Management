@@ -21,5 +21,5 @@ urlpatterns = [
     path('equipment/checkout/<int:pk>', views.EquipmentCheckout.as_view(), name="equipment-checkout"),
     path('equipment/checkin/<int:pk>', views.EquipmentCheckIn.as_view(), name="equipment-checkin"),
     path('search/', views.EquipmentSearch.as_view(), name="equipment-search"),
-    path('search-haystack', include(search_urls))
+    path('user-search/', views.EmployeeSearch.as_view(), name="user-search"),
 ]

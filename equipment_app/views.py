@@ -158,7 +158,18 @@ class EmployeePermUpdate(ManagerNeeded, UpdateView, BootstrapThemeMixin):
         context['ActionText'] = f"Editing {self.object.AffUser.first_name} {self.object.AffUser.last_name}'s permissions"
         return context
     
+class EmployeeSearch(SearchView, BootstrapThemeMixin):
+    form_class = SearchForm
+    template_name="equipment_app/search_user.html"
+    paginate_by = 5
 
+    def get_queryset(self):
+        query_set = super().get_queryset().models(User)
+        return query_set
+    
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        return context
     
 class EquipmentList(ListView, BootstrapThemeMixin):
     paginate_by = 15
