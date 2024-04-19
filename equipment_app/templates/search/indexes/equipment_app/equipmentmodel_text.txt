@@ -1,0 +1,4 @@
+{{object.Name}}
+{{object.SerialNumber}}
+{{object.ModelNumber}}
+{{object.Description}}
