@@ -87,11 +87,18 @@ class EquipmentCheckout(LoginNeeded, UpdateView, BootstrapThemeMixin):
 class EquipmentSearch(SearchView, BootstrapThemeMixin):
     form_class = EquipmentSearchForm
     template_name="equipment_app/search.html"
-
+    paginate_by = 5
 
     def get_queryset(self):
         query_set = super().get_queryset().models(EquipmentModel)
         return query_set
+    
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        #print(context['form'].cleaned_data)
+        if(Cat := context['form'].cleaned_data['EquCategory']):
+            context["Cat"] = Cat
+        return context
     
 
 class Login(LoginView, BootstrapThemeMixin):

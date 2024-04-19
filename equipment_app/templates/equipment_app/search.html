@@ -60,11 +60,19 @@
             <h2 class="text-center mt-3">No results found.</h2>
         {% endif %}
 
-        {% if page.has_previous or page.has_next %}
+        {% if page_obj.has_previous or page_obj.has_next %}
             <div>
-                {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
-                |
-                {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
+                {% if page_obj.has_previous %}
+                <a href="?q={{ query }}&amp;EquCategory={{ Cat }}&amp;page={{ page_obj.previous_page_number }}" class="btn btn-primary float-begin">Previous</a>
+                {% else %}
+                <a><button class="btn btn-outline-primary float-begin" disabled>Previous</button></a>
+                {% endif %}
+
+                {% if page_obj.has_next %}
+                <a href="?q={{ query }}&amp;EquCategory={{ Cat }}&amp;page={{ page_obj.next_page_number }}" class="btn btn-primary float-end">Next Page</a>
+                {% else %}
+                <a><button class="btn btn-outline-primary float-end" disabled>Next Page</button></a>
+                {% endif %}
             </div>
         {% endif %}
     {% endif %}
