@@ -28,6 +28,7 @@ class EqBaseTest(StaticLiveServerTestCase):
         cls.selenium.implicitly_wait(10)
         cls.width: int = config("BROWSER_WIDTH", default=0, cast=int)
         cls.height: int = config("BROWSER_HEIGHT", default=0, cast=int)
+        cls:click_navbar = False
         if(cls.width and cls.height):
             cls.selenium.set_window_size(width=cls.width, height=cls.height)
             cls.click_navbar = True
