@@ -1,17 +1,19 @@
 from typing import Any
-import datetime
-from django.forms import BaseModelForm
 from django.http import HttpResponse
 from django.http.request import HttpRequest as HttpRequest
 from django.urls import reverse
 from django.views.generic import *
-from django.views.generic.detail import SingleObjectMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.models import Permission, User
+
+from haystack.generic_views import SearchView
+from haystack.forms import SearchForm
 
 from .forms import *
 from .models import *
 from .mixins import *
+
+import datetime
 
 # Create your views here.
 class Stub(TemplateView, BootstrapThemeMixin):
@@ -79,6 +81,15 @@ class EquipmentCheckout(LoginNeeded, UpdateView, BootstrapThemeMixin):
         context['ActionText'] = f"Checking out {self.object}"
         return context
     
+class EquipmentSearch(SearchView, BootstrapThemeMixin):
+    form_class = SearchForm
+    template_name="search/search.html"
+
+    def get_queryset(self):
+        return super().get_queryset().models(EquipmentModel)
+    
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        return super().get_context_data(**kwargs)
 
 class Login(LoginView, BootstrapThemeMixin):
     template_name = "equipment_app/login.html"
