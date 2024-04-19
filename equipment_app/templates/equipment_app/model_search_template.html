@@ -1,0 +1,11 @@
+{% load widget_tweaks %}
+{% load static %}
+
+<form class=" border-bottom" role="search" method="GET" action="{% url 'equipment-search' %}">
+    <div class="d-flex mt-3 justify-content-center align-middle">
+        {% render_field form.q class+="form-control mb-3 me-3"%}
+        <button class="btn btn-success  mb-3" type="submit">Search</button>
+    </div>
+    <p>Equipment Category:&nbsp</p>
+    {% render_field form.EquCategory class+="form-select my-3"%}
+</form>

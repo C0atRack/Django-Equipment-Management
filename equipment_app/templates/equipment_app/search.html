@@ -6,13 +6,7 @@
 {% block content %}
 <div class="container-fluid">
     <div class="container-md">
-        <form class=" border-bottom" role="search" method="GET" action="">
-            <div class="d-flex mt-3 justify-content-center align-middle">
-                {% render_field form.q class+="form-control mb-3 me-3"%}
-                <button class="btn btn-success me-3 mb-3" type="submit">Search</button>
-            </div>
-            {% render_field form.EquCategory class+="form-select my-3"%}
-        </form>
+        {% include "equipment_app/model_search_template.html" %}
     </div>
     <div class="container-md">
     {% if query %}

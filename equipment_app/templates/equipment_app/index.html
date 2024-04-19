@@ -3,10 +3,6 @@
 {%block content%}
 <div class="container-md mt-auto text-center">
 	<h1>Inventory Checkout</h1>
-	{% comment %} This is just a dummy form, eventually once django_haystack is added this will become functional {% endcomment %}
-	<form class="d-flex" role="search" method="GET" action="{% url 'equipment-search'%}">
-		<input class="form-control mx-3" type="search" placeholder="Catalog Search" aria-label="Search for item" name="q">
-		<button class="btn btn-success me-3" type="submit">Search</button>
-	</form>
+	{% include "equipment_app/model_search_template.html" %}
 </div>
 {%endblock%}

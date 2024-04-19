@@ -7,8 +7,6 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.models import Permission, User
 
 from haystack.generic_views import SearchView
-from haystack.forms import SearchForm
-
 from .forms import *
 from .models import *
 from .mixins import *
@@ -21,6 +19,11 @@ class Stub(TemplateView, BootstrapThemeMixin):
 
 class Index(TemplateView, BootstrapThemeMixin):
     template_name = "equipment_app/index.html"
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context['form'] = EquipmentSearchForm
+        return context
 
 class UnauthorizedView(TemplateView, BootstrapThemeMixin):
     template_name = "equipment_app/unauthorized.html"
