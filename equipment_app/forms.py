@@ -1,6 +1,10 @@
 from typing import Any
-from django.forms import ModelForm, Textarea, TextInput, DateInput, Select, URLInput, BooleanField, CheckboxInput, Form
+from django.forms import ModelForm, Textarea, TextInput, DateInput, Select, URLInput, BooleanField, CheckboxInput, ChoiceField
 from django.contrib.auth.forms import UserCreationForm
+
+from haystack.forms import SearchForm
+from haystack.query import EmptySearchQuerySet, SearchQuerySet
+
 from .models import *
 
 class EquipmentForm(ModelForm):
@@ -50,3 +54,23 @@ class EquipmentCheckin(ModelForm):
         model = EquipmentModel
         fields = []
         exclude = '__all__'
+
+class EquipmentSearchForm(SearchForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        choices=[("Any", "Any")] + list(EquipmentModel.EQUIPMENT_CATEGORIES)
+        print(choices)
+        self.fields['EquCategory'] = ChoiceField(label="", choices=choices, required=False, initial="Any")
+
+    def search(self):
+        sqs = super().search()
+        
+        if not self.is_valid():
+            return self.no_query_found()
+        
+        if (Category := self.cleaned_data['EquCategory']):
+            if(Category != "Any"):
+                sqs = sqs.filter(equipment_type=self.cleaned_data['EquCategory'])
+
+        return sqs

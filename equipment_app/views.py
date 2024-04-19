@@ -82,12 +82,13 @@ class EquipmentCheckout(LoginNeeded, UpdateView, BootstrapThemeMixin):
         return context
     
 class EquipmentSearch(SearchView, BootstrapThemeMixin):
-    form_class = SearchForm
+    form_class = EquipmentSearchForm
     template_name="equipment_app/search.html"
 
+
     def get_queryset(self):
-        return super().get_queryset().models(EquipmentModel)
-    
+        query_set = super().get_queryset().models(EquipmentModel)
+        return query_set
     
 
 class Login(LoginView, BootstrapThemeMixin):

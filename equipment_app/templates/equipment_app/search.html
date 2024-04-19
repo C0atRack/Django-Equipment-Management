@@ -6,15 +6,17 @@
 {% block content %}
 <div class="container-fluid">
     <div class="container-md">
-        <form class="d-flex my-3 border-bottom justify-content-center align-middle" role="search" method="GET" action="">
+        <form class=" border-bottom" role="search" method="GET" action="">
+            <div class="d-flex mt-3 justify-content-center align-middle">
                 {% render_field form.q class+="form-control mb-3 me-3"%}
                 <button class="btn btn-success me-3 mb-3" type="submit">Search</button>
+            </div>
+            {% render_field form.EquCategory class+="form-select my-3"%}
         </form>
-        {% comment %} TODO: Add specifier fields {% endcomment %}
     </div>
     <div class="container-md">
     {% if query %}
-        {% if query %}
+        {% if page_obj %}
         <h2 class="text-center">Results:</h2>
 
             {% for result in page_obj %}
@@ -61,7 +63,7 @@
             </tbody>
         </table>
         {% else %}
-            <h3>No results found.</h3>
+            <h2 class="text-center mt-3">No results found.</h2>
         {% endif %}
 
         {% if page.has_previous or page.has_next %}
