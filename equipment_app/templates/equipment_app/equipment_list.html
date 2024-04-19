@@ -43,9 +43,9 @@
     <h1 class="text-center">No Equipment added!</h1>
     {%endif%}
     {% if perms.equipment_app.can_edit %}
-    <div class="d-flex justify-content-center">
-        <a aria-label="Add Equipment" class="btn btn-primary btn-sm rounded-pill px-3 mx-2" href="{% url 'equipment-creation'%}"n id="add_equipment">Add Equipment</a>
-    </div>
     {% endif %}
+</div>
+<div class="d-flex justify-content-center">
+    <a aria-label="Add Equipment" class="btn btn-primary btn-sm rounded-pill px-3 mx-2" href="{% url 'equipment-creation'%}"n id="add_equipment">Add Equipment</a>
 </div>
 {%endblock%}
