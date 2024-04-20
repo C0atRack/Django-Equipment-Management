@@ -52,7 +52,7 @@ class EqBaseTest(StaticLiveServerTestCase):
         self.findAndScrollToElement(By.ID, "login_button").click()
 
     def openNavBarDropdown(self):
-        self.selenium.find_element(By.XPATH, '//button[@class="navbar-toggler"]').click()
+        self.findAndScrollToElement(By.XPATH, '//button[@class="navbar-toggler"]').click()
 
     def findAndScrollToElement(self, by: str, selector: str) -> WebElement:
         elem = self.selenium.find_element(by, selector)
