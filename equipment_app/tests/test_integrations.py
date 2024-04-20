@@ -156,6 +156,30 @@ class EquipmentModifyTest(EqBaseTest):
         self.assertEqual(obj.SerialNumber, "1235")
         self.screenShot("Equipment_Modify")
 
+class EquipmentDeleteTest(EqBaseTest):
+    fixtures = [str(BASE_DIR / "testing_data" / "fixtures" / "modify.json")]
+    
+    serialized_rollback = True
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.urlRegex = re.compile("http(s?)\:\/\/(([a-zA-Z\.])+((\.[a-zA-Z\.])+)?)((\:[0-9]+)?)\/equipment\/\d+")
+    
+
+    def test_equipment_delete(self):
+        self.assertEqual(EquipmentModel.objects.all().count(), 1)
+        self.selenium.get(f"{self.live_server_url}/login")
+        self.login("test@example.com", "niwL5nZeBTZa64M")
+
+        targetUrl = reverse("equipment-list")
+        url = f"{self.live_server_url}{targetUrl}"
+        self.selenium.get(url)
+        self.findAndScrollToElement(By.XPATH, '//a[@aria-label="Delete Test"]').click()
+        self.findAndScrollToElement(By.XPATH, '//button[@class="btn btn-danger btn-sm rounded-pill px-3"]').click()
+        WebDriverWait(self.selenium, timeout=10).until(lambda check: self.selenium.current_url == url)
+        self.assertEqual(EquipmentModel.objects.count(), 0)
+        self.screenShot("Equipment_Delete")
+
 class SignUpTest(EqBaseTest):
 
     serialized_rollback = True
