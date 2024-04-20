@@ -7,3 +7,8 @@ static_collect
 */migrations/*
 !*/migrations/__init__.py
 media/
+Integrations_*
+uploads/
+.coverage
+static
+~static/js
