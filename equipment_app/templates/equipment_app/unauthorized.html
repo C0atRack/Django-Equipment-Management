@@ -1,5 +1,8 @@
 {% extends "equipment_app/base.html" %}
 
 {%block content%}
-<h1>You are not authorized to perform that action</h1>
+<div class="container-sm mb-3 text-center">
+    <h1 class="text-center">You are not authorized to perform that action</h1>
+    <a class="btn btn-primary mx-auto" href="#" onclick="history.back();">Go Back</a>
+</div>
 {%endblock%}
