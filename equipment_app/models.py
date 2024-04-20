@@ -1,6 +1,10 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
+import uuid
+import re
+
+filepathRegex = re.compile("(?:.*)(\..*)$")
 
 class Employee(models.Model):
     AffUser = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="User", null=False, blank=False)
@@ -14,7 +18,12 @@ class Employee(models.Model):
     
     def get_perm_url(self):
         return reverse("update-perms", kwargs={"pk": self.pk})
-    
+
+def uuidSave(instance, filename):
+    newname = filepathRegex.match(filename)
+    if(newname):
+        newname = newname.groups()[0]
+    return f"uploads/{uuid.uuid4()}{newname}"
 
 class EquipmentModel(models.Model):
 
@@ -29,7 +38,7 @@ class EquipmentModel(models.Model):
     ModelNumber = models.CharField("Model Number", max_length=200, blank=False)
     AssetTag = models.CharField("Asset Tag", max_length=200, blank=False)
     Category = models.CharField("Equipment Category", max_length=100, choices=EQUIPMENT_CATEGORIES)
-    Img = models.ImageField("Photo", upload_to="uploads/")
+    Img = models.ImageField("Photo", upload_to=uuidSave)
     Description = models.TextField("Description", max_length=5000, blank=False)
     ManualLink = models.URLField("Link to Manual", max_length=1000, blank=True)
     CheckInLocation = models.CharField("Check In Location", max_length=200, blank=False)
@@ -45,7 +54,7 @@ class EquipmentModel(models.Model):
 
     def __str__(self) -> str:
         return self.Name
-        
+     
     def get_absolute_url(self):
         return reverse('equipment-detail', args=[str(self.id)])
     
