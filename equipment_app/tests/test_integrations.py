@@ -101,7 +101,7 @@ class EquipmentModifyTest(EqBaseTest):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.urlRegex = re.compile("http(s?)\:\/\/(([a-zA-Z\.])+((\.[a-zA-Z\.])+)?)((\:[0-9]+)?)\/equipment\/\d+")
+        cls.urlRegex = re.compile("http(s?)\:\/\/(([a-zA-Z\.])+)((\:[0-9]+)?)\/equipment\/\d+")
     
 
     def test_equipment_modify(self):
@@ -163,7 +163,7 @@ class EquipmentDeleteTest(EqBaseTest):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.urlRegex = re.compile("http(s?)\:\/\/(([a-zA-Z\.])+((\.[a-zA-Z\.])+)?)((\:[0-9]+)?)\/equipment\/\d+")
+        cls.urlRegex = re.compile("http(s?)\:\/\/(([a-zA-Z\.])+)((\:[0-9]+)?)\/equipment\/\d+")
     
 
     def test_equipment_delete(self):
@@ -187,7 +187,7 @@ class SignUpTest(EqBaseTest):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.loginRegex = re.compile("http(s?)\:\/\/(([a-zA-Z\.])+((\.[a-zA-Z\.])+)?)((\:[0-9]+)?)\/login")
+        cls.loginRegex = re.compile("http(s?)\:\/\/(([a-zA-Z\.])+)((\:[0-9]+)?)\/login")
         # Matches when the url is http://localhost:<port>/user/profile/<number>
         cls.profileRegex = re.compile("http(s?)\:\/\/(([a-zA-Z0-9\.])+((\.[a-zA-Z0-9\.])+)?)((\:[0-9]+)?)\/user\/profile\/\d+")
 
@@ -241,7 +241,7 @@ class CheckOutTest(EqBaseTest):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.urlRegex = re.compile("http(s?)\:\/\/(([a-zA-Z\.])+((\.[a-zA-Z\.])+)?)((\:[0-9]+)?)\/equipment\/\d+")
+        cls.urlRegex = re.compile("http(s?)\:\/\/(([a-zA-Z\.])+)((\:[0-9]+)?)\/equipment\/\d+")
         
     def test_checkout(self):
         targetUrl = reverse("index")
