@@ -51,7 +51,7 @@ pipeline {
                     sh('./pipeline_scripts/move_env.sh')
                 }
                 sh('./pipeline_scripts/run_desktop_tests.sh')
-                // sh('./pipeline_scripts/run_mobile_tests.sh')
+                sh('./pipeline_scripts/run_mobile_tests.sh')
             }
             post{
                 always{
