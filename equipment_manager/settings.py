@@ -200,7 +200,7 @@ if((S3_HOST := config("S3_HOST", default="")) != ""):
             "bucket_name" : config("S3_STATIC_BUCKET_NAME"),
             "access_key" : config("S3_ACCESS_KEY"),
             "secret_key" : config("S3_SECRET_KEY"),
-            "custom_domain" : STATIC_URL,
+            "custom_domain" : STATIC_URL[:len(STATIC_URL) - 1],
             "endpoint_url" : config("S3_HOST"),
 
             #NEVER try to connect to an AWS server without TLS
