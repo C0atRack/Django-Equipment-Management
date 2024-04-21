@@ -33,12 +33,15 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 				<div class="navbar-nav me-lg-auto mb-lg-0 mb-md-3 mb-3" role="navigation" aria-label="PageLinks">
-					<a class="nav-link active me-2 my-auto" aria-current="page" href="{% url 'index' %}">Home</a>
-                    <a class="nav-link active me-2 my-auto" aria-current="page" href="{% url 'equipment-list' %}">Equipment Catalog</a>
+					<a class="nav-link active me-2 my-auto mb-lg-0 mb-md-3 mb-3" aria-current="page" href="{% url 'index' %}">Home</a>
+                    <a class="nav-link active me-2 my-auto mb-lg-0 mb-md-3 mb-3" aria-current="page" href="{% url 'equipment-list' %}">Equipment Catalog</a>
                     <form class="d-flex" role="search" method="GET" action="{% url 'user-search' %}">
-						<input class="form-control me-2 my-auto" type="search" placeholder="User Search" aria-label="Search for a User" name="q">
-						<button class="btn btn-success me-2 my-auto" type="submit">Search</button>
+						<input class="form-control me-2 my-auto mb-lg-0 mb-md-3 mb-3" type="search" placeholder="User Search" aria-label="Search for a User" name="q">
+						<button class="btn btn-success me-2 my-auto mb-lg-0 mb-md-3 mb-3" type="submit">Search</button>
                     </form>
+					{% if perms.equipment_app.can_edit %}
+					<a aria-label="Add Equipment" class="btn btn-primary me-2 my-auto mb-lg-0 mb-md-3 mb-3" href="{% url 'equipment-creation'%}"n id="add_equipment">Add Equipment</a>
+					{% endif %}
 				</div>
 				<div class="navbar-nav justify-content-end align-center d-flex flex-row ">
 					{% if theme == "dark" %}
