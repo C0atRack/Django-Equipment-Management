@@ -177,20 +177,40 @@ if((S3_HOST := config("S3_HOST", default="")) != ""):
     STORAGES["default"] ={
         "BACKEND": "storages.backends.s3.S3Storage",
         "OPTIONS": {
+            "bucket_name" : config("S3_MEDIA_BUCKET_NAME"),
+            "access_key" : config("S3_ACCESS_KEY"),
+            "secret_key" : config("S3_SECRET_KEY"),
+            "custom_domain" : config("S3_HOST").replace("https://", ""),
+            "endpoint_url" : config("S3_HOST"),
+
+            #NEVER try to connect to an AWS server without TLS
+            "use_ssl" : True,
+            # If a root ca is specified, AWS_S3_VERIFY will use that certificate
+            # Otherswise, setting ASW_S3_VERIFY to true will have the backend library check against amazon's CA
+            "verify" : True if (CA := config("S3_ROOT_CA", default="")) == "" else CA,
+        },
+    }
+
+    STATIC_URL = config("S3_HOST").replace("https://", "")
+    STATIC_URL = f"{STATIC_URL}/{config('S3_STATIC_BUCKET_NAME')}/"
+
+    STORAGES["staticfiles"] ={
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+            "bucket_name" : config("S3_STATIC_BUCKET_NAME"),
+            "access_key" : config("S3_ACCESS_KEY"),
+            "secret_key" : config("S3_SECRET_KEY"),
+            "custom_domain" : STATIC_URL,
+            "endpoint_url" : config("S3_HOST"),
+
+            #NEVER try to connect to an AWS server without TLS
+            "use_ssl" : True,
+            # If a root ca is specified, AWS_S3_VERIFY will use that certificate
+            # Otherswise, setting ASW_S3_VERIFY to true will have the backend library check against amazon's CA
+            "verify" : True if (CA := config("S3_ROOT_CA", default="")) == "" else CA,
         },
     }
     # Reads from a .env file to credientals and the hostname of the S3 server
-    AWS_STORAGE_BUCKET_NAME = config("S3_MEDIA_BUCKET_NAME")
-    AWS_S3_ACCESS_KEY_ID = config("S3_ACCESS_KEY")
-    AWS_S3_SECRET_ACCESS_KEY = config("S3_SECRET_KEY")
-    AWS_S3_CUSTOM_DOMAIN = config("S3_HOST")
-    AWS_S3_ENDPOINT_URL = config("S3_HOST")
-
-    #NEVER try to connect to an AWS server without TLS
-    AWS_S3_USE_SSL = True
-    # If a root ca is specified, AWS_S3_VERIFY will use that certificate
-    # Otherswise, setting ASW_S3_VERIFY to true will have the backend library check against amazon's CA
-    AWS_S3_VERIFY = True if (CA := config("S3_ROOT_CA", default="")) == "" else CA
     #The media url is no longer a resource django serves
     MEDIA_URL = config("S3_HOST") + "/" + config("S3_MEDIA_BUCKET_NAME") + "/"
 else:
