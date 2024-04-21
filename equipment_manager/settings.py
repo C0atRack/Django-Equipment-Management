@@ -173,14 +173,14 @@ STORAGES = {
 }
 
 # Checking and settting up the default storage for media
-if(config("S3_BUCKET_NAME", default="") != ""):
+if((S3_HOST := config("S3_HOST", default="")) != ""):
     STORAGES["default"] ={
         "BACKEND": "storages.backends.s3.S3Storage",
         "OPTIONS": {
         },
     }
     # Reads from a .env file to credientals and the hostname of the S3 server
-    AWS_STORAGE_BUCKET_NAME = config("S3_BUCKET_NAME")
+    AWS_STORAGE_BUCKET_NAME = config("S3_MEDIA_BUCKET_NAME")
     AWS_S3_ACCESS_KEY_ID = config("S3_ACCESS_KEY")
     AWS_S3_SECRET_ACCESS_KEY = config("S3_SECRET_KEY")
     AWS_S3_CUSTOM_DOMAIN = config("S3_HOST")
@@ -192,15 +192,16 @@ if(config("S3_BUCKET_NAME", default="") != ""):
     # Otherswise, setting ASW_S3_VERIFY to true will have the backend library check against amazon's CA
     AWS_S3_VERIFY = True if (CA := config("S3_ROOT_CA", default="")) == "" else CA
     #The media url is no longer a resource django serves
-    MEDIA_URL = config("S3_HOST") + "/" + config("S3_BUCKET_NAME") + "/"
-elif (PotentialMediaLocation := config("MEDIA_LOCATION", default="")) == "":
-    # If there is no MEDIA_LOCATION specified
-    MEDIA_ROOT = BASE_DIR / 'media'
-    MEDIA_URL = 'media/'
+    MEDIA_URL = config("S3_HOST") + "/" + config("S3_MEDIA_BUCKET_NAME") + "/"
 else:
-    # If there is a MEDIA_LOCATION, use that one
-    MEDIA_ROOT = os.path.join(PotentialMediaLocation, VIRTUAL_HOSTS[0])
-    MEDIA_URL = 'media/'
+    if (PotentialMediaLocation := config("MEDIA_LOCATION", default="")) == "":
+        # If there is no MEDIA_LOCATION specified
+        MEDIA_ROOT = BASE_DIR / 'media'
+        MEDIA_URL = 'media/'
+    else:
+        # If there is a MEDIA_LOCATION, use that one
+        MEDIA_ROOT = os.path.join(PotentialMediaLocation, VIRTUAL_HOSTS[0])
+        MEDIA_URL = 'media/'
 
 # For when Django is behind nginx to serve dynamic content
 
