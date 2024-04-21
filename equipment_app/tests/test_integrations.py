@@ -75,7 +75,7 @@ class EquipmentCreateTest(EqBaseTest):
         BlankNumber = "1234"
         targetUrl = reverse("equipment-list")
         self.selenium.get(f"{self.live_server_url}{targetUrl}")
-        self.findAndScrollToElement(By.ID, "add_equipment").click()
+        self.selenium.find_element(By.ID, "add_equipment").click()
         self.findAndScrollToElement(By.ID, "id_Name").send_keys("Test Equipment")
         self.findAndScrollToElement(By.ID, "id_SerialNumber").send_keys(BlankNumber)
         self.findAndScrollToElement(By.ID, "id_ModelNumber").send_keys(BlankNumber)
