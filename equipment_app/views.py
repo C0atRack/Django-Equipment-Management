@@ -84,7 +84,7 @@ class EquipmentCheckout(LoginNeeded, UpdateView, BootstrapThemeMixin):
         context['ActionText'] = f"Checking out {self.object}"
         return context
     
-class EquipmentSearch(SearchView, BootstrapThemeMixin):
+class EquipmentSearch(LoginNeeded, SearchView, BootstrapThemeMixin):
     form_class = EquipmentSearchForm
     template_name="equipment_app/search.html"
     paginate_by = 5
@@ -158,7 +158,7 @@ class EmployeePermUpdate(ManagerNeeded, UpdateView, BootstrapThemeMixin):
         context['ActionText'] = f"Editing {self.object.AffUser.first_name} {self.object.AffUser.last_name}'s permissions"
         return context
     
-class EmployeeSearch(SearchView, BootstrapThemeMixin):
+class EmployeeSearch(LoginNeeded, SearchView, BootstrapThemeMixin):
     form_class = SearchForm
     template_name="equipment_app/search_user.html"
     paginate_by = 5
