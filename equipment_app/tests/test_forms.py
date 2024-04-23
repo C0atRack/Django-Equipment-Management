@@ -77,11 +77,8 @@ class EquipmentFormTest(TransactionTestCase):
         uploadedMD5 = hashlib.md5()
         uploadedMD5.update(self.imgData)
 
-
         self.assertEqual(writtenMD5, uploadedMD5.hexdigest())
         
-
-
     def test_form_missing_img(self):
         data : dict = {
             'Name': "Test", 
