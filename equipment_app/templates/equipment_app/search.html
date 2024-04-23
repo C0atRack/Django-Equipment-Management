@@ -63,15 +63,15 @@
         {% if page_obj.has_previous or page_obj.has_next %}
             <div>
                 {% if page_obj.has_previous %}
-                <a href="?q={{ query }}&amp;EquCategory={{ Cat }}&amp;page={{ page_obj.previous_page_number }}" class="btn btn-primary float-begin">Previous</a>
+                <a href="?q={{ query }}&amp;EquCategory={{ Cat }}&amp;page={{ page_obj.previous_page_number }}" class="btn btn-primary float-begin mb-3">Previous</a>
                 {% else %}
-                <a><button class="btn btn-outline-primary float-begin" disabled>Previous</button></a>
+                <a class="btn btn-outline-primary float-begin disabled mb-3" aria-disabled="true">Previous</a>
                 {% endif %}
 
                 {% if page_obj.has_next %}
-                <a href="?q={{ query }}&amp;EquCategory={{ Cat }}&amp;page={{ page_obj.next_page_number }}" class="btn btn-primary float-end">Next Page</a>
+                <a href="?q={{ query }}&amp;EquCategory={{ Cat }}&amp;page={{ page_obj.next_page_number }}" class="btn btn-primary float-end mb-3">Next Page</a>
                 {% else %}
-                <a><button class="btn btn-outline-primary float-end" disabled>Next Page</button></a>
+                <a class="btn btn-outline-primary float-end disable mb-3" aria-disabled="true">Next Page</a>
                 {% endif %}
             </div>
         {% endif %}
