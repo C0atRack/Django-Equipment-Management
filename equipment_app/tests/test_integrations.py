@@ -175,7 +175,7 @@ class EquipmentDeleteTest(EqBaseTest):
         url = f"{self.live_server_url}{targetUrl}"
         self.selenium.get(url)
         self.findAndScrollToElement(By.XPATH, '//a[@aria-label="Delete Test"]').click()
-        self.findAndScrollToElement(By.XPATH, '//button[@class="btn btn-danger btn-sm rounded-pill px-3"]').click()
+        self.findAndScrollToElement(By.XPATH, '//button[@class="btn btn-primary btn-sm rounded-pill px-3 me-auto"]').click()
         WebDriverWait(self.selenium, timeout=10).until(lambda check: self.selenium.current_url == url)
         self.assertEqual(EquipmentModel.objects.count(), 0)
         self.screenShot("Equipment_Delete")
