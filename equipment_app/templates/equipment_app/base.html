@@ -32,7 +32,7 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-				<div class="navbar-nav me-lg-auto mb-lg-0 mb-md-3 mb-3" role="navigation" aria-label="PageLinks">
+				<div class="navbar-nav" role="navigation" aria-label="PageLinks">
 					<a class="nav-link active me-2 my-auto mb-lg-0 mb-md-3 mb-3" aria-current="page" href="{% url 'index' %}">Home</a>
                     <a class="nav-link active me-2 my-auto mb-lg-0 mb-md-3 mb-3" aria-current="page" href="{% url 'equipment-list' %}">Equipment Catalog</a>
                     <form class="d-flex" role="search" method="GET" action="{% url 'user-search' %}">
@@ -43,18 +43,18 @@
 					<a aria-label="Add Equipment" class="btn btn-primary me-2 my-auto mb-lg-0 mb-md-3 mb-3" href="{% url 'equipment-creation'%}" id="navbar_add_equipment">Add Equipment</a>
 					{% endif %}
 				</div>
-				<div class="navbar-nav justify-content-end align-center d-flex flex-row ">
+				<div class="navbar-nav justify-content-end align-center d-flex flex-row">
 					{% if theme == "dark" %}
-					<button aria-label="Toggle Site Theme" id="themeToggler" role="button" class="btn btn-secondary me-2 bi bi-moon-stars-fill my-auto" onclick="toggleTheme();"> Toggle Theme</button>
+					<button aria-label="Toggle Site Theme" id="themeToggler" role="button" class="btn btn-secondary me-2 bi bi-moon-stars-fill mt-auto" onclick="toggleTheme();"> Toggle Theme</button>
 					{%else%}
-					<button aria-label="Toggle Site Theme" id="themeToggler" role="button" class="btn btn-secondary me-2 bi bi-sun-fill my-auto" onclick="toggleTheme();"> Toggle Theme</button>
+					<button aria-label="Toggle Site Theme" id="themeToggler" role="button" class="btn btn-secondary me-2 bi bi-sun-fill mt-auto" onclick="toggleTheme();"> Toggle Theme</button>
 					{%endif%}
 					{% if user.is_authenticated %}
-					<a class="nav-link active me-2 ms-auto ms-lg-0 ms-md-0 my-auto text-center" href="{{user.employee.get_absolute_url}}">{{user.first_name |capfirst}}'s Profile </a>
-					<a id="logoutLink" role="link" class="btn btn-info me-2 my-auto" href="{% url 'logout' %}">Log Out</a>
+					<a class="nav-link active me-2 ms-auto ms-lg-0 ms-md-0 mt-auto text-center" href="{{user.employee.get_absolute_url}}">{{user.first_name |capfirst}}'s Profile </a>
+					<a id="logoutLink" role="link" class="btn btn-info me-2 mt-auto" href="{% url 'logout' %}">Log Out</a>
 					{% else %}
-					<a id="loginLink" role="link" class="btn btn-outline-primary ms-auto my-auto" href="{% url 'login' %}">Login</a>
-					<a id="signupLink" role="link" class="btn btn-outline-info me-2 ms-2 my-auto" href="{% url 'register' %}">Register</a>
+					<a id="loginLink" role="link" class="btn btn-outline-primary ms-auto mt-auto" href="{% url 'login' %}">Login</a>
+					<a id="signupLink" role="link" class="btn btn-outline-info me-2 ms-2 mt-auto" href="{% url 'register' %}">Register</a>
 					{%endif%}
 				</div>
 			</div>
