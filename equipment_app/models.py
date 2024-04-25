@@ -40,7 +40,7 @@ class EquipmentModel(models.Model):
     ModelNumber = models.CharField("Model Number", max_length=200, blank=False)
     AssetTag = models.CharField("Asset Tag", max_length=200, blank=False)
     Category = models.CharField("Equipment Category", max_length=100, choices=EQUIPMENT_CATEGORIES)
-    Img = ProcessedImageField(verbose_name="Photo", upload_to=uuidSave, processors=[ResizeToFit(750, 1000)], format="JPEG", options={"quaility" : 70})
+    Img = ProcessedImageField(verbose_name="Photo", upload_to=uuidSave, processors=[ResizeToFit(500, 500)], format="JPEG", options={"quaility" : 70})
     Description = models.TextField("Description", max_length=5000, blank=False)
     ManualLink = models.URLField("Link to Manual", max_length=1000, blank=True)
     CheckInLocation = models.CharField("Check In Location", max_length=200, blank=False)
